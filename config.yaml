@@ -1,7 +1,7 @@
 # Leonida Clips auto-clipper settings. Edit freely; the pipeline reads this every run.
 
 game_name: "Grand Theft Auto VI"   # exact Twitch category name
-clips_per_run: 1                   # the GitHub schedule runs 3x a day, so 1 = 3 Shorts/day
+clips_per_run: 1                   # the GitHub schedule runs 6x a day (5 family + 1 18+), so 1 = 6 Shorts/day
 lookback_hours: 24                 # only consider clips created in this window
 min_views: 500                     # skip low-traction clips
 max_duration_s: 55                 # Shorts sweet spot; longer clips are trimmed
@@ -27,7 +27,7 @@ host:
 writer_model: "claude-opus-5-5"
 
 # Naked/sexual clips: skip | private (upload private so Mochi can mark 18+) | public
-adult_clips: "both"   # naked clips post twice: uncensored (18+) + censored. Mochi asked 2026-11-18
+adult_clips: "public"   # 18+ slot posts the uncensored version (marked 18+). "both" also posts a blurred copy, but that's a 7th upload and goes over the ~6/day YouTube limit
 # options: skip | private | public (uncensored only) | both
 
 youtube:

@@ -2,10 +2,14 @@ name: Auto-clip GTA 6 Shorts
 
 on:
   schedule:
-    # 3 runs a day: 9 AM, 2 PM, 7 PM Pacific (UTC times below, PST)
-    - cron: "0 17 * * *"
-    - cron: "0 22 * * *"
-    - cron: "0 3 * * *"
+    # 6 a day (Pacific, PST). 5 family-friendly: 7 AM, 9:30 AM, 12 PM, 3 PM, 6 PM. 18+: 10 PM.
+    # YouTube's default API quota allows ~6 uploads a day, so this is the max.
+    - cron: "0 15 * * *"
+    - cron: "30 17 * * *"
+    - cron: "0 20 * * *"
+    - cron: "0 23 * * *"
+    - cron: "0 2 * * *"
+    - cron: "0 6 * * *"   # the 18+ slot
   workflow_dispatch:
     inputs:
       dry_run:
@@ -16,6 +20,11 @@ on:
         description: "How many Shorts to make (blank = config clips_per_run)"
         type: string
         default: ""
+      mode:
+        description: "family = no naked clips, adult = only naked clips (18+), any = either"
+        type: choice
+        options: [family, adult, any]
+        default: family
       clip_id:
         description: "Make specific Twitch clip id(s), comma-separated (optional)"
         type: string
@@ -61,7 +70,7 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }}
+        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }} --mode ${{ github.event.schedule == '0 6 * * *' && 'adult' || inputs.mode || 'family' }}
 
       - name: Keep the rendered Shorts for 7 days
         if: always()

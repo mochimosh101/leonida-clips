@@ -87,11 +87,18 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--count", type=int, default=0, help="Shorts to make this run (default: clips_per_run)")
+    ap.add_argument("--mode", choices=["any", "family", "adult"], default="any",
+                    help="family = skip naked/sexual clips; adult = only naked/sexual clips")
     ap.add_argument("--clip-id", default="", help="Make these Twitch clip ids (comma-separated), even if posted before")
     args = ap.parse_args()
 
     with open(os.path.join(ROOT, "config.yaml")) as f:
         cfg = yaml.safe_load(f)
+
+    if args.mode == "family":
+        cfg["adult_clips"] = "skip"
+    elif args.mode == "adult" and cfg.get("adult_clips", "skip") == "skip":
+        cfg["adult_clips"] = "public"
 
     state = load_state()
     posted = {r["clip_id"] for r in state}
@@ -99,7 +106,14 @@ def main() -> int:
         candidates = twitch.clips_by_id([c.strip() for c in args.clip_id.split(",") if c.strip()])
     else:
         candidates = [c for c in twitch.top_clips(cfg) if twitch.eligible(c, cfg, posted)]
-    print(f"{len(candidates)} eligible clips")
+    if args.mode == "adult" and not args.clip_id:
+        adult = [c for c in candidates if ADULT_WORDS.search(c.title)]
+        if adult:
+            candidates = adult
+        else:  # no 18+ clip today: fill the slot with a family-friendly one instead
+            print("no 18+ clips found; using a family-friendly clip for this slot")
+            cfg["adult_clips"] = "skip"
+    print(f"{len(candidates)} eligible clips (mode: {args.mode})")
 
     made = 0
     for clip in candidates:
