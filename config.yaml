@@ -1,0 +1,39 @@
+# Leonida Clips auto-clipper settings. Edit freely; the pipeline reads this every run.
+
+game_name: "Grand Theft Auto VI"   # exact Twitch category name
+clips_per_run: 1                   # the GitHub schedule runs 3x a day, so 1 = 3 Shorts/day
+lookback_hours: 24                 # only consider clips created in this window
+min_views: 500                     # skip low-traction clips
+max_duration_s: 55                 # Shorts sweet spot; longer clips are trimmed
+languages: ["en"]
+
+# Copyright safety. Reposting a streamer without permission can earn strikes
+# (3 strikes in 90 days deletes the channel). Best practice: list streamers who
+# allow clipping (many run clipping programs) and set allow_any_broadcaster: false.
+allow_any_broadcaster: true
+broadcaster_allowlist: []          # Twitch logins, e.g. ["streamer_one", "streamer_two"]
+broadcaster_blocklist: []          # never clip these
+
+# Rico Neon, the channel's AI host
+host:
+  name: "Rico Neon"
+  voice_engine: "edge"             # "edge" (free) or "elevenlabs" (needs ELEVENLABS_API_KEY + voice id)
+  edge_voice: "en-US-GuyNeural"
+  edge_rate: "-5%"
+  edge_pitch: "-8Hz"
+  elevenlabs_voice_id: ""
+  avatar_path: "assets/rico.png"   # optional transparent PNG; skipped if missing
+
+writer_model: "claude-opus-5-5"
+
+youtube:
+  # Uploads from a Google Cloud project that hasn't passed YouTube's API audit
+  # are forced to private. Leave "private" until the audit is approved, then switch to "public".
+  privacy_status: "private"
+  category_id: "20"                # Gaming
+  made_for_kids: false
+  base_tags: ["GTA 6", "GTA VI", "GTA 6 funny moments", "Vice City", "Leonida", "gaming", "shorts"]
+  description_footer: |
+    Daily GTA 6 moments in 60 seconds, roasted by Rico Neon.
+    Not affiliated with Rockstar Games.
+    #GTA6 #GTAVI #ViceCity #Shorts
