@@ -110,5 +110,21 @@
     "variant": "normal",
     "youtube_id": "jvKUz_VPPQw",
     "dry_run": false
+  },
+  {
+    "clip_id": "VivaciousCallousYogurtDxCat-tcAghtrsbnP82HX2",
+    "streamer": "xqc",
+    "views": 35301,
+    "title": "xQc's Honest GTA 6 Review After 24 Hours",
+    "hook": "xQc played GTA 6 for 24 hours. His biggest complaint?",
+    "verdict": "Prediction: performance patch or PC port lands, and xQc plays another 24 hours. Squinting the whole time anyway.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "I8fEm_P8hFk",
+    "dry_run": false
   }
 ]
