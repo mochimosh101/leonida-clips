@@ -18,6 +18,7 @@ from . import captions, edit, twitch, voice, writer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(ROOT, "state", "posted.json")
+SPOILER_WORDS = re.compile(r"spoiler|cutscene|cinematic|ending|final mission|story mode ending", re.I)
 ADULT_WORDS = re.compile(r"strip|naked|nude|nsfw|lap ?dance|private dance|boob|topless|stripper|hooker|sex", re.I)
 
 
@@ -43,6 +44,9 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
                              recent)
     if copy is None:
         print(f"skip {clip.id}: writer declined")
+        return None
+    if copy.spoiler or SPOILER_WORDS.search(clip.title):
+        print(f"skip {clip.id}: cutscene/story spoiler (Rockstar takedown risk)")
         return None
     if ADULT_WORDS.search(clip.title):
         copy.adult = True

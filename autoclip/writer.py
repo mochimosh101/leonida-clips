@@ -48,6 +48,7 @@ class ShortCopy(BaseModel):
     tags: list[str]
     hook_style: str = Field(description="H1-H7")
     verdict_style: str = Field(description="V1-V6")
+    spoiler: bool = Field(description="True if mainly a cutscene or a story spoiler")
     adult: bool = Field(description="True if the clip involves nudity or sexual content")
 
 
