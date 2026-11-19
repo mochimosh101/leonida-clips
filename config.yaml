@@ -18,9 +18,9 @@ broadcaster_blocklist: []          # never clip these
 host:
   name: "Rico Neon"
   voice_engine: "edge"             # "edge" (free) or "elevenlabs" (needs ELEVENLABS_API_KEY + voice id)
-  edge_voice: "en-US-GuyNeural"
-  edge_rate: "-5%"
-  edge_pitch: "-8Hz"
+  edge_voice: "en-US-AndrewMultilingualNeural"   # newer, much more natural Edge voice
+  edge_rate: "+0%"
+  edge_pitch: "+0Hz"              # pitch shifts make it sound robotic
   elevenlabs_voice_id: ""
   avatar_path: "assets/rico.png"   # optional transparent PNG; skipped if missing
 
