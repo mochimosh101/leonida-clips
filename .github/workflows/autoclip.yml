@@ -14,6 +14,10 @@ on:
     - cron: "30 1 * * *"
     - cron: "0 3 * * *"
     - cron: "0 6 * * *"   # the 18+ slot
+    # Launch-week overnight slots (12 AM, 2 AM, 4 AM Pacific) for the global audience
+    - cron: "0 8 * * *"
+    - cron: "0 10 * * *"
+    - cron: "0 12 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
