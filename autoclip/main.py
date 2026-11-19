@@ -57,6 +57,8 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
 
     caption_style = random.choice(sorted(captions.CAPTION_STYLES))
     copy.__dict__["caption_style"] = caption_style  # logged in posted.json for the weekly comparison
+    # A/B test: YouTube's "altered or synthetic content" label on half the Shorts (Mochi 2026-11-19)
+    copy.__dict__["synthetic_label"] = random.random() < 0.5
     host = cfg["host"]
     hook_mp3 = voice.speak(copy.hook_line, os.path.join(work, "hook.mp3"), host)
     verdict_mp3 = voice.speak(copy.verdict_line, os.path.join(work, "verdict.mp3"), host)
@@ -163,7 +165,8 @@ def main() -> int:
                 if age_restricted and cfg.get("adult_clips") == "private":
                     yv = {**yt, "privacy_status": "private"}  # Mochi sets 18+ in Studio, then publishes
                 try:
-                    video_id = upload_short(path, title, description, tags, yv, age_restricted=age_restricted)
+                    video_id = upload_short(path, title, description, tags, yv, age_restricted=age_restricted,
+                                            synthetic_label=copy.__dict__.get("synthetic_label", True))
                 except Exception as e:
                     if type(e).__name__ != "UploadLimitReached":
                         raise
@@ -176,6 +179,7 @@ def main() -> int:
                 "title": title, "hook": copy.hook_line, "verdict": copy.verdict_line,
                 "hook_style": copy.hook_style, "verdict_style": copy.verdict_style,
                 "caption_style": copy.__dict__.get("caption_style"),
+                "synthetic_label": copy.__dict__.get("synthetic_label"),
                 "adult": copy.adult, "variant": variant, "youtube_id": video_id, "dry_run": args.dry_run,
             })
             if not args.dry_run:
@@ -188,9 +192,10 @@ def main() -> int:
     return 0
 
 
-def upload_short(path, title, description, tags, yt, age_restricted=False):
+def upload_short(path, title, description, tags, yt, age_restricted=False, synthetic_label=True):
     from . import youtube
-    return youtube.upload(path, title, description, tags, yt, age_restricted=age_restricted)
+    return youtube.upload(path, title, description, tags, yt, age_restricted=age_restricted,
+                          synthetic_label=synthetic_label)
 
 
 if __name__ == "__main__":
