@@ -3,7 +3,7 @@ name: Auto-clip GTA 6 Shorts
 on:
   schedule:
     # 6 a day (Pacific, PST). 5 family-friendly: 7 AM, 9:30 AM, 12 PM, 3 PM, 6 PM. 18+: 10 PM.
-    # YouTube's default API quota allows ~6 uploads a day, so this is the max.
+    # API upload quota is 100/day (checked in Cloud console 2026-11-18), so more slots are possible.
     - cron: "0 15 * * *"
     - cron: "30 17 * * *"
     - cron: "0 20 * * *"
