@@ -80,5 +80,35 @@
     "variant": "censored",
     "youtube_id": "p1E5sqikKI0",
     "dry_run": false
+  },
+  {
+    "clip_id": "WealthyNimbleHamsterDansGame-yrU7UShZomelh1Ke",
+    "streamer": "xqc",
+    "views": 23501,
+    "title": "xQc Tries Stealing His First Car GTA 6",
+    "hook": "xQc's first car theft in GTA 6. Guess how it goes.",
+    "verdict": "Neon score: 3 out of 10. Tip: in Leonida, check the street before you check the button.",
+    "hook_style": "H1",
+    "verdict_style": "V3",
+    "caption_style": "B",
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "RcEDvLkffwk",
+    "dry_run": false
+  },
+  {
+    "clip_id": "WiseBusyStapleNononoCat--XYNEyYmRlr4KoEY",
+    "streamer": "ohnepixel",
+    "views": 22986,
+    "title": "ohnePixel's Genius Jet Plan in GTA 6",
+    "hook": "ohnePixel thinks hugging skyscrapers keeps the cops from shooting. Right?",
+    "verdict": "Neon score: 2 out of 10. Cops respect civilians, physics doesn't. Fly over water next time.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "B",
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "jvKUz_VPPQw",
+    "dry_run": false
   }
 ]
