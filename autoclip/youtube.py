@@ -33,6 +33,7 @@ def upload(path: str, title: str, description: str, tags: list[str], yt: dict,
         "status": {
             "privacyStatus": yt["privacy_status"],
             "selfDeclaredMadeForKids": yt["made_for_kids"],
+            "containsSyntheticMedia": True,  # Rico's voice is AI; YouTube asks for this, no monetization hit
         },
     }
     if age_restricted:

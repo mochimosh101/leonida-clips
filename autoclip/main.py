@@ -33,12 +33,13 @@ def save_state(rows: list[dict]) -> None:
         json.dump(rows, f, indent=2)
 
 
-def make_short(clip: twitch.Clip, cfg: dict, work: str):
+def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | None = None):
     """Returns (copy, [(path, variant)]) where variant is "normal", "uncensored" or "censored"."""
     src = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
     transcript, words = captions.transcribe(src)
     frames = edit.sample_frames(src, work)  # lets Claude spot nudity that isn't in the words
-    copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript, frames)
+    copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript, frames,
+                             recent)
     if copy is None:
         print(f"skip {clip.id}: writer declined")
         return None
@@ -109,7 +110,8 @@ def main() -> int:
             break
         with tempfile.TemporaryDirectory() as work:
             try:
-                result = make_short(clip, cfg, work)
+                recent = [r for r in state if not r.get("dry_run")][-9:]
+                result = make_short(clip, cfg, work, recent)
             except Exception as e:  # one bad clip shouldn't stop the run
                 print(f"skip {clip.id}: {e}", file=sys.stderr)
                 continue
@@ -138,6 +140,7 @@ def main() -> int:
             state.append({
                 "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
                 "title": title, "hook": copy.hook_line, "verdict": copy.verdict_line,
+                "hook_style": copy.hook_style, "verdict_style": copy.verdict_style,
                 "adult": copy.adult, "variant": variant, "youtube_id": video_id, "dry_run": args.dry_run,
             })
             if not args.dry_run:
