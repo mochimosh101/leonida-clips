@@ -17,7 +17,7 @@ import yaml
 from . import captions, edit, twitch, voice, writer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATE = os.path.join(ROOT, "state", "posted.json")
+STATE = os.path.join(ROOT, "state", "posted.json")  # overridden by config "state_file"
 SPOILER_WORDS = re.compile(r"spoiler|cutscene|cinematic|ending|final mission|story mode ending", re.I)
 ADULT_WORDS = re.compile(r"strip|naked|nude|nsfw|lap ?dance|private dance|boob|topless|stripper|hooker|sex", re.I)
 
@@ -38,10 +38,10 @@ def save_state(rows: list[dict]) -> None:
 def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | None = None):
     """Returns (copy, [(path, variant)]) where variant is "normal", "uncensored" or "censored"."""
     src = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
-    transcript, words = captions.transcribe(src)
+    transcript, words = captions.transcribe(src, language=cfg.get("whisper_language"))
     frames = edit.sample_frames(src, work)  # lets Claude spot nudity that isn't in the words
     copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript, frames,
-                             recent)
+                             recent, cfg.get("writer_language", ""))
     if copy is None:
         print(f"skip {clip.id}: writer declined")
         return None
@@ -96,11 +96,15 @@ def main() -> int:
     ap.add_argument("--count", type=int, default=0, help="Shorts to make this run (default: clips_per_run)")
     ap.add_argument("--mode", choices=["any", "family", "adult"], default="any",
                     help="family = skip naked/sexual clips; adult = only naked/sexual clips")
+    ap.add_argument("--config", default="config.yaml", help="e.g. config.es.yaml for the Spanish channel")
     ap.add_argument("--clip-id", default="", help="Make these Twitch clip ids (comma-separated), even if posted before")
     args = ap.parse_args()
 
-    with open(os.path.join(ROOT, "config.yaml")) as f:
+    with open(os.path.join(ROOT, args.config)) as f:
         cfg = yaml.safe_load(f)
+    if cfg.get("state_file"):
+        global STATE
+        STATE = os.path.join(ROOT, cfg["state_file"])
 
     if args.mode == "family":
         cfg["adult_clips"] = "skip"
@@ -141,8 +145,9 @@ def main() -> int:
         copy, variants = result
         yt = cfg["youtube"]
         description = (
-            f"{copy.description}\n\nClip from {clip.broadcaster_name} on Twitch: "
-            f"https://twitch.tv/{clip.broadcaster_login}\n\n{yt['description_footer']}"
+            f"{copy.description}\n\n"
+            + yt.get("clip_credit", "Clip from {name} on Twitch:").format(name=clip.broadcaster_name)
+            + f" https://twitch.tv/{clip.broadcaster_login}\n\n{yt['description_footer']}"
         )
         tags = list(dict.fromkeys(copy.tags + yt["base_tags"] + [clip.broadcaster_name]))
         for path, variant in variants:
