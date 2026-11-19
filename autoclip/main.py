@@ -58,6 +58,7 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str) -> tuple[str, writer.Sho
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--count", type=int, default=0, help="Shorts to make this run (default: clips_per_run)")
     args = ap.parse_args()
 
     with open(os.path.join(ROOT, "config.yaml")) as f:
@@ -70,7 +71,7 @@ def main() -> int:
 
     made = 0
     for clip in candidates:
-        if made >= cfg["clips_per_run"]:
+        if made >= (args.count or cfg["clips_per_run"]):
             break
         with tempfile.TemporaryDirectory() as work:
             try:
@@ -95,6 +96,8 @@ def main() -> int:
             "title": copy.title, "hook": copy.hook_line, "verdict": copy.verdict_line,
             "youtube_id": video_id, "dry_run": args.dry_run,
         })
+        if not args.dry_run:
+            save_state(state)  # save after every upload so a later failure can't cause a repost
         print(f"made {path} -> {video_id or 'dry run'} | {copy.title}")
         made += 1
 

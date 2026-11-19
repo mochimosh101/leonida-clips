@@ -29,7 +29,7 @@ writer_model: "claude-opus-5-5"
 youtube:
   # Uploads from a Google Cloud project that hasn't passed YouTube's API audit
   # are forced to private. Leave "private" until the audit is approved, then switch to "public".
-  privacy_status: "private"
+  privacy_status: "public"     # YouTube may still force private until the API audit passes
   category_id: "20"                # Gaming
   made_for_kids: false
   base_tags: ["GTA 6", "GTA VI", "GTA 6 funny moments", "Vice City", "Leonida", "gaming", "shorts"]

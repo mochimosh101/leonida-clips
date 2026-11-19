@@ -12,6 +12,10 @@ on:
         description: "Make the Short but don't upload"
         type: boolean
         default: false
+      count:
+        description: "How many Shorts to make (blank = config clips_per_run)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -53,7 +57,7 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }}
 
       - name: Keep the rendered Shorts for 7 days
         if: always()
@@ -65,7 +69,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Save posted-clip history
-        if: success() && !inputs.dry_run
+        if: always() && !inputs.dry_run
         run: |
           git config user.name "autoclip-bot"
           git config user.email "autoclip-bot@users.noreply.github.com"
