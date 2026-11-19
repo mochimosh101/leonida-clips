@@ -96,8 +96,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--count", type=int, default=0, help="Shorts to make this run (default: clips_per_run)")
-    ap.add_argument("--mode", choices=["any", "family", "adult"], default="any",
-                    help="family = skip naked/sexual clips; adult = only naked/sexual clips")
+    ap.add_argument("--mode", choices=["any", "family", "adult", "series"], default="any",
+                    help="family = skip naked/sexual clips; adult = only naked/sexual clips; "
+                         "series = next part of a tips/mistakes series")
     ap.add_argument("--config", default="config.yaml", help="e.g. config.es.yaml for the Spanish channel")
     ap.add_argument("--clip-id", default="", help="Make these Twitch clip ids (comma-separated), even if posted before")
     args = ap.parse_args()
@@ -115,6 +116,8 @@ def main() -> int:
 
     state = load_state()
     posted = {r["clip_id"] for r in state}
+    if args.mode == "series":
+        return run_series(cfg, args, state)
     if args.clip_id:
         candidates = twitch.clips_by_id([c.strip() for c in args.clip_id.split(",") if c.strip()])
     else:
@@ -189,6 +192,41 @@ def main() -> int:
 
     if not args.dry_run:
         save_state(state)
+    return 0
+
+
+def run_series(cfg: dict, args, state: list[dict]) -> int:
+    """One part of the current tips/mistakes series (see listicle.py)."""
+    from . import listicle
+    series_path = os.path.join(ROOT, cfg.get("series_file", "state/series.json"))
+    footage = [c for c in twitch.top_clips(cfg)
+               if c.view_count >= cfg["min_views"] and not ADULT_WORDS.search(c.title)
+               and not SPOILER_WORDS.search(c.title)][:25]
+    used = {r.get("footage_clip") for r in state[-12:] if r.get("format") == "series"}
+    fresh = [c for c in footage if c.id not in used]
+    footage = fresh if len(fresh) >= 3 else footage  # vary the gameplay between parts
+    if not footage:
+        print("no usable gameplay clips right now; skipping this slot")
+        return 0
+    with tempfile.TemporaryDirectory() as work:
+        made = listicle.next_part(cfg, series_path, footage, work, os.path.join(ROOT, "out"))
+        if made is None:
+            return 0
+        meta, path = made
+        video_id = None
+        if not args.dry_run:
+            try:
+                video_id = upload_short(path, meta["title"], meta["description"], meta["tags"], cfg["youtube"],
+                                        synthetic_label=bool(cfg.get("synthetic_label", False)))
+            except Exception as e:
+                if type(e).__name__ != "UploadLimitReached":
+                    raise
+                print("YouTube daily upload limit reached; this part will be posted in a later slot.")
+                return 0
+            listicle.mark_posted(series_path)
+            state.append({**meta["row"], "youtube_id": video_id, "dry_run": False})
+            save_state(state)
+        print(f"made {path} -> {video_id or 'dry run'} | {meta['title']}")
     return 0
 
 

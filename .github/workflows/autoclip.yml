@@ -2,7 +2,8 @@ name: Auto-clip GTA 6 Shorts
 
 on:
   schedule:
-    # 10 slots a day (Pacific, PST). 9 family-friendly, every 90 min from 7 AM to 7 PM. 18+: 10 PM.
+    # 9 slots a day (Pacific, PST), ~10 uploads with the 18+ pair (YouTube's channel cap is ~10/day).
+    # Family clips: 7 AM, 8:30, 11:30, 1 PM, 4 PM. Tips/mistakes series: 10 AM, 2:30 PM, 7 PM. 18+: 10 PM.
     # API quota is 100/day, but YouTube also caps uploads per channel (~10/day for this new channel,
     # hit 2026-11-19). The bot stops cleanly when it hits that cap; verifying the channel raises it.
     - cron: "0 15 * * *"
@@ -12,7 +13,6 @@ on:
     - cron: "0 21 * * *"
     - cron: "30 22 * * *"
     - cron: "0 0 * * *"
-    - cron: "30 1 * * *"
     - cron: "0 3 * * *"
     - cron: "0 6 * * *"   # the 18+ slot
   workflow_dispatch:
@@ -26,9 +26,9 @@ on:
         type: string
         default: ""
       mode:
-        description: "family = no naked clips, adult = only naked clips (18+), any = either"
+        description: "family = no naked clips, adult = only naked clips (18+), any = either, series = next tips/mistakes part"
         type: choice
-        options: [family, adult, any]
+        options: [family, adult, any, series]
         default: family
       clip_id:
         description: "Make specific Twitch clip id(s), comma-separated (optional)"
@@ -75,7 +75,13 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }} --mode ${{ github.event.schedule == '0 6 * * *' && 'adult' || inputs.mode || 'family' }}
+        run: |
+          MODE="${{ inputs.mode || 'family' }}"
+          case "${{ github.event.schedule }}" in
+            "0 6 * * *") MODE=adult ;;
+            "0 18 * * *"|"30 22 * * *"|"0 3 * * *") MODE=series ;;
+          esac
+          python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }} --mode "$MODE"
 
       - name: Keep the rendered Shorts for 7 days
         if: always()
@@ -92,6 +98,7 @@ jobs:
           git config user.name "autoclip-bot"
           git config user.email "autoclip-bot@users.noreply.github.com"
           git add state/posted.json
+          if [ -f state/series.json ]; then git add state/series.json; fi
           git diff --cached --quiet || git commit -m "Record posted clips"
           git pull --rebase origin main
           git push
