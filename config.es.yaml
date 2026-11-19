@@ -39,6 +39,7 @@ writer_language: >-
 
 # Naked/sexual clips: skip | private (upload private so Mochi can mark 18+) | public
 adult_clips: "skip"   # Spanish channel is family-friendly only for now
+synthetic_label: false   # YouTube AI label off (Mochi 2026-11-19). Set true only if a video has realistic AI-generated imagery
 # options: skip | private | public (uncensored only) | both
 
 youtube:

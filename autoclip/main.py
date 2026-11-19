@@ -57,8 +57,8 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
 
     caption_style = random.choice(sorted(captions.CAPTION_STYLES))
     copy.__dict__["caption_style"] = caption_style  # logged in posted.json for the weekly comparison
-    # A/B test: YouTube's "altered or synthetic content" label on half the Shorts (Mochi 2026-11-19)
-    copy.__dict__["synthetic_label"] = random.random() < 0.5
+    # YouTube "altered or synthetic content" label: off unless the video has realistic AI imagery (Mochi 2026-11-19)
+    copy.__dict__["synthetic_label"] = bool(cfg.get("synthetic_label", False))
     host = cfg["host"]
     hook_mp3 = voice.speak(copy.hook_line, os.path.join(work, "hook.mp3"), host)
     verdict_mp3 = voice.speak(copy.verdict_line, os.path.join(work, "verdict.mp3"), host)
@@ -166,7 +166,7 @@ def main() -> int:
                     yv = {**yt, "privacy_status": "private"}  # Mochi sets 18+ in Studio, then publishes
                 try:
                     video_id = upload_short(path, title, description, tags, yv, age_restricted=age_restricted,
-                                            synthetic_label=copy.__dict__.get("synthetic_label", True))
+                                            synthetic_label=copy.__dict__.get("synthetic_label", False))
                 except Exception as e:
                     if type(e).__name__ != "UploadLimitReached":
                         raise
@@ -192,7 +192,7 @@ def main() -> int:
     return 0
 
 
-def upload_short(path, title, description, tags, yt, age_restricted=False, synthetic_label=True):
+def upload_short(path, title, description, tags, yt, age_restricted=False, synthetic_label=False):
     from . import youtube
     return youtube.upload(path, title, description, tags, yt, age_restricted=age_restricted,
                           synthetic_label=synthetic_label)

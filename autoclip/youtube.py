@@ -22,7 +22,7 @@ def _client():
 
 
 def upload(path: str, title: str, description: str, tags: list[str], yt: dict,
-           age_restricted: bool = False, synthetic_label: bool = True) -> str:
+           age_restricted: bool = False, synthetic_label: bool = False) -> str:
     body = {
         "snippet": {
             "title": title[:100],
@@ -33,7 +33,7 @@ def upload(path: str, title: str, description: str, tags: list[str], yt: dict,
         "status": {
             "privacyStatus": yt["privacy_status"],
             "selfDeclaredMadeForKids": yt["made_for_kids"],
-            "containsSyntheticMedia": synthetic_label,  # A/B tested (Mochi 2026-11-19); voice is AI TTS, not a real person
+            "containsSyntheticMedia": synthetic_label,  # from config synthetic_label
         },
     }
     if age_restricted:

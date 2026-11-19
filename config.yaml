@@ -27,7 +27,8 @@ host:
 writer_model: "claude-opus-5-5"
 
 # Naked/sexual clips: skip | private (upload private so Mochi can mark 18+) | public
-adult_clips: "both"   # 18+ slot posts uncensored (marked 18+) plus a blurred copy. Upload quota is 100/day, so no limit issue
+adult_clips: "both"   # 18+ slot posts uncensored (marked 18+) plus a blurred copy. Channel cap ~10 uploads/day
+synthetic_label: false   # YouTube AI label off (Mochi 2026-11-19). Set true only if a video has realistic AI-generated imagery
 # options: skip | private | public (uncensored only) | both
 
 youtube:
