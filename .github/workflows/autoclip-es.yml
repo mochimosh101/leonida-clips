@@ -7,7 +7,7 @@ on:
     # Minutes are :15/:45 so they never start at the same moment as the English channel's runs.
     - cron: "15 12 * * *"   # Spain 1 PM
     - cron: "15 15 * * *"   # Spain 4 PM, Mexico 9 AM
-    - cron: "15 18 * * *"   # Spain 7 PM, Mexico noon
+    - cron: "15 18 * * *"   # Spain 7 PM, Mexico noon (CDMX)
     - cron: "45 20 * * *"   # Spain 9:45 PM, Mexico 2:45 PM
     - cron: "15 23 * * *"   # Mexico 5 PM
     - cron: "15 2 * * *"    # Mexico 8 PM
