@@ -51,14 +51,22 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 PINK = r"{\c&HB414FF&}"   # BGR for #FF14B4
+# Caption looks the bot rotates between, so we can see which one keeps people watching.
+# (highlight colour in ASS BGR, words per chunk, font size, pop the spoken word)
+CAPTION_STYLES = {
+    "A": (r"{\c&HB414FF&}", 3, 86, False),   # pink highlight, 3 words (original)
+    "B": (r"{\c&H40D6FF&}", 2, 96, True),    # yellow highlight, 2 words, spoken word pops
+    "C": (r"{\c&HFFE500&}", 1, 110, True),   # cyan, one big word at a time, pops
+}
 WHITE = r"{\c&HFFFFFF&}"
 
 
 def build_ass(words: list[Word], hook_text: str, out_path: str,
               offset: float = 0.0, per_line: int = 3, caption_y: int = 1290,
-              credit: str = "", duration: float = 60.0) -> str:
+              credit: str = "", duration: float = 60.0, style: str = "A") -> str:
+    color, per_line, size, pop = CAPTION_STYLES.get(style, CAPTION_STYLES["A"])
     """Captions in 3-word chunks; the word being spoken turns pink. Hook banner on top for 3s."""
-    lines = [HEADER]
+    lines = [HEADER.replace("Style: Cap,Montserrat ExtraBold,86,", f"Style: Cap,Montserrat ExtraBold,{size},")]
     if hook_text:
         lines.append(f"Dialogue: 1,{_ts(0)},{_ts(3.0)},Hook,,0,0,0,,{_esc(hook_text)}")
     if credit:
@@ -69,7 +77,9 @@ def build_ass(words: list[Word], hook_text: str, out_path: str,
             start = w.start + offset
             end = (chunk[j + 1].start if j + 1 < len(chunk) else w.end) + offset
             text = " ".join(
-                (PINK + _esc(x.text) + WHITE) if k == j else _esc(x.text) for k, x in enumerate(chunk)
+                ((color + (r"{\fscx118\fscy118}" if pop else "") + _esc(x.text) + WHITE
+                  + (r"{\fscx100\fscy100}" if pop else "")) if k == j else _esc(x.text))
+                for k, x in enumerate(chunk)
             )
             lines.append(f"Dialogue: 0,{_ts(start)},{_ts(end)},Cap,,0,0,0,,{{\\pos(540,{caption_y})}}{text}")
     with open(out_path, "w", encoding="utf-8") as f:

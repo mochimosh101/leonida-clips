@@ -8,6 +8,7 @@ import argparse
 import json
 import re
 import os
+import random
 import sys
 import tempfile
 
@@ -50,6 +51,8 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
         print(f"skip {clip.id}: adult content")
         return None
 
+    caption_style = random.choice(sorted(captions.CAPTION_STYLES))
+    copy.__dict__["caption_style"] = caption_style  # logged in posted.json for the weekly comparison
     host = cfg["host"]
     hook_mp3 = voice.speak(copy.hook_line, os.path.join(work, "hook.mp3"), host)
     verdict_mp3 = voice.speak(copy.verdict_line, os.path.join(work, "verdict.mp3"), host)
@@ -57,7 +60,7 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
     dur = min(edit.probe_duration(src), cfg["max_duration_s"])
     ass = captions.build_ass(
         [w for w in words if w.start < dur], copy.on_screen_hook, os.path.join(work, "caps.ass"),
-        credit=f"twitch.tv/{clip.broadcaster_login}", duration=dur,
+        credit=f"twitch.tv/{clip.broadcaster_login}", duration=dur, style=caption_style,
     )
     out_dir = os.path.join(ROOT, "out")
     os.makedirs(out_dir, exist_ok=True)
@@ -155,6 +158,7 @@ def main() -> int:
                 "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
                 "title": title, "hook": copy.hook_line, "verdict": copy.verdict_line,
                 "hook_style": copy.hook_style, "verdict_style": copy.verdict_style,
+                "caption_style": copy.__dict__.get("caption_style"),
                 "adult": copy.adult, "variant": variant, "youtube_id": video_id, "dry_run": args.dry_run,
             })
             if not args.dry_run:
