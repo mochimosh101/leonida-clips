@@ -1,0 +1,30 @@
+name: Make voice samples
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install "edge-tts>=6.1"
+      - name: Voice the same Rico line in each candidate voice
+        run: |
+          LINE="Okay, Leonida, what are we doing here? Bro hit the wrong button and somehow made it everybody's problem. Rico's verdict: zero regrets, full send."
+          mkdir -p samples
+          for v in en-US-GuyNeural en-US-AndrewMultilingualNeural en-US-BrianMultilingualNeural en-US-ChristopherNeural en-US-EricNeural en-US-SteffanNeural en-US-RogerNeural en-GB-RyanNeural en-US-AvaMultilingualNeural; do
+            edge-tts --voice "$v" --text "$LINE" --write-media "samples/$v.mp3"
+          done
+          ls -la samples
+      - name: Save samples to the repo
+        run: |
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add samples
+          git diff --cached --quiet || git commit -m "Add Rico voice samples"
+          git pull --rebase origin main
+          git push
