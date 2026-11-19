@@ -11,6 +11,7 @@ import os
 import random
 import sys
 import tempfile
+import datetime as dt
 
 import yaml
 
@@ -184,6 +185,7 @@ def main() -> int:
                 "caption_style": copy.__dict__.get("caption_style"),
                 "synthetic_label": copy.__dict__.get("synthetic_label"),
                 "adult": copy.adult, "variant": variant, "youtube_id": video_id, "dry_run": args.dry_run,
+                "posted_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             })
             if not args.dry_run:
                 save_state(state)  # save after every upload so a later failure can't cause a repost
@@ -224,7 +226,8 @@ def run_series(cfg: dict, args, state: list[dict]) -> int:
                 print("YouTube daily upload limit reached; this part will be posted in a later slot.")
                 return 0
             listicle.mark_posted(series_path)
-            state.append({**meta["row"], "youtube_id": video_id, "dry_run": False})
+            state.append({**meta["row"], "youtube_id": video_id, "dry_run": False,
+                          "posted_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
             save_state(state)
         print(f"made {path} -> {video_id or 'dry run'} | {meta['title']}")
     return 0
