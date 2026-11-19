@@ -8,7 +8,7 @@ on:
     # hit 2026-11-19). The bot stops cleanly when it hits that cap; verifying the channel raises it.
     - cron: "7 15 * * *"
     - cron: "37 16 * * *"
-    - cron: "7 18 * * *"
+    - cron: "7 18 * * *"   # 10 AM PT, tips series
     - cron: "37 19 * * *"
     - cron: "7 21 * * *"
     - cron: "37 22 * * *"
