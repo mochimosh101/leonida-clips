@@ -3,7 +3,8 @@ name: Auto-clip GTA 6 Shorts
 on:
   schedule:
     # 10 slots a day (Pacific, PST). 9 family-friendly, every 90 min from 7 AM to 7 PM. 18+: 10 PM.
-    # API upload quota is 100/day (checked in Cloud console 2026-11-18).
+    # API quota is 100/day, but YouTube also caps uploads per channel (~10/day for this new channel,
+    # hit 2026-11-19). The bot stops cleanly when it hits that cap; verifying the channel raises it.
     - cron: "0 15 * * *"
     - cron: "30 16 * * *"
     - cron: "0 18 * * *"
@@ -14,10 +15,6 @@ on:
     - cron: "30 1 * * *"
     - cron: "0 3 * * *"
     - cron: "0 6 * * *"   # the 18+ slot
-    # Launch-week overnight slots (12 AM, 2 AM, 4 AM Pacific) for the global audience
-    - cron: "0 8 * * *"
-    - cron: "0 10 * * *"
-    - cron: "0 12 * * *"
   workflow_dispatch:
     inputs:
       dry_run:

@@ -49,12 +49,21 @@ def upload(path: str, title: str, description: str, tags: list[str], yt: dict,
     return _send(path, "snippet,status", body)["id"]
 
 
+class UploadLimitReached(Exception):
+    """YouTube's per-channel daily upload cap (not the API quota). Resets on a rolling ~24h window."""
+
+
 def _send(path: str, part: str, body: dict) -> dict:
     req = _client().videos().insert(
         part=part, body=body,
         media_body=MediaFileUpload(path, mimetype="video/mp4", resumable=True),
     )
     resp = None
-    while resp is None:
-        _, resp = req.next_chunk()
+    try:
+        while resp is None:
+            _, resp = req.next_chunk()
+    except HttpError as e:
+        if "uploadLimitExceeded" in str(e):
+            raise UploadLimitReached(str(e)) from None
+        raise
     return resp

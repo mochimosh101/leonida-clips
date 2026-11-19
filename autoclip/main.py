@@ -162,7 +162,15 @@ def main() -> int:
                 yv = yt
                 if age_restricted and cfg.get("adult_clips") == "private":
                     yv = {**yt, "privacy_status": "private"}  # Mochi sets 18+ in Studio, then publishes
-                video_id = upload_short(path, title, description, tags, yv, age_restricted=age_restricted)
+                try:
+                    video_id = upload_short(path, title, description, tags, yv, age_restricted=age_restricted)
+                except Exception as e:
+                    if type(e).__name__ != "UploadLimitReached":
+                        raise
+                    print("YouTube daily upload limit reached for this channel; stopping this run "
+                          "(the clip stays unused and will be tried again in a later slot).")
+                    save_state(state)
+                    return 0
             state.append({
                 "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
                 "title": title, "hook": copy.hook_line, "verdict": copy.verdict_line,
