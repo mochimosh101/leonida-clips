@@ -6,6 +6,7 @@ Usage:
 """
 import argparse
 import json
+import re
 import os
 import sys
 import tempfile
@@ -16,6 +17,7 @@ from . import captions, edit, twitch, voice, writer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(ROOT, "state", "posted.json")
+ADULT_WORDS = re.compile(r"strip|naked|nude|nsfw|lap ?dance|private dance|boob|topless|stripper|hooker|sex", re.I)
 
 
 def load_state() -> list[dict]:
@@ -37,6 +39,9 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str) -> tuple[str, writer.Sho
     copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript)
     if copy is None:
         print(f"skip {clip.id}: writer declined")
+        return None
+    if copy.adult and cfg.get("adult_clips", "skip") == "skip":
+        print(f"skip {clip.id}: adult content")
         return None
 
     host = cfg["host"]
@@ -71,6 +76,9 @@ def main() -> int:
 
     made = 0
     for clip in candidates:
+        if cfg.get("adult_clips", "skip") == "skip" and ADULT_WORDS.search(clip.title):
+            print(f"skip {clip.id}: adult title")
+            continue
         if made >= (args.count or cfg["clips_per_run"]):
             break
         with tempfile.TemporaryDirectory() as work:
@@ -90,11 +98,13 @@ def main() -> int:
         tags = list(dict.fromkeys(copy.tags + yt["base_tags"] + [clip.broadcaster_name]))
         video_id = None
         if not args.dry_run:
+            if copy.adult and cfg.get("adult_clips") == "private":
+                yt = {**yt, "privacy_status": "private"}  # Mochi sets 18+ in Studio, then publishes
             video_id = upload_short(path, copy.title, description, tags, yt)
         state.append({
             "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
             "title": copy.title, "hook": copy.hook_line, "verdict": copy.verdict_line,
-            "youtube_id": video_id, "dry_run": args.dry_run,
+            "adult": copy.adult, "youtube_id": video_id, "dry_run": args.dry_run,
         })
         if not args.dry_run:
             save_state(state)  # save after every upload so a later failure can't cause a repost

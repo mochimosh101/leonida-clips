@@ -26,6 +26,9 @@ host:
 
 writer_model: "claude-opus-5-5"
 
+# Naked/sexual clips: skip | private (upload private so Mochi can mark 18+) | public
+adult_clips: "skip"
+
 youtube:
   # Uploads from a Google Cloud project that hasn't passed YouTube's API audit
   # are forced to private. Leave "private" until the audit is approved, then switch to "public".

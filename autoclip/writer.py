@@ -18,6 +18,8 @@ Rules:
 - title: under 60 characters, curiosity-driven, includes the streamer's name when it helps, no clickbait lies, no emoji.
 - description: 1 to 2 sentences about the moment.
 - tags: 5 to 10 search tags specific to this clip.
+- adult: true if the clip title or transcript points to nudity or sexual content (strip club,
+  private/lap dance, naked characters, sex scenes). Otherwise false.
 Base everything on the clip title and transcript. Don't invent events that aren't there."""
 
 
@@ -28,6 +30,7 @@ class ShortCopy(BaseModel):
     title: str = Field(description="YouTube title under 60 characters")
     description: str
     tags: list[str]
+    adult: bool = Field(description="True if the clip involves nudity or sexual content")
 
 
 def write_copy(model: str, clip_title: str, streamer: str, transcript: str) -> ShortCopy | None:
