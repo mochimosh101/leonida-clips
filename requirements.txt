@@ -4,6 +4,7 @@ pyyaml>=6
 requests>=2.31
 yt-dlp>=2025.1.1
 faster-whisper>=1.0
+av>=15,<17  # faster-whisper passes metadata_errors, removed in newer PyAV
 edge-tts>=6.1
 google-api-python-client>=2.100
 google-auth>=2.23
