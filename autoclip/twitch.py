@@ -70,7 +70,17 @@ def top_clips(cfg: dict) -> list[Clip]:
         timeout=30,
     )
     r.raise_for_status()
-    raw = r.json()["data"]
+    return _to_clips(token, r.json()["data"])
+
+
+def clips_by_id(ids: list[str]) -> list[Clip]:
+    token = _token()
+    r = requests.get(f"{HELIX}/clips", headers=_headers(token), params=[("id", i) for i in ids], timeout=30)
+    r.raise_for_status()
+    return _to_clips(token, r.json()["data"])
+
+
+def _to_clips(token: str, raw: list[dict]) -> list[Clip]:
     logins = _logins(token, sorted({c["broadcaster_id"] for c in raw}))
     clips = [
         Clip(

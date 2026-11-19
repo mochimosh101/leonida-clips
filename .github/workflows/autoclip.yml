@@ -16,6 +16,10 @@ on:
         description: "How many Shorts to make (blank = config clips_per_run)"
         type: string
         default: ""
+      clip_id:
+        description: "Make specific Twitch clip id(s), comma-separated (optional)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -27,7 +31,7 @@ concurrency:
 jobs:
   clip:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
 
@@ -57,7 +61,7 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }}
+        run: python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }}
 
       - name: Keep the rendered Shorts for 7 days
         if: always()

@@ -9,3 +9,5 @@ edge-tts>=6.1
 google-api-python-client>=2.100
 google-auth>=2.23
 google-auth-oauthlib>=1.1
+nudenet>=3.4      # finds exposed body parts for the censored version
+opencv-python-headless>=4.8
