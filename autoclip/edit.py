@@ -74,3 +74,17 @@ def render(src: str, ass_path: str, hook_mp3: str, verdict_mp3: str, out: str,
         check=True,
     )
     return out
+
+
+def sample_frames(src: str, work: str, n: int = 4) -> list[str]:
+    """Grab n evenly spaced JPEG frames (small) for the writer to look at."""
+    dur = probe_duration(src)
+    paths = []
+    for i in range(n):
+        t = dur * (i + 0.5) / n
+        out = os.path.join(work, f"frame{i}.jpg")
+        r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{t:.2f}", "-i", src,
+                            "-frames:v", "1", "-vf", "scale=640:-2", "-q:v", "5", out])
+        if r.returncode == 0 and os.path.exists(out):
+            paths.append(out)
+    return paths

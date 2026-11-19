@@ -1,4 +1,6 @@
 """Claude writes Rico Neon's lines plus the title, description and tags for each Short."""
+import base64
+
 import anthropic
 from pydantic import BaseModel, Field
 
@@ -18,7 +20,7 @@ Rules:
 - title: under 60 characters, curiosity-driven, includes the streamer's name when it helps, no clickbait lies, no emoji.
 - description: 1 to 2 sentences about the moment.
 - tags: 5 to 10 search tags specific to this clip.
-- adult: true if the clip title or transcript points to nudity or sexual content (strip club,
+- adult: true if the frames, clip title or transcript show or point to nudity or sexual content (strip club,
   private/lap dance, naked characters, sex scenes). Otherwise false.
 Base everything on the clip title and transcript. Don't invent events that aren't there."""
 
@@ -33,7 +35,14 @@ class ShortCopy(BaseModel):
     adult: bool = Field(description="True if the clip involves nudity or sexual content")
 
 
-def write_copy(model: str, clip_title: str, streamer: str, transcript: str) -> ShortCopy | None:
+def write_copy(model: str, clip_title: str, streamer: str, transcript: str,
+               frames: list[str] | None = None) -> ShortCopy | None:
+    images = []
+    for f in frames or []:
+        with open(f, "rb") as fh:
+            images.append({"type": "image", "source": {
+                "type": "base64", "media_type": "image/jpeg",
+                "data": base64.standard_b64encode(fh.read()).decode()}})
     client = anthropic.Anthropic()
     response = client.messages.parse(
         model=model,
@@ -42,10 +51,11 @@ def write_copy(model: str, clip_title: str, streamer: str, transcript: str) -> S
         system=SYSTEM,
         messages=[{
             "role": "user",
-            "content": (
+            "content": images + [{"type": "text", "text": (
+                f"Frames above are stills from the clip.\n"
                 f"Streamer: {streamer}\nTwitch clip title: {clip_title}\n"
                 f"Transcript (auto, may have errors):\n{transcript[:4000] or '(no speech)'}"
-            ),
+            )}],
         }],
         output_format=ShortCopy,
     )

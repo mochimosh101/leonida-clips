@@ -36,10 +36,13 @@ def save_state(rows: list[dict]) -> None:
 def make_short(clip: twitch.Clip, cfg: dict, work: str) -> tuple[str, writer.ShortCopy] | None:
     src = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
     transcript, words = captions.transcribe(src)
-    copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript)
+    frames = edit.sample_frames(src, work)  # lets Claude spot nudity that isn't in the words
+    copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript, frames)
     if copy is None:
         print(f"skip {clip.id}: writer declined")
         return None
+    if ADULT_WORDS.search(clip.title):
+        copy.adult = True
     if copy.adult and cfg.get("adult_clips", "skip") == "skip":
         print(f"skip {clip.id}: adult content")
         return None
@@ -100,7 +103,7 @@ def main() -> int:
         if not args.dry_run:
             if copy.adult and cfg.get("adult_clips") == "private":
                 yt = {**yt, "privacy_status": "private"}  # Mochi sets 18+ in Studio, then publishes
-            video_id = upload_short(path, copy.title, description, tags, yt)
+            video_id = upload_short(path, copy.title, description, tags, yt, age_restricted=copy.adult)
         state.append({
             "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
             "title": copy.title, "hook": copy.hook_line, "verdict": copy.verdict_line,
@@ -116,9 +119,9 @@ def main() -> int:
     return 0
 
 
-def upload_short(path, title, description, tags, yt):
+def upload_short(path, title, description, tags, yt, age_restricted=False):
     from . import youtube
-    return youtube.upload(path, title, description, tags, yt)
+    return youtube.upload(path, title, description, tags, yt, age_restricted=age_restricted)
 
 
 if __name__ == "__main__":
