@@ -126,5 +126,19 @@
     "variant": "normal",
     "youtube_id": "I8fEm_P8hFk",
     "dry_run": false
+  },
+  {
+    "clip_id": "series:7mistakestoavoidingta6:1",
+    "format": "series",
+    "series": "7 Mistakes to Avoid in GTA 6",
+    "part": 1,
+    "of": 7,
+    "footage_clip": "SteamyAntsyGerbilDoritosChip-RKspwLMpO9nYTDXI",
+    "streamer": "melomelosss",
+    "title": "7 Mistakes to Avoid in GTA 6 (Part 1)",
+    "hook": "Don't carry all your cash around",
+    "source_url": "https://metaforge.app/gta-6/gta-6-beginner-tips-things-to-do-first",
+    "youtube_id": "bmxfLBA5lVo",
+    "dry_run": false
   }
 ]
