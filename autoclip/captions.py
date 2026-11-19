@@ -9,11 +9,12 @@ class Word:
     text: str
 
 
-def transcribe(video_path: str, model_size: str = "small") -> tuple[str, list[Word]]:
+def transcribe(video_path: str, model_size: str = "small", language: str | None = None) -> tuple[str, list[Word]]:
     from faster_whisper import WhisperModel
 
     model = WhisperModel(model_size, device="cpu", compute_type="int8")
-    segments, _ = model.transcribe(video_path, word_timestamps=True, vad_filter=True)
+    segments, _ = model.transcribe(video_path, word_timestamps=True, vad_filter=True,
+                                   language=language or None)
     words: list[Word] = []
     for seg in segments:
         for w in seg.words or []:

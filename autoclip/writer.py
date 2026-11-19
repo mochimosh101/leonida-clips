@@ -53,7 +53,8 @@ class ShortCopy(BaseModel):
 
 
 def write_copy(model: str, clip_title: str, streamer: str, transcript: str,
-               frames: list[str] | None = None, recent: list[dict] | None = None) -> ShortCopy | None:
+               frames: list[str] | None = None, recent: list[dict] | None = None,
+               language: str = "") -> ShortCopy | None:
     recent_txt = "\n".join(
         f"- [{r.get('hook_style', '?')}/{r.get('verdict_style', '?')}] hook: {r.get('hook')} | verdict: {r.get('verdict')}"
         for r in (recent or []) if r.get("hook")
@@ -69,7 +70,7 @@ def write_copy(model: str, clip_title: str, streamer: str, transcript: str,
         model=model,
         max_tokens=16000,
         output_config={"effort": "low"},
-        system=SYSTEM,
+        system=SYSTEM + (f"\n\nLANGUAGE: {language}" if language else ""),
         messages=[{
             "role": "user",
             "content": images + [{"type": "text", "text": (
