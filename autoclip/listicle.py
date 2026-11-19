@@ -205,6 +205,9 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
                "tips": [t.model_dump() for t in plan.tips], "next_part": 1}
         data["current"] = cur
         save_series(series_path, data)
+        print(f"series: {plan.series_title}")
+        for i, t in enumerate(plan.tips, 1):
+            print(f"  {i}. {t.caption} | {t.source_url}")
 
     part = cur["next_part"]
     tip = Tip(**cur["tips"][part - 1])
