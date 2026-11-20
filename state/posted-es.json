@@ -49,5 +49,22 @@
     "youtube_id": "uDr9wHJPQ6c",
     "dry_run": false,
     "posted_at": "2026-11-20T20:25:33Z"
+  },
+  {
+    "clip_id": "SeductivePeacefulWolverinePrimeMe-y78daQ7jAJuDmUTq",
+    "streamer": "elmariana",
+    "views": 1646,
+    "title": "ElMariana se meti\u00f3 en la pelea equivocada GTA 6",
+    "hook": "ElMariana contra un patio lleno de gente. \u00bfQui\u00e9n gana?",
+    "verdict": "Consejo de Rico: en Leonida, si te rodean, p\u00e9gate a una pared. En GTA 5 te salvaba el autoapuntado; aqu\u00ed no.",
+    "hook_style": "H1",
+    "verdict_style": "V3",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "9Dv3Ygoo-5M",
+    "dry_run": false,
+    "posted_at": "2026-11-20T21:09:01Z"
   }
 ]
