@@ -23,6 +23,7 @@ GAME_W, GAME_H, GAME_Y = 1080, 608, 640
 TOPICS = [
     "mistakes to avoid in GTA 6",
     "fastest money making methods in GTA 6",   # next up: reference TikTok Mochi shared 2026-11-20
+    "types of players GTA 6 will punish (playstyles the game's systems punish, e.g. reckless driving, carrying cash)",  # reference TikTok 2026-11-20
     "GTA 6 tips and tricks most players don't know",
     "GTA 6 money tips for the first week",
     "hidden GTA 6 features and secrets",
@@ -129,7 +130,13 @@ def _ass_text(s: str) -> str:
     return s.replace("\\", "").replace("{", "(").replace("}", ")").replace("\n", r"\N")
 
 
-def _build_ass(path: str, title: str, part: int, caption: str, credit: str, dur: float, next_part: int | None):
+# A/B test (Mochi's 2nd reference TikTok, 2026-11-20): "sticker" = title and Part in white boxes with
+# black text over a blurred copy of the gameplay; "clean" = the original white text on black.
+LOOKS = ("clean", "sticker")
+
+
+def _build_ass(path: str, title: str, part: int, caption: str, credit: str, dur: float, next_part: int | None,
+               look: str = "clean"):
     def ts(t):
         return f"{int(t // 3600)}:{int(t % 3600 // 60):02d}:{t % 60:05.2f}"
 
@@ -145,6 +152,14 @@ def _build_ass(path: str, title: str, part: int, caption: str, credit: str, dur:
         "Style: Tip,Montserrat SemiBold,60,&H00FFFFFF,&H00FFFFFF,&H00303030,&H00303030,0,0,0,0,100,100,0,0,3,18,0,8,80,80,1500,1",
         "Style: Credit,Montserrat SemiBold,34,&H00C8C8C8,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,60,60,1262,1",
         "Style: Next,Montserrat ExtraBold,54,&H00B414FF,&H00FFFFFF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,2,60,60,110,1",
+    ]
+    if look == "sticker":
+        lines = [l for l in lines if not l.startswith(("Style: Title,", "Style: Part,"))]
+        lines += [
+            "Style: Title,Montserrat ExtraBold,88,&H00000000,&H00000000,&H00FFFFFF,&H00FFFFFF,-1,0,0,0,100,100,0,0,3,16,0,2,90,90,1360,1",
+            "Style: Part,Montserrat ExtraBold,96,&H00000000,&H00000000,&H00FFFFFF,&H00FFFFFF,-1,0,0,0,100,100,0,0,3,14,0,8,60,60,1330,1",
+        ]
+    lines += [
         "", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
         f"Dialogue: 0,0:00:00.00,{end},Title,,0,0,0,,{_ass_text(title)}",
         f"Dialogue: 0,0:00:00.00,{end},Part,,0,0,0,,Part {part}",
@@ -158,12 +173,17 @@ def _build_ass(path: str, title: str, part: int, caption: str, credit: str, dur:
     return path
 
 
-def render(src: str, narration_mp3: str, ass_path: str, out: str, dur: float, start: float = 0.0) -> str:
+def render(src: str, narration_mp3: str, ass_path: str, out: str, dur: float, start: float = 0.0,
+           look: str = "clean") -> str:
     import subprocess
     ass = ass_path.replace("\\", "/").replace(":", "\\:")
-    v = (f"color=c=black:s={W}x{H}:d={dur:.2f}:r=30[bg];"
-         f"[0:v]scale={GAME_W}:{GAME_H}:force_original_aspect_ratio=increase,crop={GAME_W}:{GAME_H},setsar=1[g];"
-         f"[bg][g]overlay=0:{GAME_Y}:shortest=1[base];[base]ass='{ass}'[vout]")
+    game = f"scale={GAME_W}:{GAME_H}:force_original_aspect_ratio=increase,crop={GAME_W}:{GAME_H},setsar=1[g]"
+    if look == "sticker":
+        v = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
+             f"boxblur=30:2,eq=brightness=-0.25,setsar=1[bg];[b]{game};")
+    else:
+        v = f"color=c=black:s={W}x{H}:d={dur:.2f}:r=30[bg];[0:v]{game};"
+    v += f"[bg][g]overlay=0:{GAME_Y}:shortest=1[base];[base]ass='{ass}'[vout]"
     narr = "[1:a]adelay=300|300,volume=1.6[n]"
     if edit.has_audio(src):
         a = f"{narr};[0:a]aresample=48000,volume=0.12[bgm];[bgm][n]amix=inputs=2:normalize=0:duration=first[aout]"
@@ -227,6 +247,7 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
     clip = footage[_pick_footage(client, model, tip, footage)]
     src = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
 
+    look = random.choice(LOOKS)
     said = f"{cur['item_word']} number {part}. {tip.narration}"
     if part < total:
         said += f" Follow for part {part + 1}."
@@ -235,10 +256,10 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
     dur = min(max(edit.probe_duration(narration) + 1.2, 9.0), clip_len, 45.0)
     start = max(0.0, min(2.0, clip_len - dur))
     ass = _build_ass(os.path.join(work, "listicle.ass"), cur["series_title"], part, tip.caption,
-                     f"gameplay: twitch.tv/{clip.broadcaster_login}", dur, part + 1 if part < total else None)
+                     f"gameplay: twitch.tv/{clip.broadcaster_login}", dur, part + 1 if part < total else None, look)
     os.makedirs(out_dir, exist_ok=True)
     slug = "".join(ch for ch in cur["series_title"].lower() if ch.isalnum())[:30]
-    path = render(src, narration, ass, os.path.join(out_dir, f"series-{slug}-part{part}.mp4"), dur, start)
+    path = render(src, narration, ass, os.path.join(out_dir, f"series-{slug}-part{part}.mp4"), dur, start, look)
 
     title = f"{cur['series_title']} (Part {part})"[:95]
     description = (f"{cur['item_word']} {part} of {total}: {tip.caption}\n\n{tip.narration}\n\n"
@@ -248,7 +269,7 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
             cur["item_word"].lower() + "s", clip.broadcaster_name]
     meta = {"title": title, "description": description, "tags": tags,
             "row": {"clip_id": f"series:{slug}:{part}", "format": "series", "series": cur["series_title"],
-                    "part": part, "of": total, "title_style": cur.get("title_style", "count"), "footage_clip": clip.id, "streamer": clip.broadcaster_login,
+                    "part": part, "of": total, "title_style": cur.get("title_style", "count"), "look": look, "footage_clip": clip.id, "streamer": clip.broadcaster_login,
                     "title": title, "hook": tip.caption, "source_url": tip.source_url}}
     return meta, path
 
