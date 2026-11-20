@@ -1,0 +1,142 @@
+{
+  "channels": {
+    "en": {
+      "updated": "2026-11-20T17:17:51Z",
+      "videos_scored": 10,
+      "weights": {
+        "caption_style": {
+          "A": 0.333,
+          "B": 0.333,
+          "C": 0.333
+        },
+        "hook_style": {
+          "H1": 0.143,
+          "H2": 0.143,
+          "H3": 0.143,
+          "H4": 0.143,
+          "H5": 0.143,
+          "H6": 0.143,
+          "H7": 0.143
+        },
+        "verdict_style": {
+          "V1": 0.167,
+          "V2": 0.167,
+          "V3": 0.167,
+          "V4": 0.167,
+          "V5": 0.167,
+          "V6": 0.167
+        },
+        "title_style": {
+          "count": 0.5,
+          "utility": 0.5
+        },
+        "look": {
+          "clean": 0.5,
+          "sticker": 0.5
+        }
+      },
+      "tested": {
+        "caption_style": {
+          "A": 0,
+          "B": 2,
+          "C": 0
+        },
+        "hook_style": {
+          "H1": 2,
+          "H2": 0,
+          "H3": 0,
+          "H4": 0,
+          "H5": 0,
+          "H6": 0,
+          "H7": 0
+        },
+        "verdict_style": {
+          "V1": 1,
+          "V2": 0,
+          "V3": 1,
+          "V4": 0,
+          "V5": 0,
+          "V6": 0
+        },
+        "title_style": {
+          "count": 0,
+          "utility": 0
+        },
+        "look": {
+          "clean": 0,
+          "sticker": 0
+        }
+      },
+      "lessons": []
+    },
+    "es": {
+      "updated": "2026-11-20T17:17:51Z",
+      "videos_scored": 0,
+      "weights": {
+        "caption_style": {
+          "A": 0.333,
+          "B": 0.333,
+          "C": 0.333
+        },
+        "hook_style": {
+          "H1": 0.143,
+          "H2": 0.143,
+          "H3": 0.143,
+          "H4": 0.143,
+          "H5": 0.143,
+          "H6": 0.143,
+          "H7": 0.143
+        },
+        "verdict_style": {
+          "V1": 0.167,
+          "V2": 0.167,
+          "V3": 0.167,
+          "V4": 0.167,
+          "V5": 0.167,
+          "V6": 0.167
+        },
+        "title_style": {
+          "count": 0.5,
+          "utility": 0.5
+        },
+        "look": {
+          "clean": 0.5,
+          "sticker": 0.5
+        }
+      },
+      "tested": {
+        "caption_style": {
+          "A": 0,
+          "B": 0,
+          "C": 0
+        },
+        "hook_style": {
+          "H1": 0,
+          "H2": 0,
+          "H3": 0,
+          "H4": 0,
+          "H5": 0,
+          "H6": 0,
+          "H7": 0
+        },
+        "verdict_style": {
+          "V1": 0,
+          "V2": 0,
+          "V3": 0,
+          "V4": 0,
+          "V5": 0,
+          "V6": 0
+        },
+        "title_style": {
+          "count": 0,
+          "utility": 0
+        },
+        "look": {
+          "clean": 0,
+          "sticker": 0
+        }
+      },
+      "lessons": []
+    }
+  }
+}
