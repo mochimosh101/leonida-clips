@@ -66,6 +66,10 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
     verdict_mp3 = voice.speak(copy.verdict_line, os.path.join(work, "verdict.mp3"), host)
 
     dur = min(edit.probe_duration(src), cfg["max_duration_s"])
+    mid_mp3 = mid_at = None
+    if copy.mid_line and dur >= 20:  # more of Rico in every Short = more original content
+        mid_mp3 = voice.speak(copy.mid_line, os.path.join(work, "mid.mp3"), host)
+        mid_at = edit.quiet_spot([w for w in words if w.start < dur], dur)
     ass = captions.build_ass(
         [w for w in words if w.start < dur], copy.on_screen_hook, os.path.join(work, "caps.ass"),
         credit=f"twitch.tv/{clip.broadcaster_login}", duration=dur, style=caption_style,
@@ -76,7 +80,7 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
 
     def _render(source, name):
         return edit.render(source, ass, hook_mp3, verdict_mp3, os.path.join(out_dir, name),
-                           cfg["max_duration_s"], avatar)
+                           cfg["max_duration_s"], avatar, mid_mp3=mid_mp3, mid_at=mid_at)
 
     if not copy.adult:
         return copy, [(_render(src, f"{clip.id}.mp4"), "normal")]
@@ -181,7 +185,7 @@ def main() -> int:
                     return 0
             state.append({
                 "clip_id": clip.id, "streamer": clip.broadcaster_login, "views": clip.view_count,
-                "title": title, "hook": copy.hook_line, "verdict": copy.verdict_line,
+                "title": title, "hook": copy.hook_line, "mid": copy.mid_line, "verdict": copy.verdict_line,
                 "hook_style": copy.hook_style, "verdict_style": copy.verdict_style,
                 "caption_style": copy.__dict__.get("caption_style"),
                 "synthetic_label": copy.__dict__.get("synthetic_label"),

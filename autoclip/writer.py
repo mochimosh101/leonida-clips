@@ -28,6 +28,9 @@ Rules (from our short-form research, Nov 2026):
 - verdict_line: 1 to 2 short sentences, max 22 words. Must be one of: V1 Neon score with a reason
   ("Neon score: 9 out of 10. He never touched the brakes."), V2 GTA 5 comparison, V3 tip, V4 prediction,
   V5 callback to the channel/running joke, V6 contrarian take. Never just restate what happened.
+- mid_line: Rico's quick reaction halfway through, 5 to 12 words, said over the clip. It reacts to
+  what just happened or sets up the payoff with an opinion ("Brakes are optional, apparently.",
+  "This is where it goes wrong. Watch his left hand."). Never just narrates. Same language as the rest.
 - hook_style and verdict_style: the codes you used (e.g. "H3", "V1"). Don't repeat the style or any
   wording of the recent Shorts listed in the user message.
 - on_screen_hook: 3 to 6 words, the same idea as hook_line in shorter form (e.g. "KAI vs FIVE STARS?"),
@@ -42,6 +45,7 @@ Base everything on the clip title and transcript. Don't invent events that aren'
 class ShortCopy(BaseModel):
     hook_line: str = Field(description="Rico's opening voice line, max 10 words")
     verdict_line: str = Field(description="Rico's closing take, max 22 words")
+    mid_line: str = Field(default="", description="Rico's mid-clip reaction, 5-12 words")
     on_screen_hook: str = Field(description="2-5 word banner text")
     title: str = Field(description="YouTube title under 60 characters")
     description: str
