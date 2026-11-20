@@ -84,5 +84,23 @@
     "youtube_id": "CollZ1BeA0g",
     "dry_run": false,
     "posted_at": "2026-11-20T22:16:21Z"
+  },
+  {
+    "clip_id": "FreezingSaltyKaleDAESuppy-w8xBG6W3YzlCCpiM",
+    "streamer": "arigameplays",
+    "views": 847,
+    "title": "Ari y el michi de la tienda en GTA 6",
+    "hook": "Ari vio un gatito en la tienda. \u00bfQu\u00e9 pod\u00eda salir mal?",
+    "mid": "Error cl\u00e1sico: bot\u00f3n equivocado justo frente a un gato.",
+    "verdict": "Predicci\u00f3n: Ari vuelve a esa tienda solo para pedirle perd\u00f3n al michi. Y esta vez sin tocar los controles.",
+    "hook_style": "H6",
+    "verdict_style": "V4",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "i8u3rVd0870",
+    "dry_run": false,
+    "posted_at": "2026-11-20T23:37:09Z"
   }
 ]
