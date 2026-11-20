@@ -32,5 +32,22 @@
     "youtube_id": "iweBRnZIPp8",
     "dry_run": false,
     "posted_at": "2026-11-20T18:36:57Z"
+  },
+  {
+    "clip_id": "RamshackleZanyWolfPogChamp-jlBwzlV6XclSZ-mk",
+    "streamer": "rivers_gg",
+    "views": 1552,
+    "title": "Rivers y la app bancaria m\u00e1s turbia GTA 6",
+    "hook": "Rivers abri\u00f3 una app de banco y le cantaron amenazas.",
+    "verdict": "Puntuaci\u00f3n Neon: 8 de 10. Un banco que te amenaza cantando es m\u00e1s honesto que cualquier banco de GTA 5.",
+    "hook_style": "H2",
+    "verdict_style": "V1",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "uDr9wHJPQ6c",
+    "dry_run": false,
+    "posted_at": "2026-11-20T20:25:33Z"
   }
 ]
