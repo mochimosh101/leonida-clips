@@ -2,19 +2,13 @@ name: Auto-clip GTA 6 Shorts
 
 on:
   schedule:
-    # Slots run at :07/:37 past (GitHub delays top-of-hour runs). 9 slots a day (Pacific, PST), ~10 uploads with the 18+ pair (YouTube's channel cap is ~10/day).
-    # Family clips: 7 AM, 8:30, 11:30, 1 PM, 4 PM. Tips/mistakes series: 10 AM, 2:30 PM, 7 PM. 18+: 10 PM.
-    # API quota is 100/day, but YouTube also caps uploads per channel (~10/day for this new channel,
-    # hit 2026-11-19). The bot stops cleanly when it hits that cap; verifying the channel raises it.
-    - cron: "7 15 * * *"
+    # Slots run at :07/:37 past (GitHub delays top-of-hour runs). 4 Shorts a day (Mochi's "full reset",
+    # 2026-11-20): new channels earn reach faster with fewer, more original Shorts. No 18+ slot.
+    # Pacific (PST): 8:37 AM family clip, 10:07 AM tips series, 1:07 PM family clip, 7:07 PM tips series.
     - cron: "37 16 * * *"
-    - cron: "7 18 * * *"   # 10 AM PT, tips series
-    - cron: "37 19 * * *"
+    - cron: "7 18 * * *"   # tips series
     - cron: "7 21 * * *"
-    - cron: "37 22 * * *"
-    - cron: "7 0 * * *"
-    - cron: "7 3 * * *"
-    - cron: "7 6 * * *"   # the 18+ slot
+    - cron: "7 3 * * *"    # tips series
   workflow_dispatch:
     inputs:
       dry_run:
@@ -86,7 +80,6 @@ jobs:
           fi
           MODE="${{ inputs.mode || 'family' }}"
           case "${{ github.event.schedule }}" in
-            "7 6 * * *") MODE=adult ;;
             "7 18 * * *"|"37 22 * * *"|"7 3 * * *") MODE=series ;;
           esac
           python -m autoclip.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.count && format('--count {0}', inputs.count) || '' }} ${{ inputs.clip_id && format('--clip-id {0}', inputs.clip_id) || '' }} --mode "$MODE"

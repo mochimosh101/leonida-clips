@@ -2,13 +2,10 @@ name: Auto-clip GTA 6 Shorts (Spanish)
 
 on:
   schedule:
-    # 6 family-friendly Spanish Shorts a day, timed for Mexico/Latin America and Spain.
-    # Times in UTC (Pacific = UTC-8): 4:15 AM, 7:15 AM, 10:15 AM, 12:45 PM, 3:15 PM, 6:15 PM Pacific.
-    # Minutes are :15/:45 so they never start at the same moment as the English channel's runs.
-    - cron: "15 12 * * *"   # Spain 1 PM
+    # 4 family-friendly Spanish Shorts a day (Mochi's "full reset", 2026-11-20), timed for Mexico/Latin America and Spain.
+    # Times in UTC (Pacific = UTC-8). Minutes are :15 so they never start with the English channel's runs.
     - cron: "15 15 * * *"   # Spain 4 PM, Mexico 9 AM
     - cron: "15 18 * * *"   # Spain 7 PM, Mexico noon (CDMX)
-    - cron: "45 20 * * *"   # Spain 9:45 PM, Mexico 2:45 PM
     - cron: "15 23 * * *"   # Mexico 5 PM
     - cron: "15 2 * * *"    # Mexico 8 PM
   workflow_dispatch:
