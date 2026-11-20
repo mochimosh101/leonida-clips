@@ -140,5 +140,22 @@
     "source_url": "https://metaforge.app/gta-6/gta-6-beginner-tips-things-to-do-first",
     "youtube_id": "bmxfLBA5lVo",
     "dry_run": false
+  },
+  {
+    "clip_id": "CuriousBadEchidnaCoolStoryBro-g66TfyHbfF_r5vxZ",
+    "streamer": "caseoh_",
+    "views": 26020,
+    "title": "CaseOh Pushed His Luck Too Far GTA 6",
+    "hook": "CaseOh just crashed a seaplane. How is everyone still breathing?",
+    "verdict": "Neon score: 7 out of 10. Bad flying, perfect landing spot. Seaplanes forgive what helicopters never would.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "JDHnQu3VFTc",
+    "dry_run": false,
+    "posted_at": "2026-11-20T00:32:02Z"
   }
 ]
