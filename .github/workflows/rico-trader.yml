@@ -1,0 +1,85 @@
+name: Rico trading Shorts
+
+on:
+  # Preview: any change to the video maker on a claude/ branch renders the sample and saves it to previews/.
+  push:
+    branches: ["claude/**"]
+    paths: ["ricotrader/**", ".github/workflows/rico-trader.yml"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Make the Short but don't upload"
+        type: boolean
+        default: false
+      episode:
+        description: "Episode JSON to use (blank = next one in the queue)"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rico-trader-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  short:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install ffmpeg and fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-inter fonts-liberation fonts-dejavu-core
+      - name: Install Python deps
+        run: pip install "edge-tts>=7" pillow google-api-python-client google-auth
+
+      - name: Preview (push to a claude/ branch)
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p previews
+          for f in ricotrader/episodes/*.json; do
+            python -m ricotrader.render "$f" "previews/$(basename "$f" .json).mp4"
+          done
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add previews
+          git diff --cached --quiet || git commit -m "Render Rico preview"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Make and post the next Short
+        if: github.event_name != 'push'
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_TRADE || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_TRADE || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_TRADE }}  # the Rico trading channel's sign-in
+        run: |
+          if [ -z "$YOUTUBE_REFRESH_TOKEN" ] && [ "${{ inputs.dry_run }}" != "true" ]; then
+            echo "Rico trading channel not connected yet (secret YOUTUBE_REFRESH_TOKEN_TRADE is missing). Skipping."
+            exit 0
+          fi
+          python -m ricotrader.main ${{ inputs.dry_run && '--dry-run' || '' }} ${{ inputs.episode && format('--episode {0}', inputs.episode) || '' }}
+
+      - name: Keep the rendered Short for 7 days
+        if: always() && github.event_name != 'push'
+        uses: actions/upload-artifact@v6
+        with:
+          name: rico-trader-${{ github.run_id }}
+          path: out/*.mp4
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Save posted history
+        if: github.event_name != 'push' && !inputs.dry_run
+        run: |
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add ricotrader/queue ricotrader/posted
+          git diff --cached --quiet || git commit -m "Record posted Rico trading Short"
+          git pull --rebase origin main
+          git push
