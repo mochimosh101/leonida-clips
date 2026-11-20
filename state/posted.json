@@ -240,5 +240,22 @@
     "youtube_id": "2gMSQH98tcw",
     "dry_run": false,
     "posted_at": "2026-11-20T18:29:49Z"
+  },
+  {
+    "clip_id": "PricklyImpossibleReindeerKippa-K4GZFY5Z2KqgQNiU",
+    "streamer": "avoidingthepuddle",
+    "views": 8357,
+    "title": "AvoidingThePuddle Hears GTA 6 Is Boring",
+    "hook": "Somebody told AvoidingThePuddle GTA 6 is boring. Bad timing.",
+    "verdict": "Contrarian take: the boring guy has a point. Then you hit a curb, lose the cops, and park on a lawn.",
+    "hook_style": "H3",
+    "verdict_style": "V6",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "-YqQ5wKi2Bo",
+    "dry_run": false,
+    "posted_at": "2026-11-20T20:00:41Z"
   }
 ]
