@@ -66,5 +66,23 @@
     "youtube_id": "9Dv3Ygoo-5M",
     "dry_run": false,
     "posted_at": "2026-11-20T21:09:01Z"
+  },
+  {
+    "clip_id": "PlumpKitschyGarlicDuDudu-EGx_zksvYYu-t_eS",
+    "streamer": "auronplay",
+    "views": 1257,
+    "title": "La silla de Auronplay no aguant\u00f3 GTA 6",
+    "hook": "Auronplay estaba viendo GTA 6. Entonces su silla dijo basta.",
+    "mid": "Esa silla aguant\u00f3 a\u00f1os de directos. GTA 6 la remat\u00f3.",
+    "verdict": "Puntuaci\u00f3n Neon: 3 de 10. En GTA 5 romp\u00edas coches; en GTA 6 rompes el mobiliario de casa.",
+    "hook_style": "H3",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "CollZ1BeA0g",
+    "dry_run": false,
+    "posted_at": "2026-11-20T22:16:21Z"
   }
 ]
