@@ -189,5 +189,22 @@
     "youtube_id": "SAaU7xl76H8",
     "dry_run": false,
     "posted_at": "2026-11-20T06:30:20Z"
+  },
+  {
+    "clip_id": "FurryLittleBunnyCoolStoryBob-_J3RtuezOHW-UCWQ",
+    "streamer": "xqc",
+    "views": 17176,
+    "title": "xQc's Honest GTA 6 Review So Far",
+    "hook": "xQc calls GTA 6 a masterpiece. So why the complaint?",
+    "verdict": "Contrarian take: blame the console, sure. But GTA 5 launched on a PS3 and still ran fine.",
+    "hook_style": "H3",
+    "verdict_style": "V6",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "sliuITlLlDU",
+    "dry_run": false,
+    "posted_at": "2026-11-20T15:30:41Z"
   }
 ]
