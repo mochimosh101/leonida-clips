@@ -172,5 +172,22 @@
     "youtube_id": "aETT5odt_LU",
     "dry_run": false,
     "posted_at": "2026-11-20T03:29:51Z"
+  },
+  {
+    "clip_id": "PricklySpineyChickpeaKeyboardCat-lPhZkKg4k9Nq98Bm",
+    "streamer": "ohnepixel",
+    "views": 15124,
+    "title": "ohnePixel Roasts the Difficulty in GTA 6",
+    "hook": "ohnePixel says a ten-year-old could beat GTA 6. Is he right?",
+    "verdict": "Contrarian take: easy early missions are a trap. Rockstar always saves the pain for the final heists.",
+    "hook_style": "H4",
+    "verdict_style": "V6",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "SAaU7xl76H8",
+    "dry_run": false,
+    "posted_at": "2026-11-20T06:30:20Z"
   }
 ]
