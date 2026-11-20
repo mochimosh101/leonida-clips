@@ -257,5 +257,22 @@
     "youtube_id": "-YqQ5wKi2Bo",
     "dry_run": false,
     "posted_at": "2026-11-20T20:00:41Z"
+  },
+  {
+    "clip_id": "BeautifulDaintyMomTwitchRaid-q4op7h8xugMC5r-E",
+    "streamer": "ludwig",
+    "views": 7639,
+    "title": "Ludwig Finds the Wildest Radio Station GTA 6",
+    "hook": "Ludwig's GTA 6 radio host just went full boomer rant. Why?",
+    "verdict": "Prediction: this talk station gets clipped more than any mission. Rockstar satire always outlives the story.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "uUom4l6ztmU",
+    "dry_run": false,
+    "posted_at": "2026-11-20T21:30:37Z"
   }
 ]
