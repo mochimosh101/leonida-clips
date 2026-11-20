@@ -1,0 +1,190 @@
+{
+  "date": "2026-11-20",
+  "title": "I win 57% of my trades and I'm STILL losing money",
+  "scenes": [
+    {
+      "say": "Fifty-seven percent of my trades are winners. And I'm still losing money.",
+      "mood": "pain",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "WIN RATE",
+            "value": 57,
+            "fmt": "{:.0f}%",
+            "color": "green"
+          },
+          {
+            "label": "TOTAL",
+            "value": -29.4,
+            "fmt": "money",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "say": "Eight hundred fourteen real trades, from my own trading bot. Here's what went wrong.",
+      "mood": "calm",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "TRADES",
+            "value": 814,
+            "color": "white"
+          },
+          {
+            "label": "WINNERS",
+            "value": 464,
+            "color": "green"
+          },
+          {
+            "label": "LOSERS",
+            "value": 350,
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "say": "November eleventh. I sold a put spread and collected fifty-seven dollars. The market ran the wrong way. I lost a hundred and twenty-six.",
+      "mood": "pain",
+      "visual": {
+        "type": "trade",
+        "date": "NOV 11",
+        "symbol": "QQQ",
+        "what": "PUT SPREAD",
+        "in_label": "SOLD",
+        "out_label": "CLOSED",
+        "entry": 0.57,
+        "exit": 1.83,
+        "pnl": -126,
+        "pct": -221
+      }
+    },
+    {
+      "say": "Two days later, one QQQ put. Bought at a dollar thirty-one. Sold at three seventy-five. Plus two hundred forty-four.",
+      "mood": "hype",
+      "visual": {
+        "type": "trade",
+        "date": "NOV 13",
+        "symbol": "QQQ",
+        "what": "669 PUT",
+        "in_label": "BUY",
+        "out_label": "SELL",
+        "entry": 1.31,
+        "exit": 3.75,
+        "pnl": 244,
+        "pct": 186
+      }
+    },
+    {
+      "say": "But look at the last month of options. I won sixty-nine percent of the time. My average win, twelve dollars. My average loss, twenty-eight.",
+      "mood": "pain",
+      "visual": {
+        "type": "compare",
+        "title": "LAST 30 DAYS \u00b7 OPTIONS",
+        "rows": [
+          {
+            "label": "AVG WIN",
+            "value": 12.27,
+            "color": "green"
+          },
+          {
+            "label": "AVG LOSS",
+            "value": -27.76,
+            "color": "red"
+          }
+        ],
+        "note": "69% win rate... and barely +$9"
+      }
+    },
+    {
+      "say": "So here's the lesson. Your win rate doesn't matter if your losses are bigger than your wins. Cut losers fast. Let winners run.",
+      "mood": "calm",
+      "visual": {
+        "type": "lesson",
+        "lines": [
+          "Win rate means nothing",
+          "if your losses are bigger than your wins.",
+          "Cut losers fast. Let winners run."
+        ]
+      }
+    },
+    {
+      "say": "You don't have to be right every time. You just have to be small when you're wrong.",
+      "mood": "deep",
+      "visual": {
+        "type": "quote",
+        "text": "You don't have to be right every time. You just have to be small when you're wrong.",
+        "by": "Rica"
+      }
+    },
+    {
+      "say": "I'm Rica. These are my real trades, not financial advice. Follow, and watch me get better.",
+      "mood": "hype",
+      "visual": {
+        "type": "outro"
+      }
+    }
+  ],
+  "layout": "stream",
+  "voice": "en-US-AvaMultilingualNeural",
+  "date_label": "NOV 20, 2026",
+  "tiles": [
+    {
+      "label": "ALL-TIME",
+      "value": -29.4,
+      "fmt": "money"
+    },
+    {
+      "label": "WIN RATE",
+      "value": 57,
+      "fmt": "{:.0f}%",
+      "color": "white"
+    },
+    {
+      "label": "TRADES",
+      "value": 814,
+      "color": "white"
+    }
+  ],
+  "log": [
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 669 PUT",
+      "pnl": 244
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 670 PUT",
+      "pnl": 24
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 668 PUT",
+      "pnl": -43
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 689 CALL",
+      "pnl": -39
+    },
+    {
+      "time": "NOV 11",
+      "sym": "QQQ PUT SPREAD",
+      "pnl": -126
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 661 PUT",
+      "pnl": 20
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 677 CALL",
+      "pnl": -57
+    }
+  ]
+}

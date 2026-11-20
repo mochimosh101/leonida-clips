@@ -372,13 +372,18 @@ def captions(img, words, t):
     for w, s, wd in zip(chunk, texts, widths):
         active = w is words[idx]
         pop = 1.0
-        d.text((x, 1060), s, font=f, fill=YELLOW if active else WHITE, anchor="lm",
+        d.text((x, CAPTION_Y[0]), s, font=f, fill=YELLOW if active else WHITE, anchor="lm",
                stroke_width=9, stroke_fill=(0, 0, 0))
         x += wd + space
 
 
+PANEL = [60, 1130, 1020, 1580]   # stream layout moves these
+CAPTION_Y = [1060]
+QUOTE_Y = [1180]
+
+
 def panel_box(img, color):
-    box = (60, 1130, 1020, 1580)
+    box = tuple(PANEL)
     glow_rect(img, box, color, r=34, width=5, blur=18, fill=(12, 6, 28))
     return box
 
@@ -451,7 +456,7 @@ def draw_compare(img, v, p, mood):
         yy = y0 + 150 + i * 130
         col = COLORS[r["color"]]
         d.text((x0 + 45, yy), r["label"], font=font("black", 40), fill=WHITE, anchor="lm")
-        bx0, bx1 = x0 + 300, x1 - 250
+        bx0, bx1 = x0 + 300, x1 - 280
         bw = (bx1 - bx0) * abs(r["value"]) / mx * k
         d.rounded_rectangle([bx0, yy - 34, bx0 + max(bw, 20), yy + 34], radius=16, fill=col)
         d.text((bx0 + bw + 18, yy), money(r["value"] * k), font=font("black", 50), fill=col, anchor="lm")
@@ -530,7 +535,7 @@ def draw_quote(img, v, p, mood, words, t, scene_idx):
     if p > 0.95:
         n_show = n_words_total
     shown = 0
-    ytop = 1180 - len(lines) * 45
+    ytop = QUOTE_Y[0] - len(lines) * 45
     for i, ln in enumerate(lines):
         out = []
         for w in ln.split():
@@ -620,5 +625,9 @@ def render(ep, out_path, work=None):
 
 if __name__ == "__main__":
     ep = json.load(open(sys.argv[1]))
-    render(ep, sys.argv[2])
+    if ep.get("layout") == "stream":
+        from ricotrader.stream import render_stream
+        render_stream(ep, sys.argv[2])
+    else:
+        render(ep, sys.argv[2])
     print("wrote", sys.argv[2])
