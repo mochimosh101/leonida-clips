@@ -1,0 +1,43 @@
+name: Channel checkup
+
+# Run by hand: checks both channels and every Short for anything stopping views
+# (blocked, private, made for kids, age-restricted, region blocks, wrong shape). Report in reports/diagnose-*.md.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install "google-api-python-client>=2.100" "google-auth>=2.23" requests
+      - name: English channel
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: python scripts/diagnose.py --state state/posted.json --name en
+      - name: Spanish channel
+        if: always()
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_ES || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_ES || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_ES }}
+        run: python scripts/diagnose.py --state state/posted-es.json --name es
+      - name: Save
+        if: always()
+        run: |
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add reports/diagnose-*.md || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Channel checkup"
+          for i in 1 2 3 4; do git pull --rebase origin main && git push && exit 0; sleep $((i*10)); done
