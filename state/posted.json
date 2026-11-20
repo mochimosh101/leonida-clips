@@ -206,5 +206,22 @@
     "youtube_id": "sliuITlLlDU",
     "dry_run": false,
     "posted_at": "2026-11-20T15:30:41Z"
+  },
+  {
+    "clip_id": "RenownedNeighborlyWaffleTwitchRaid-t74SktFrD6SZ0Iu6",
+    "streamer": "dansgaming",
+    "views": 14788,
+    "title": "DansGaming Tries Multitasking in GTA 6",
+    "hook": "This might be DansGaming's worst idea yet: phone out, highway traffic.",
+    "verdict": "In GTA 5, Franklin texted at full speed without blinking. Leonida actually punishes that. Eyes up, Dan.",
+    "hook_style": "H2",
+    "verdict_style": "V2",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "8L2r1kEVWrA",
+    "dry_run": false,
+    "posted_at": "2026-11-20T17:00:28Z"
   }
 ]
