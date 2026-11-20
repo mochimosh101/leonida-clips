@@ -15,7 +15,7 @@ import datetime as dt
 
 import yaml
 
-from . import captions, edit, twitch, voice, writer
+from . import captions, edit, learned, twitch, voice, writer
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE = os.path.join(ROOT, "state", "posted.json")  # overridden by config "state_file"
@@ -42,7 +42,7 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
     transcript, words = captions.transcribe(src, language=cfg.get("whisper_language"))
     frames = edit.sample_frames(src, work)  # lets Claude spot nudity that isn't in the words
     copy = writer.write_copy(cfg["writer_model"], clip.title, clip.broadcaster_name, transcript, frames,
-                             recent, cfg.get("writer_language", ""))
+                             recent, cfg.get("writer_language", ""), learned.writer_notes(cfg))
     if copy is None:
         print(f"skip {clip.id}: writer declined")
         return None
@@ -56,7 +56,8 @@ def make_short(clip: twitch.Clip, cfg: dict, work: str, recent: list[dict] | Non
         print(f"skip {clip.id}: adult content")
         return None
 
-    caption_style = random.choice(sorted(captions.CAPTION_STYLES))
+    # Daily reviewer's odds (state/learned.json): styles that get more views are picked more often
+    caption_style = learned.pick(cfg, "caption_style", captions.CAPTION_STYLES)
     copy.__dict__["caption_style"] = caption_style  # logged in posted.json for the weekly comparison
     # YouTube "altered or synthetic content" label: off unless the video has realistic AI imagery (Mochi 2026-11-19)
     copy.__dict__["synthetic_label"] = bool(cfg.get("synthetic_label", False))

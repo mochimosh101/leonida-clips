@@ -1,0 +1,64 @@
+name: Daily Shorts review
+
+# Once a day: pull views/likes for every Short on both channels, work out which styles win,
+# and save new odds to state/learned.json so the next uploads use the winners more.
+# The report lands in reports/daily/ and on the run's summary page.
+
+on:
+  schedule:
+    - cron: "47 11 * * *"   # 3:47 AM Pacific, before the first upload slot of either channel
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Python deps
+        run: pip install "anthropic>=2.10" "pydantic>=2" "pyyaml>=6" "google-api-python-client>=2.100" "google-auth>=2.23"
+
+      - name: Review English channel (Leonida Clips)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: python -m autoclip.review --config config.yaml
+
+      - name: Review Spanish channel (Leonida Clips en Español)
+        if: always()
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_ES || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_ES || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_ES }}
+        run: |
+          if [ -z "$YOUTUBE_REFRESH_TOKEN" ]; then echo "Spanish channel not connected; skipping."; exit 0; fi
+          python -m autoclip.review --config config.es.yaml
+
+      - name: Save the review
+        if: always() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add state/stats.json state/learned.json reports/daily 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Daily Shorts review"
+          for i in 1 2 3 4; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

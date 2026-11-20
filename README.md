@@ -37,3 +37,13 @@ Then open the repo's **Actions** tab > Auto-clip GTA 6 Shorts > **Run workflow**
 
 - **Uploads start private.** YouTube forces videos uploaded through a new, unaudited Google Cloud project to private. Until the free audit is approved (apply at support.google.com/youtube/contact/yt_api_form, usually a few weeks), either flip each video to public in YouTube Studio, or keep the bot as the maker and upload the artifacts yourself. Once approved, set `privacy_status: public`.
 - **Copyright.** The bot credits and links every streamer, and Rico's commentary makes each Short transformative, but a streamer can still claim a clip. For the safest channel, fill `broadcaster_allowlist` with streamers who allow clipping and set `allow_any_broadcaster: false`.
+
+## Daily review (gets better on its own)
+
+Every morning at 3:47 AM Pacific, `.github/workflows/review.yml` checks every Short on both channels:
+views, likes and comments, each judged at about 48 hours old so new and old videos compare fairly.
+It works out which caption style, hook style, verdict style, series banner and series look get more
+views, and writes new odds to `state/learned.json`. The bot reads those odds on every run, so the
+winners get used more (every option keeps some share so the test keeps going). Claude also reads the
+best and worst Shorts and writes a few lessons that go into the script writer's instructions.
+The day's report is in `reports/daily/` and on the run's summary page.

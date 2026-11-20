@@ -54,7 +54,7 @@ class ShortCopy(BaseModel):
 
 def write_copy(model: str, clip_title: str, streamer: str, transcript: str,
                frames: list[str] | None = None, recent: list[dict] | None = None,
-               language: str = "") -> ShortCopy | None:
+               language: str = "", notes: str = "") -> ShortCopy | None:
     recent_txt = "\n".join(
         f"- [{r.get('hook_style', '?')}/{r.get('verdict_style', '?')}] hook: {r.get('hook')} | verdict: {r.get('verdict')}"
         for r in (recent or []) if r.get("hook")
@@ -76,6 +76,7 @@ def write_copy(model: str, clip_title: str, streamer: str, transcript: str,
             "content": images + [{"type": "text", "text": (
                 f"Frames above are stills from the clip.\n"
                 f"Recent Shorts (don't repeat their styles back-to-back or reuse their wording):\n{recent_txt}\n\n"
+                + (f"{notes}\n\n" if notes else "") +
                 f"Streamer: {streamer}\nTwitch clip title: {clip_title}\n"
                 f"Transcript (auto, may have errors):\n{transcript[:4000] or '(no speech)'}"
             )}],
