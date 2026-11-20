@@ -8,8 +8,6 @@ on:
   schedule:
     - cron: "47 11 * * *"   # 3:47 AM Pacific, before the first upload slot of either channel
   workflow_dispatch:
-  push:
-    branches: [claude/project-thread-uyjhhq]   # TEMP test run, removed before merge
 
 permissions:
   contents: write

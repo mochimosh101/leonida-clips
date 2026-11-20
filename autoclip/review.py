@@ -29,6 +29,7 @@ ROOT = learned.ROOT
 STATS = os.path.join(ROOT, "state", "stats.json")
 TARGET_AGE_H = 48.0     # compare every video at this age
 MIN_AGE_H = 20.0        # younger videos are too early to judge
+MIN_VIEWS_TO_LEARN = 300  # below this many 48h views in total, differences are luck: keep the test even
 PRIOR = 3.0             # pretend every option already has 3 average videos (stops one lucky video winning)
 EXPLORE = 0.2           # share of picks kept spread evenly across all options
 PT = dt.timezone(dt.timedelta(hours=-8))  # Pacific (PST); good enough for slot labels
@@ -269,14 +270,17 @@ def main() -> int:
         r["rel"] = r["views48"] / max(base, 1)
 
     weights, tables = {}, {}
+    enough = sum(r["views48"] for r in scored) >= MIN_VIEWS_TO_LEARN
     for factor, options in learned.OPTIONS.items():
         weights[factor], tables[factor] = weights_for(scored, factor, options)
+        if not enough:
+            weights[factor] = {o: round(1 / len(options), 3) for o in options}
     for factor in ("format", "slot", "streamer"):  # reported only; not changed automatically
         vals = sorted({factor_value(r, factor) for r in scored} - {None})
         if vals:
             tables[factor] = weights_for(scored, factor, vals)[1]
 
-    lessons, summary = lessons_from_claude(cfg, scored, tables)
+    lessons, summary = lessons_from_claude(cfg, scored, tables) if enough else ([], "")
     store = load_json(learned.PATH, {})
     prev = store.get("channels", {}).get(key, {})
     store.setdefault("channels", {})[key] = {
@@ -289,7 +293,7 @@ def main() -> int:
     save_json(learned.PATH, store)
 
     report = render_report(key, cfg, rows, scored, missing, tables, weights, prev.get("weights", {}),
-                           lessons, summary, channel, stats.get("_channels", {}).get(key, []))
+                           lessons, summary, channel, stats.get("_channels", {}).get(key, []), enough)
     day = now_utc().astimezone(PT).strftime("%Y-%m-%d")
     path = os.path.join(ROOT, "reports", "daily", f"{day}-{key}.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -303,7 +307,7 @@ def main() -> int:
 
 
 def render_report(key, cfg, rows, scored, missing, tables, weights, old_weights, lessons, summary,
-                  channel, history) -> str:
+                  channel, history, enough=True) -> str:
     name = channel.get("title") or ("Leonida Clips en Español" if key == "es" else "Leonida Clips")
     today = now_utc().astimezone(PT).strftime("%a %b %-d, %Y")
     L = [f"# Daily Shorts review: {name}", f"_{today}. {len(rows)} Shorts posted, "
@@ -320,6 +324,11 @@ def render_report(key, cfg, rows, scored, missing, tables, weights, old_weights,
                          f"{channel['views'] - p['views']:+,} views")
     if summary:
         L += ["## In short", summary, ""]
+    if scored and not enough:
+        total = sum(r["views48"] for r in scored)
+        L += ["## In short", f"Only about {total:,.0f} views across the judged Shorts so far. That's too few to tell "
+              f"which styles really win, so the bot keeps testing everything evenly. It starts shifting toward "
+              f"winners once the judged Shorts pass {MIN_VIEWS_TO_LEARN:,} views.", ""]
     if not scored:
         L += ["Not enough data yet: Shorts need about a day of views before they can be compared. "
               "The bot keeps testing every style evenly until then.", ""]
