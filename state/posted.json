@@ -223,5 +223,22 @@
     "youtube_id": "8L2r1kEVWrA",
     "dry_run": false,
     "posted_at": "2026-11-20T17:00:28Z"
+  },
+  {
+    "clip_id": "series:7mistakestoavoidingta6:3",
+    "format": "series",
+    "series": "7 Mistakes to Avoid in GTA 6",
+    "part": 3,
+    "of": 7,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "LuckyBenevolentDotterelOMGScoots-lFgr2IvDbbFYqy0L",
+    "streamer": "caseoh_",
+    "title": "7 Mistakes to Avoid in GTA 6 (Part 3)",
+    "hook": "Don't commit crimes in your normal outfit",
+    "source_url": "https://www.gamespot.com/articles/gta-6-tips-everything-i-wish-i-knew-before-i-started-playing/",
+    "youtube_id": "2gMSQH98tcw",
+    "dry_run": false,
+    "posted_at": "2026-11-20T18:29:49Z"
   }
 ]
