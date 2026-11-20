@@ -7,6 +7,7 @@ lookback_hours: 24                 # only consider clips created in this window
 min_views: 150                     # skip low-traction clips
 max_duration_s: 55                 # Shorts sweet spot; longer clips are trimmed
 languages: ["es"]                  # Spanish-speaking streams only (Rubius, etc.)
+channel_key: "es"                  # its own section in state/stats.json and state/learned.json
 state_file: "state/posted-es.json" # separate history so the two channels never block each other
 whisper_language: "es"
 

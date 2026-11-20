@@ -228,7 +228,8 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
         topic = TOPICS[data.get("topic_index", 0) % len(TOPICS)]
         data["topic_index"] = data.get("topic_index", 0) + 1
         print(f"planning a new series: {topic}")
-        title_style = random.choice(sorted(TITLE_STYLES))
+        from . import learned  # daily reviewer's odds: the banner style with more views is picked more
+        title_style = learned.pick(cfg, "title_style", TITLE_STYLES)
         plan = _research(client, model, topic, data["done"], title_style)
         if plan is None:
             print("series research came back empty; skipping this slot")
@@ -247,7 +248,8 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
     clip = footage[_pick_footage(client, model, tip, footage)]
     src = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
 
-    look = random.choice(LOOKS)
+    from . import learned
+    look = learned.pick(cfg, "look", LOOKS)
     said = f"{cur['item_word']} number {part}. {tip.narration}"
     if part < total:
         said += f" Follow for part {part + 1}."
