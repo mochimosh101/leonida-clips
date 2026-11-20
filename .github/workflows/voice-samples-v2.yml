@@ -1,0 +1,91 @@
+name: Make realistic voice samples
+# Mochi (2026-11-20): Brian sounds robotic. Same Rico line voiced by free open-source models
+# so Mochi can compare before we switch. Each engine runs in its own job so one failure doesn't block the rest.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+env:
+  LINE: "Okay... CaseOh just crashed a seaplane. And somehow? Everyone's still breathing. Neon score: seven out of ten. Bad flying, perfect landing spot."
+jobs:
+  edge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install "edge-tts>=6.1"
+      - run: |
+          mkdir -p out
+          edge-tts --voice en-US-BrianMultilingualNeural --text "$LINE" --write-media out/1-current-brian.mp3
+          edge-tts --voice en-US-AndrewMultilingualNeural --rate=+8% --text "$LINE" --write-media out/2-free-andrew-edge.mp3
+          # 20 s of Brian for the cloning test below
+          edge-tts --voice en-US-BrianMultilingualNeural --text "Yo, what's up Leonida, it's your boy Rico Neon. Today we're looking at the wildest clips from GTA 6, and trust me, some of these are straight up unbelievable. Let's get into it." --write-media out/ref-brian.mp3
+      - uses: actions/upload-artifact@v4
+        with: { name: edge, path: out }
+
+  kokoro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.11" }
+      - run: sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu "kokoro>=0.9.4" soundfile
+      - run: |
+          mkdir -p out
+          python - <<'EOF'
+          import os, soundfile as sf, numpy as np
+          from kokoro import KPipeline
+          p = KPipeline(lang_code="a")
+          for n, v in [("3", "am_michael"), ("4", "am_fenrir"), ("5", "am_puck")]:
+              audio = np.concatenate([a for _, _, a in p(os.environ["LINE"], voice=v, speed=1.05)])
+              sf.write(f"out/{n}-free-kokoro-{v[3:]}.wav", audio, 24000)
+          EOF
+          for f in out/*.wav; do ffmpeg -loglevel error -y -i "$f" -b:a 128k "${f%.wav}.mp3" && rm "$f"; done
+      - uses: actions/upload-artifact@v4
+        with: { name: kokoro, path: out }
+
+  chatterbox:
+    needs: edge
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.11" }
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - uses: actions/download-artifact@v4
+        with: { name: edge, path: ref }
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu chatterbox-tts
+      - run: |
+          mkdir -p out
+          ffmpeg -loglevel error -y -i ref/ref-brian.mp3 -ar 24000 ref/ref.wav
+          python - <<'EOF'
+          import os, torchaudio
+          from chatterbox.tts import ChatterboxTTS
+          m = ChatterboxTTS.from_pretrained(device="cpu")
+          line = os.environ["LINE"]
+          wav = m.generate(line, exaggeration=0.65, cfg_weight=0.4)
+          torchaudio.save("out/6-free-chatterbox-default.wav", wav, m.sr)
+          wav = m.generate(line, audio_prompt_path="ref/ref.wav", exaggeration=0.65, cfg_weight=0.4)
+          torchaudio.save("out/7-free-chatterbox-brian-clone.wav", wav, m.sr)
+          EOF
+          for f in out/*.wav; do ffmpeg -loglevel error -y -i "$f" -b:a 128k "${f%.wav}.mp3" && rm "$f"; done
+      - uses: actions/upload-artifact@v4
+        with: { name: chatterbox, path: out }
+
+  save:
+    needs: [edge, kokoro, chatterbox]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with: { path: dl }
+      - run: |
+          mkdir -p samples/v2 && find dl -name '*.mp3' ! -name 'ref-*' -exec cp {} samples/v2/ \;
+          ls -la samples/v2
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add samples/v2
+          git diff --cached --quiet || git commit -m "Add realistic Rico voice samples"
+          git pull --rebase origin main
+          git push
