@@ -15,5 +15,22 @@
     "youtube_id": "jsYLwWEiadw",
     "dry_run": false,
     "posted_at": "2026-11-20T17:19:45Z"
+  },
+  {
+    "clip_id": "DependableFragileRadishDuDudu-_E9o6gCC-TLwRcpg",
+    "streamer": "rubius",
+    "views": 2772,
+    "title": "Rubius intenta perder a la poli en GTA 6",
+    "hook": "Rubius se escondi\u00f3 en un arbusto. Spoiler: la poli no es ciega.",
+    "verdict": "Consejo de Rico: en Leonida, los arbustos no rompen la l\u00ednea de visi\u00f3n. Corre primero, esc\u00f3ndete despu\u00e9s.",
+    "hook_style": "H3",
+    "verdict_style": "V3",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "iweBRnZIPp8",
+    "dry_run": false,
+    "posted_at": "2026-11-20T18:36:57Z"
   }
 ]
