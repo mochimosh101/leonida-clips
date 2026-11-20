@@ -29,7 +29,16 @@ TOPICS = [
     "GTA 6 things you should do first",
     "GTA 6 driving and car tips",
     "GTA 6 combat and weapon tips",
+    "fastest money making methods in GTA 6",   # reference TikTok Mochi shared 2026-11-20
+    "best early game cars and how to get them in GTA 6",
 ]
+
+# A/B test (Mochi's reference TikToks, 2026-11-20): numbered list banner vs one-promise "utility" banner.
+TITLE_STYLES = {
+    "count": "a numbered list banner, e.g. '7 Mistakes to avoid in GTA 6'",
+    "utility": "a single concrete promise with no number, e.g. 'Fastest Money Making Method in GTA 6' or "
+               "'Easiest Way to Lose the Cops in GTA 6'",
+}
 
 
 class Tip(BaseModel):
@@ -40,7 +49,7 @@ class Tip(BaseModel):
 
 
 class SeriesPlan(BaseModel):
-    series_title: str = Field(description="Top banner, max 32 characters, e.g. '10 Mistakes to avoid in GTA 6'")
+    series_title: str = Field(description="Top banner, max 40 characters, e.g. '10 Mistakes to avoid in GTA 6'")
     item_word: str = Field(description="How Rico counts them: 'Mistake', 'Tip', 'Secret', 'Trick'...")
     tips: list[Tip] = Field(description="Exactly as many tips as the title promises, best first")
 
@@ -63,12 +72,14 @@ FORMAT_PROMPT = """Turn these researched GTA 6 tips into a Shorts series plan fo
 Rico Neon, is a washed-up Vice City getaway driver: deadpan, a bit smug, actually helpful. Each narration
 is Rico explaining one tip in his voice, plain words, no greeting, no channel name. Keep only tips that
 name a source URL.
+Banner (series_title) style: {title_style}.
 
 Research notes:
 {notes}"""
 
 
-def _research(client: anthropic.Anthropic, model: str, topic: str, done: list[str]) -> SeriesPlan | None:
+def _research(client: anthropic.Anthropic, model: str, topic: str, done: list[str],
+              title_style: str = "count") -> SeriesPlan | None:
     n = random.choice([5, 7, 10])
     messages = [{"role": "user", "content": RESEARCH_PROMPT.format(
         topic=topic, n=n, topic_title=topic.replace("in GTA 6", "").strip(), done=", ".join(done[-10:]) or "none")}]
@@ -88,7 +99,7 @@ def _research(client: anthropic.Anthropic, model: str, topic: str, done: list[st
         return None
     plan = client.messages.parse(
         model=model, max_tokens=8000, output_config={"effort": "low"},
-        messages=[{"role": "user", "content": FORMAT_PROMPT.format(notes=notes)}],
+        messages=[{"role": "user", "content": FORMAT_PROMPT.format(notes=notes, title_style=TITLE_STYLES[title_style])}],
         output_format=SeriesPlan,
     ).parsed_output
     if plan:
@@ -197,12 +208,13 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
         topic = TOPICS[data.get("topic_index", 0) % len(TOPICS)]
         data["topic_index"] = data.get("topic_index", 0) + 1
         print(f"planning a new series: {topic}")
-        plan = _research(client, model, topic, data["done"])
+        title_style = random.choice(sorted(TITLE_STYLES))
+        plan = _research(client, model, topic, data["done"], title_style)
         if plan is None:
             print("series research came back empty; skipping this slot")
             return None
         cur = {"series_title": plan.series_title, "item_word": plan.item_word, "topic": topic,
-               "tips": [t.model_dump() for t in plan.tips], "next_part": 1}
+               "tips": [t.model_dump() for t in plan.tips], "next_part": 1, "title_style": title_style}
         data["current"] = cur
         save_series(series_path, data)
         print(f"series: {plan.series_title}")
@@ -231,12 +243,12 @@ def next_part(cfg: dict, series_path: str, footage: list, work: str, out_dir: st
     title = f"{cur['series_title']} (Part {part})"[:95]
     description = (f"{cur['item_word']} {part} of {total}: {tip.caption}\n\n{tip.narration}\n\n"
                    f"Gameplay: {clip.broadcaster_name} on Twitch https://twitch.tv/{clip.broadcaster_login}\n"
-                   f"Source: {tip.source_url}")
+                   f"Source: {tip.source_url}\n\n#GTA6 #GTAVI #GTA6Tips #Shorts")
     tags = ["gta 6", "gta 6 tips", "gta 6 tips and tricks", "gta vi", "gta 6 guide", "leonida",
             cur["item_word"].lower() + "s", clip.broadcaster_name]
     meta = {"title": title, "description": description, "tags": tags,
             "row": {"clip_id": f"series:{slug}:{part}", "format": "series", "series": cur["series_title"],
-                    "part": part, "of": total, "footage_clip": clip.id, "streamer": clip.broadcaster_login,
+                    "part": part, "of": total, "title_style": cur.get("title_style", "count"), "footage_clip": clip.id, "streamer": clip.broadcaster_login,
                     "title": title, "hook": tip.caption, "source_url": tip.source_url}}
     return meta, path
 
