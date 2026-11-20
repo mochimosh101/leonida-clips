@@ -424,7 +424,7 @@ def draw_trade(img, v, p, mood):
         k = ease((p - 0.08 - i * 0.22) / 0.15)
         if k <= 0:
             continue
-        yy = y0 + 150 + i * 95
+        yy = y0 + 135 + i * 88
         d.rounded_rectangle([x0 + 40, yy - 38, x0 + 230, yy + 38], radius=18, fill=(40, 20, 70))
         d.text((x0 + 135, yy), lab, font=font("black", 40), fill=CYAN, anchor="mm")
         d.text((x0 + 260, yy), f"${price:.2f}", font=font("black", 70), fill=WHITE, anchor="lm")
@@ -432,7 +432,7 @@ def draw_trade(img, v, p, mood):
     kp = ease((p - 0.5) / 0.3)
     if kp > 0:
         val = v["pnl"] * kp
-        d.text((W // 2, y1 - 125), money(val, cents=False), font=font("black", 140), fill=col, anchor="mm",
+        d.text((W // 2, y1 - 105), money(val, cents=False), font=font("black", 120), fill=col, anchor="mm",
                stroke_width=4, stroke_fill=(0, 0, 0))
         if "pct" in v and kp >= 1:
             d.text((W // 2, y1 - 38), f"{v['pct']:+.0f}% on this trade", font=font("bold", 38), fill=col, anchor="mm")
