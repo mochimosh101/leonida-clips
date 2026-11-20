@@ -22,6 +22,7 @@ GAME_W, GAME_H, GAME_Y = 1080, 608, 640
 # Rotated so the channel doesn't post the same kind of list twice in a row.
 TOPICS = [
     "mistakes to avoid in GTA 6",
+    "fastest money making methods in GTA 6",   # next up: reference TikTok Mochi shared 2026-11-20
     "GTA 6 tips and tricks most players don't know",
     "GTA 6 money tips for the first week",
     "hidden GTA 6 features and secrets",
@@ -29,7 +30,6 @@ TOPICS = [
     "GTA 6 things you should do first",
     "GTA 6 driving and car tips",
     "GTA 6 combat and weapon tips",
-    "fastest money making methods in GTA 6",   # reference TikTok Mochi shared 2026-11-20
     "best early game cars and how to get them in GTA 6",
 ]
 
