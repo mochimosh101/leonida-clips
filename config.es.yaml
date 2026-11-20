@@ -2,7 +2,7 @@
 # Same bot as config.yaml, but Spanish-speaking GTA VI streams, a Spanish voice and Spanish host lines.
 
 game_name: "Grand Theft Auto VI"   # exact Twitch category name
-clips_per_run: 1                   # the GitHub schedule runs 10x a day (9 family + 1 18+), so 1 = 10 Shorts/day
+clips_per_run: 1                   # the Spanish schedule runs 4x a day
 lookback_hours: 24                 # only consider clips created in this window
 min_views: 150                     # skip low-traction clips
 max_duration_s: 55                 # Shorts sweet spot; longer clips are trimmed
