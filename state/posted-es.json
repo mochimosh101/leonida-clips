@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "clip_id": "JazzyCrazySlothBatChest-FrP1EI-0vsloLRfG",
+    "streamer": "illojuan",
+    "views": 5159,
+    "title": "IlloJuan escucha una voz conocida en GTA 6",
+    "hook": "\u00bfDe verdad IlloJuan escuch\u00f3 a Trevor en la radio de GTA 6?",
+    "verdict": "Predicci\u00f3n: Trevor sale en una misi\u00f3n antes de fin de a\u00f1o. Ese loco no se queda callado en una radio.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "jsYLwWEiadw",
+    "dry_run": false,
+    "posted_at": "2026-11-20T17:19:45Z"
+  }
+]
