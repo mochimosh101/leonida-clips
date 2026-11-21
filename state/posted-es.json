@@ -156,5 +156,23 @@
     "youtube_id": "d0J47dBvY2c",
     "dry_run": false,
     "posted_at": "2026-11-21T15:38:53Z"
+  },
+  {
+    "clip_id": "AgileCourteousSnailChefFrank-aXIZi2PwSvZcyxS2",
+    "streamer": "rubius",
+    "views": 737,
+    "title": "Rubius aprendiendo a manejar moto en GTA 6",
+    "hook": "Rubius probando la moto de tierra. \u00bfCu\u00e1nto crees que dura?",
+    "mid": "Esa pregunta de c\u00f3mo se controla ya da miedo.",
+    "verdict": "Consejo de Rico: en caminos de tierra, frena antes de la curva, no durante. La moto no perdona y los buggies tampoco.",
+    "hook_style": "H7",
+    "verdict_style": "V3",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "9sQ1f6-AcEo",
+    "dry_run": false,
+    "posted_at": "2026-11-21T20:57:56Z"
   }
 ]
