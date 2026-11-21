@@ -102,5 +102,23 @@
     "youtube_id": "i8u3rVd0870",
     "dry_run": false,
     "posted_at": "2026-11-20T23:37:09Z"
+  },
+  {
+    "clip_id": "DignifiedAggressiveZebraCoolStoryBro-Jx6dSpRu2uUcadeI",
+    "streamer": "illojuan",
+    "views": 816,
+    "title": "IlloJuan encontr\u00f3 al jefe de la tienda GTA 6",
+    "hook": "En GTA 5 no pod\u00edas acariciar gatos. \u00bfIlloJuan en GTA 6? Mira.",
+    "mid": "Atenci\u00f3n: el gato lo est\u00e1 manipulando. Cl\u00e1sico felino.",
+    "verdict": "Puntuaci\u00f3n Neon: 9 de 10. Entr\u00f3 a una tienda sin robarla. Ese gato tiene m\u00e1s poder que la polic\u00eda.",
+    "hook_style": "H5",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "0sfNf59Th7Q",
+    "dry_run": false,
+    "posted_at": "2026-11-21T00:00:44Z"
   }
 ]
