@@ -309,5 +309,22 @@
     "youtube_id": "5iDko6M3D2A",
     "dry_run": false,
     "posted_at": "2026-11-21T16:59:17Z"
+  },
+  {
+    "clip_id": "series:7mistakestoavoidingta6:5",
+    "format": "series",
+    "series": "7 Mistakes to Avoid in GTA 6",
+    "part": 5,
+    "of": 7,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "SassyWiseRingFeelsBadMan-KWr9lkKEN2ayfe1P",
+    "streamer": "ludwig",
+    "title": "7 Mistakes to Avoid in GTA 6 (Part 5)",
+    "hook": "Don't make a supercar your main ride",
+    "source_url": "https://www.forbes.com/sites/paultassi/2026/11/19/i-played-130-hours-of-gta-6-and-here-are-10-tips-you-should-know/",
+    "youtube_id": "86uwmPeySNQ",
+    "dry_run": false,
+    "posted_at": "2026-11-21T18:29:24Z"
   }
 ]
