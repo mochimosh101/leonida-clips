@@ -291,5 +291,23 @@
     "youtube_id": "RW7Mr-aXPDE",
     "dry_run": false,
     "posted_at": "2026-11-21T03:29:27Z"
+  },
+  {
+    "clip_id": "SassyWiseRingFeelsBadMan-KWr9lkKEN2ayfe1P",
+    "streamer": "ludwig",
+    "views": 23834,
+    "title": "Chat Calls Ludwig a Good Driver in GTA 6",
+    "hook": "Chat says Ludwig is the one streamer who can drive. Really?",
+    "mid": "Accepting compliments mid-ride. Bold. That's how curbs get you.",
+    "verdict": "Neon score: 6 out of 10. Stayed on the bike, sure, but civilians hit says 21. Bar's on the floor.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "5iDko6M3D2A",
+    "dry_run": false,
+    "posted_at": "2026-11-21T16:59:17Z"
   }
 ]
