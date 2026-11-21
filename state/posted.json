@@ -326,5 +326,23 @@
     "youtube_id": "86uwmPeySNQ",
     "dry_run": false,
     "posted_at": "2026-11-21T18:29:24Z"
+  },
+  {
+    "clip_id": "ZanyFantasticWolverineCoolCat-FMXQCyIb1vOYiJ6r",
+    "streamer": "drdonutttttt",
+    "views": 4584,
+    "title": "DrDonut Can't Even Play GTA 6",
+    "hook": "Why is DrDonut's partner mad about a game that's just GTA?",
+    "mid": "\"It's just GTA\" has never once won an argument.",
+    "verdict": "Prediction: rent gets collected, the game waits. In GTA 5 nobody paused for real life. Leonida apparently does.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "pZZFIqm9bTs",
+    "dry_run": false,
+    "posted_at": "2026-11-21T21:30:37Z"
   }
 ]
