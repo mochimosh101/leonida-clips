@@ -6,7 +6,7 @@ like an edited screen recording.
 
 Episode JSON (stream layout) adds:
   "screen": {
-    "url": "desktrader.example/app",
+    "url": "desktrader.example/app", "urls": {"history": ".../history"}, "titles": {...},   # per-page optional
     "pages": {"history": "ricotrader/screens/history.png", ...},   # browser-content screenshots
     "blur": {"history": [[x0, y0, x1, y1], ...]}                   # boxes in screenshot pixels
   }
@@ -146,7 +146,9 @@ class ScreenCam:
 
     def desktop(self, page):
         p = self.cfg["pages"][page]
-        return make_desktop(p, self.cfg.get("url", ""), self.cfg.get("title", "Desk Trader"),
+        url = self.cfg.get("urls", {}).get(page, self.cfg.get("url", ""))
+        title = self.cfg.get("titles", {}).get(page, self.cfg.get("title", "Desk Trader"))
+        return make_desktop(p, url, title,
                             self.cfg.get("blur", {}).get(page, []))
 
     def frame(self, scenes, si, p, t, timeline):
@@ -163,8 +165,9 @@ class ScreenCam:
         click = cur.get("click")
         click_at = 0.22 if click else 0.0
         page = page_cur if p >= click_at else page_prev
-        box_prev = fit_aspect(prev.get("focus", self.full), self.aspect)
-        box_cur = fit_aspect(cur.get("focus", box_prev), self.aspect)
+        pad = lambda b: [b[0] - 50, b[1] - 30, b[2] + 50, b[3] + 30]   # breathing room around the focus
+        box_prev = fit_aspect(pad(prev.get("focus", self.full)), self.aspect)
+        box_cur = fit_aspect(pad(cur["focus"]), self.aspect) if cur.get("focus") else box_prev
         # camera: hold wide on the click, then move to the new focus
         k = ease((p - click_at) / 0.18) if click else ease(p / 0.15)
         box = lerp_box(box_prev, box_cur, k)

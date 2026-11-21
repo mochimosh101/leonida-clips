@@ -86,6 +86,15 @@
             "cents": false
           }
         ]
+      },
+      "screen": {
+        "page": "desk",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ]
       }
     },
     {
@@ -98,6 +107,15 @@
           "Every morning: I call UP, DOWN or NO IDEA",
           "My bot ignores me and trades anyway",
           "Then we score who was right"
+        ]
+      },
+      "screen": {
+        "page": "desk",
+        "focus": [
+          244,
+          273,
+          1681,
+          404
         ]
       }
     },
@@ -120,6 +138,19 @@
           }
         ],
         "note": "The market went DOWN"
+      },
+      "screen": {
+        "page": "history",
+        "click": [
+          1118,
+          108
+        ],
+        "focus": [
+          244,
+          273,
+          1681,
+          826
+        ]
       }
     },
     {
@@ -141,6 +172,15 @@
           }
         ],
         "note": "Gut saved $42"
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          244,
+          418,
+          1681,
+          681
+        ]
       }
     },
     {
@@ -175,6 +215,15 @@
         ],
         "label": "BOT",
         "label2": "MY GUT"
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          1134,
+          154,
+          1920,
+          266
+        ]
       }
     },
     {
@@ -185,6 +234,19 @@
         "lines": [
           "Your feelings are not a strategy.",
           "Rules are."
+        ]
+      },
+      "screen": {
+        "page": "xpro",
+        "click": [
+          1452,
+          108
+        ],
+        "focus": [
+          303,
+          200,
+          1615,
+          1032
         ]
       }
     },
@@ -204,7 +266,35 @@
         "type": "outro",
         "big": "PART 2",
         "small": "an AI second-guesses my bot"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          1319,
+          200,
+          1920,
+          747
+        ]
       }
     }
-  ]
+  ],
+  "screen": {
+    "title": "Desk Trader",
+    "tag": "Shown: Desk Trader, my trading app",
+    "pages": {
+      "desk": "ricotrader/screens/desk.png",
+      "history": "ricotrader/screens/history.png",
+      "xpro": "ricotrader/screens/xpro.png"
+    },
+    "urls": {
+      "desk": "trading.sichi.me/app/live/desk",
+      "history": "trading.sichi.me/app/history",
+      "xpro": "trading.sichi.me/app/crypto/live/xpro"
+    },
+    "titles": {
+      "desk": "Desk Trader Desk",
+      "history": "Desk Trader History",
+      "xpro": "Crypto XPRO | Desk Trader"
+    }
+  }
 }

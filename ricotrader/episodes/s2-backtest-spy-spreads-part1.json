@@ -97,6 +97,15 @@
             "cents": false
           }
         ]
+      },
+      "screen": {
+        "page": "desk",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ]
       }
     },
     {
@@ -109,6 +118,15 @@
           "Weekly SPY put spread",
           "1% below price \u00b7 7 days out",
           "Take profit at 50%"
+        ]
+      },
+      "screen": {
+        "page": "desk",
+        "focus": [
+          244,
+          404,
+          1187,
+          826
         ]
       }
     },
@@ -129,6 +147,19 @@
           3119.06
         ],
         "label": "BACKTEST"
+      },
+      "screen": {
+        "page": "history",
+        "click": [
+          1118,
+          108
+        ],
+        "focus": [
+          244,
+          273,
+          1681,
+          826
+        ]
       }
     },
     {
@@ -150,6 +181,15 @@
             "color": "red"
           }
         ]
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          1134,
+          154,
+          1920,
+          266
+        ]
       }
     },
     {
@@ -161,6 +201,19 @@
           "Every strategy has losing seasons.",
           "A backtest is a map, not a promise."
         ]
+      },
+      "screen": {
+        "page": "xpro",
+        "click": [
+          1452,
+          108
+        ],
+        "focus": [
+          303,
+          200,
+          1615,
+          1032
+        ]
       }
     },
     {
@@ -170,7 +223,35 @@
         "type": "outro",
         "big": "PART 2",
         "small": "I run it live with practice money"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ]
       }
     }
-  ]
+  ],
+  "screen": {
+    "title": "Desk Trader",
+    "tag": "Shown: Desk Trader, my trading app",
+    "pages": {
+      "desk": "ricotrader/screens/desk.png",
+      "history": "ricotrader/screens/history.png",
+      "xpro": "ricotrader/screens/xpro.png"
+    },
+    "urls": {
+      "desk": "trading.sichi.me/app/live/desk",
+      "history": "trading.sichi.me/app/history",
+      "xpro": "trading.sichi.me/app/crypto/live/xpro"
+    },
+    "titles": {
+      "desk": "Desk Trader Desk",
+      "history": "Desk Trader History",
+      "xpro": "Crypto XPRO | Desk Trader"
+    }
+  }
 }

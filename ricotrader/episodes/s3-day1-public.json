@@ -69,6 +69,15 @@
             "color": "red"
           }
         ]
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ]
       }
     },
     {
@@ -85,6 +94,15 @@
           -327.85
         ],
         "label": "MY P&L"
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          1134,
+          154,
+          1920,
+          266
+        ]
       }
     },
     {
@@ -110,6 +128,15 @@
             "color": "green"
           }
         ]
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          244,
+          273,
+          1681,
+          826
+        ]
       }
     },
     {
@@ -131,6 +158,15 @@
           }
         ],
         "note": "Wins need to be bigger than losses"
+      },
+      "screen": {
+        "page": "history",
+        "focus": [
+          244,
+          418,
+          1681,
+          681
+        ]
       }
     },
     {
@@ -149,7 +185,39 @@
         "type": "outro",
         "big": "DAY 2",
         "small": "Monday: comeback or crash?"
+      },
+      "screen": {
+        "page": "xpro",
+        "click": [
+          1452,
+          108
+        ],
+        "focus": [
+          303,
+          200,
+          1615,
+          1032
+        ]
       }
     }
-  ]
+  ],
+  "screen": {
+    "title": "Desk Trader",
+    "tag": "Shown: Desk Trader, my trading app",
+    "pages": {
+      "desk": "ricotrader/screens/desk.png",
+      "history": "ricotrader/screens/history.png",
+      "xpro": "ricotrader/screens/xpro.png"
+    },
+    "urls": {
+      "desk": "trading.sichi.me/app/live/desk",
+      "history": "trading.sichi.me/app/history",
+      "xpro": "trading.sichi.me/app/crypto/live/xpro"
+    },
+    "titles": {
+      "desk": "Desk Trader Desk",
+      "history": "Desk Trader History",
+      "xpro": "Crypto XPRO | Desk Trader"
+    }
+  }
 }
