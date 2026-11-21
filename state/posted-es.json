@@ -138,5 +138,23 @@
     "youtube_id": "kgQqEz14wzA",
     "dry_run": false,
     "posted_at": "2026-11-21T09:55:57Z"
+  },
+  {
+    "clip_id": "MiniatureIntelligentHamBibleThump-V2uqtExgElouvkvG",
+    "streamer": "rubius",
+    "views": 1221,
+    "title": "Rubius se pone serio en GTA 6",
+    "hook": "Esta podr\u00eda ser la amenaza m\u00e1s rara de Rubius en GTA 6.",
+    "mid": "Ojo: quien avisa tanto, nunca termina el trabajo.",
+    "verdict": "En GTA 5, Trevor no anunciaba nada: actuaba. Rubius declara la guerra y luego pone pausa. As\u00ed no se vuelve uno leyenda.",
+    "hook_style": "H2",
+    "verdict_style": "V2",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "d0J47dBvY2c",
+    "dry_run": false,
+    "posted_at": "2026-11-21T15:38:53Z"
   }
 ]
