@@ -198,8 +198,10 @@ def app_chrome(ep):
     y = CAM_H
     d.rectangle([0, y, W, y + 78], fill=(16, 18, 30))
     d.text((34, y + 39), "◆ DESK TRADER", font=font("black", 38), fill=WHITE, anchor="lm")
-    d.ellipse([W - 420, y + 30, W - 402, y + 48], fill=GREEN)
-    d.text((W - 392, y + 39), "LIVE", font=font("bold", 28), fill=GREEN, anchor="lm")
+    date_txt = ep.get("date_label", ep.get("date", ""))
+    lx = W - 34 - d.textlength(date_txt, font=font("bold", 28)) - 130
+    d.ellipse([lx, y + 30, lx + 18, y + 48], fill=GREEN)
+    d.text((lx + 28, y + 39), "LIVE", font=font("bold", 28), fill=GREEN, anchor="lm")
     d.text((W - 34, y + 39), ep.get("date_label", ep.get("date", "")), font=font("bold", 28), fill=MUTED, anchor="rm")
     x = 34
     for i, tab in enumerate(["Dashboard", "Trades", "Review", "Playbooks"]):
@@ -241,13 +243,14 @@ def trade_log(img, ep, t):
     y0 = 1430
     d.text((34, y0), "RECENT TRADES", font=font("bold", 26), fill=MUTED, anchor="lm")
     shift = (t * 18) % (len(rows) * 52)
+    sym_x = 34 + max(d.textlength(r["time"], font=font("medium", 28)) for r in rows) + 30
     for k in range(len(rows) * 2):
         r = rows[k % len(rows)]
         y = y0 + 40 + k * 52 - shift
         if y < y0 + 22 or y > 1660:
             continue
         d.text((34, y), r["time"], font=font("medium", 28), fill=MUTED, anchor="lm")
-        d.text((170, y), r["sym"], font=font("bold", 28), fill=WHITE, anchor="lm")
+        d.text((sym_x, y), r["sym"], font=font("bold", 28), fill=WHITE, anchor="lm")
         d.text((W - 34, y), money(r["pnl"]), font=font("bold", 28), fill=GREEN if r["pnl"] >= 0 else RED, anchor="rm")
     d.rectangle([0, 1680, W, 1860], fill=APP_BG)
 
