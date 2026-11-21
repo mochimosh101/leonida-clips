@@ -174,5 +174,23 @@
     "youtube_id": "9sQ1f6-AcEo",
     "dry_run": false,
     "posted_at": "2026-11-21T20:57:56Z"
+  },
+  {
+    "clip_id": "BlushingSmallSproutArgieB8-RDPDYYOn2sojDlLC",
+    "streamer": "auronplay",
+    "views": 1371,
+    "title": "Auronplay defiende a Luc\u00eda a su manera GTA 6",
+    "hook": "Auronplay vio obreros acosando a Luc\u00eda. \u00bfQu\u00e9 pod\u00eda hacer \u00e9l?",
+    "mid": "Un martillo como argumento. Debate cerrado, supongo.",
+    "verdict": "Opini\u00f3n impopular: los obreros solo estaban trabajando. Auronplay vino a hacer justicia y acab\u00f3 haciendo la obra \u00e9l solo.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "RNXSR5zJsGo",
+    "dry_run": false,
+    "posted_at": "2026-11-21T23:20:04Z"
   }
 ]
