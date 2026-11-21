@@ -215,6 +215,19 @@ def app_chrome(ep):
     return img
 
 
+def screen_chrome(ep, y_screen_end):
+    """Background for the screen-recording layout: dark area under the desktop view + footer."""
+    img = Image.new("RGBA", (W, H), APP_BG + (255,))
+    d = ImageDraw.Draw(img)
+    d.line([0, y_screen_end, W, y_screen_end], fill=APP_LINE, width=3)
+    tag = ep["screen"].get("tag", "")
+    if tag:
+        d.text((W // 2, 1845), tag, font=font("bold", 28), fill=CYAN, anchor="mm")
+    d.text((W // 2, 1890), "Education only · Not financial advice · Trading can lose money",
+           font=font("medium", 24), fill=MUTED, anchor="mm")
+    return img
+
+
 def tiles(img, ep, t):
     items = ep.get("tiles", [])
     if not items:
@@ -275,7 +288,16 @@ def render_stream(ep, out_path, work=None):
     wav, timeline, words, total = R.build_audio(scenes, voice, work)
     n = int(total * FPS)
     loud = R.loudness_per_frame(wav, n)
-    chrome = app_chrome(ep)
+    screen = None
+    if ep.get("screen"):
+        from ricotrader.desktop import ScreenCam
+        SCR_H = 608                      # 1080x608 ~ 16:9 view of the Windows desktop
+        screen = ScreenCam(ep, W, SCR_H)
+        R.PANEL[:] = [40, CAM_H + SCR_H + 40, W - 40, CAM_H + SCR_H + 490]
+        R.CAPTION_Y[0] = CAM_H + SCR_H + 580
+        chrome = screen_chrome(ep, CAM_H + SCR_H)
+    else:
+        chrome = app_chrome(ep)
     cam_raw = cam_frames(ep.get("cam_video"), n, work)
     camf = open(cam_raw, "rb") if cam_raw else None
 
@@ -302,8 +324,12 @@ def render_stream(ep, out_path, work=None):
             cam = cam_placeholder(t, lv, mood)
         img.alpha_composite(cam, (0, 0))
         cam_overlay(img)
-        tiles(img, ep, t)
-        trade_log(img, ep, t)
+        if screen:
+            img.alpha_composite(screen.frame(scenes, si, p, t, timeline), (0, CAM_H))
+            ImageDraw.Draw(img).line([0, CAM_H, W, CAM_H], fill=PINK, width=4)
+        else:
+            tiles(img, ep, t)
+            trade_log(img, ep, t)
         vis = sc.get("visual", {})
         typ = vis.get("type")
         if typ == "quote":
@@ -311,7 +337,8 @@ def render_stream(ep, out_path, work=None):
         else:
             {"stat": R.draw_stat, "trade": R.draw_trade, "compare": R.draw_compare, "line": R.draw_line,
              "lesson": R.draw_lesson, "outro": R.draw_outro}.get(typ, lambda *x: None)(img, vis, p, mood)
-            cursor(img, t, (760, R.PANEL[1] + 200))
+            if not screen:
+                cursor(img, t, (760, R.PANEL[1] + 200))
             R.captions(img, words, t)
         ff.stdin.write(img.convert("RGB").tobytes())
     ff.stdin.close()
