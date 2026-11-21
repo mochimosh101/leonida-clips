@@ -1,0 +1,155 @@
+{
+  "layout": "stream",
+  "voice": "en-US-AvaMultilingualNeural",
+  "date": "2026-11-20",
+  "date_label": "FRI NOV 20, 2026",
+  "title": "Day 1 trading with my bot in public: down $328 this week",
+  "description": "Day 1 of posting every real result from my trading bot, red days included.",
+  "tags": [
+    "day trading",
+    "trading bot",
+    "trading journal"
+  ],
+  "tiles": [
+    {
+      "label": "TODAY",
+      "value": 35.41,
+      "fmt": "money"
+    },
+    {
+      "label": "THIS WEEK",
+      "value": -327.85,
+      "fmt": "money"
+    },
+    {
+      "label": "WIN RATE",
+      "value": 65,
+      "fmt": "{:.0f}%",
+      "color": "white"
+    }
+  ],
+  "log": [
+    {
+      "time": "MON",
+      "sym": "WEEK DAY 1",
+      "pnl": 40.39
+    },
+    {
+      "time": "TUE",
+      "sym": "WEEK DAY 2",
+      "pnl": -124.66
+    },
+    {
+      "time": "WED",
+      "sym": "WEEK DAY 3",
+      "pnl": 35.49
+    },
+    {
+      "time": "THU",
+      "sym": "WEEK DAY 4",
+      "pnl": -314.48
+    },
+    {
+      "time": "FRI",
+      "sym": "WEEK DAY 5",
+      "pnl": 35.41
+    }
+  ],
+  "scenes": [
+    {
+      "say": "Day one of trading with my bot in public. And I'm starting down three hundred twenty-eight dollars this week.",
+      "mood": "pain",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "THIS WEEK",
+            "value": -327.85,
+            "fmt": "money",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "say": "Thursday was the killer. Minus three hundred fourteen in a single day.",
+      "mood": "pain",
+      "visual": {
+        "type": "line",
+        "title": "THIS WEEK \u00b7 RUNNING TOTAL",
+        "points": [
+          40.39,
+          -84.27,
+          -48.78,
+          -363.26,
+          -327.85
+        ],
+        "label": "MY P&L"
+      }
+    },
+    {
+      "say": "Friday. Seventeen trades, eleven winners. Plus thirty-five dollars.",
+      "mood": "hype",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "TRADES",
+            "value": 17,
+            "color": "white"
+          },
+          {
+            "label": "WINNERS",
+            "value": 11,
+            "color": "green"
+          },
+          {
+            "label": "TODAY",
+            "value": 35.41,
+            "fmt": "money",
+            "color": "green"
+          }
+        ]
+      }
+    },
+    {
+      "say": "Best trade, plus twenty-eight. Worst, minus thirty. Almost the same size. That's what I'm fixing next week.",
+      "mood": "calm",
+      "visual": {
+        "type": "compare",
+        "title": "FRIDAY \u00b7 BEST VS WORST",
+        "rows": [
+          {
+            "label": "BEST",
+            "value": 28,
+            "color": "green"
+          },
+          {
+            "label": "WORST",
+            "value": -30,
+            "color": "red"
+          }
+        ],
+        "note": "Wins need to be bigger than losses"
+      }
+    },
+    {
+      "say": "One green day doesn't fix a red week. Small losses do.",
+      "mood": "deep",
+      "visual": {
+        "type": "quote",
+        "text": "One green day doesn't fix a red week. Small losses do.",
+        "by": "Rica"
+      }
+    },
+    {
+      "say": "Day two on Monday. Follow, and watch the comeback, or the crash. Real trades, not financial advice.",
+      "mood": "hype",
+      "visual": {
+        "type": "outro",
+        "big": "DAY 2",
+        "small": "Monday: comeback or crash?"
+      }
+    }
+  ]
+}

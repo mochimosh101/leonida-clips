@@ -1,0 +1,176 @@
+{
+  "layout": "stream",
+  "voice": "en-US-AvaMultilingualNeural",
+  "date": "2026-11-20",
+  "date_label": "BACKTEST \u00b7 2025-2026",
+  "title": "I tested selling SPY put spreads for 2 years (Part 1)",
+  "description": "I backtested one options strategy, a weekly SPY put spread, across 2 years of market data in my own backtester. 78% winners... then this fall happened.",
+  "tags": [
+    "backtest",
+    "put credit spread",
+    "options strategy",
+    "SPY"
+  ],
+  "tiles": [
+    {
+      "label": "TRADES",
+      "value": 81,
+      "color": "white"
+    },
+    {
+      "label": "WIN RATE",
+      "value": 78,
+      "fmt": "{:.0f}%",
+      "color": "white"
+    },
+    {
+      "label": "PROFIT",
+      "value": 3119,
+      "fmt": "money"
+    }
+  ],
+  "log": [
+    {
+      "time": "JAN-MAR 25",
+      "sym": "10 TRADES \u00b7 80%",
+      "pnl": 491.47
+    },
+    {
+      "time": "APR-JUN 25",
+      "sym": "11 TRADES \u00b7 73%",
+      "pnl": 636.6
+    },
+    {
+      "time": "JUN-SEP 25",
+      "sym": "11 TRADES \u00b7 91%",
+      "pnl": 646.28
+    },
+    {
+      "time": "SEP-DEC 25",
+      "sym": "10 TRADES \u00b7 70%",
+      "pnl": 143.33
+    },
+    {
+      "time": "DEC-MAR 26",
+      "sym": "8 TRADES \u00b7 63%",
+      "pnl": 135.15
+    },
+    {
+      "time": "MAR-JUN 26",
+      "sym": "12 TRADES \u00b7 83%",
+      "pnl": 476.79
+    },
+    {
+      "time": "JUN-SEP 26",
+      "sym": "11 TRADES \u00b7 82%",
+      "pnl": 593.17
+    },
+    {
+      "time": "SEP-NOV 26",
+      "sym": "8 TRADES \u00b7 75%",
+      "pnl": -3.73
+    }
+  ],
+  "scenes": [
+    {
+      "say": "I tested one options strategy over two years of market data. Seventy-eight percent winners. But wait for the last three months.",
+      "mood": "hype",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "TRADES",
+            "value": 81,
+            "color": "white"
+          },
+          {
+            "label": "WIN RATE",
+            "value": 78,
+            "fmt": "{:.0f}%",
+            "color": "green"
+          },
+          {
+            "label": "PROFIT",
+            "value": 3119,
+            "fmt": "money",
+            "color": "green",
+            "cents": false
+          }
+        ]
+      }
+    },
+    {
+      "say": "The rules are simple. Once a week, sell a put spread on SPY, about one percent below the price, seven days out. Take profit at half.",
+      "mood": "calm",
+      "visual": {
+        "type": "lesson",
+        "tag": "THE SETUP",
+        "lines": [
+          "Weekly SPY put spread",
+          "1% below price \u00b7 7 days out",
+          "Take profit at 50%"
+        ]
+      }
+    },
+    {
+      "say": "Here's the running total, in three-month chunks. Seven out of eight made money.",
+      "mood": "hype",
+      "visual": {
+        "type": "line",
+        "title": "2 YEARS \u00b7 RUNNING TOTAL",
+        "points": [
+          491.47,
+          1128.07,
+          1774.35,
+          1917.68,
+          2052.83,
+          2529.62,
+          3122.79,
+          3119.06
+        ],
+        "label": "BACKTEST"
+      }
+    },
+    {
+      "say": "Then this fall. It still won seventy-five percent of its trades, and it lost money anyway.",
+      "mood": "pain",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "SEP-NOV 2026",
+            "value": 75,
+            "fmt": "{:.0f}% wins",
+            "color": "green"
+          },
+          {
+            "label": "RESULT",
+            "value": -3.73,
+            "fmt": "money",
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "say": "The lesson: even a strategy that wins most of the time has losing seasons. A backtest is a map, not a promise.",
+      "mood": "calm",
+      "visual": {
+        "type": "lesson",
+        "lines": [
+          "Every strategy has losing seasons.",
+          "A backtest is a map, not a promise."
+        ]
+      }
+    },
+    {
+      "say": "Part two: I run it live with practice money. Follow to see if it holds up. Backtests aren't real results, and this is not financial advice.",
+      "mood": "hype",
+      "visual": {
+        "type": "outro",
+        "big": "PART 2",
+        "small": "I run it live with practice money"
+      }
+    }
+  ]
+}

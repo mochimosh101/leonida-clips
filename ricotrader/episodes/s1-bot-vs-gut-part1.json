@@ -1,0 +1,210 @@
+{
+  "layout": "stream",
+  "voice": "en-US-AvaMultilingualNeural",
+  "date": "2026-11-20",
+  "date_label": "NOV 9 - 20, 2026",
+  "title": "My trading bot beat my gut by $377 (Part 1)",
+  "description": "Every morning I write down my market call. My bot ignores it. 10 days of real trades later, here's who won.",
+  "tags": [
+    "bot vs human",
+    "trading bot",
+    "day trading"
+  ],
+  "tiles": [
+    {
+      "label": "BOT",
+      "value": 301,
+      "fmt": "money"
+    },
+    {
+      "label": "MY GUT",
+      "value": -76,
+      "fmt": "money"
+    },
+    {
+      "label": "TRADES",
+      "value": 133,
+      "color": "white"
+    }
+  ],
+  "log": [
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 669 PUT",
+      "pnl": 244
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 670 PUT",
+      "pnl": 24
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 661 PUT",
+      "pnl": 20
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 660 PUT",
+      "pnl": 19
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 668 PUT",
+      "pnl": -43
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 689 CALL",
+      "pnl": -39
+    },
+    {
+      "time": "NOV 13",
+      "sym": "QQQ 663 PUT",
+      "pnl": 10
+    }
+  ],
+  "scenes": [
+    {
+      "say": "My trading bot just beat my gut by three hundred seventy-seven dollars. In ten days.",
+      "mood": "pain",
+      "visual": {
+        "type": "stat",
+        "items": [
+          {
+            "label": "MY BOT",
+            "value": 301,
+            "fmt": "money",
+            "color": "green",
+            "cents": false
+          },
+          {
+            "label": "MY GUT",
+            "value": -76,
+            "fmt": "money",
+            "color": "red",
+            "cents": false
+          }
+        ]
+      }
+    },
+    {
+      "say": "Every morning before the market opens, I write down my call. Up, down, or no idea. My bot ignores it and trades anyway.",
+      "mood": "calm",
+      "visual": {
+        "type": "lesson",
+        "tag": "THE RULES",
+        "lines": [
+          "Every morning: I call UP, DOWN or NO IDEA",
+          "My bot ignores me and trades anyway",
+          "Then we score who was right"
+        ]
+      }
+    },
+    {
+      "say": "November thirteenth. I called up. The market dumped. My bot bought puts and made two hundred thirty-six dollars. If it had listened to me? Minus thirty-three.",
+      "mood": "pain",
+      "visual": {
+        "type": "compare",
+        "title": "NOV 13 \u00b7 I SAID \"UP\"",
+        "rows": [
+          {
+            "label": "MY BOT",
+            "value": 236,
+            "color": "green"
+          },
+          {
+            "label": "MY GUT",
+            "value": -33,
+            "color": "red"
+          }
+        ],
+        "note": "The market went DOWN"
+      }
+    },
+    {
+      "say": "To be fair, my gut won once. November twelfth, it would have saved me forty-two dollars.",
+      "mood": "hype",
+      "visual": {
+        "type": "compare",
+        "title": "NOV 12 \u00b7 MY GUT'S ONE WIN",
+        "rows": [
+          {
+            "label": "MY BOT",
+            "value": -62,
+            "color": "red"
+          },
+          {
+            "label": "MY GUT",
+            "value": -20,
+            "color": "green"
+          }
+        ],
+        "note": "Gut saved $42"
+      }
+    },
+    {
+      "say": "Here are all ten days. The bot's line climbs. Mine goes nowhere.",
+      "mood": "calm",
+      "visual": {
+        "type": "line",
+        "title": "10 DAYS \u00b7 RUNNING TOTAL",
+        "points": [
+          69,
+          155,
+          231,
+          169,
+          405,
+          377,
+          258,
+          294,
+          252,
+          301
+        ],
+        "points2": [
+          69,
+          69,
+          96,
+          76,
+          43,
+          15,
+          -119,
+          -83,
+          -125,
+          -76
+        ],
+        "label": "BOT",
+        "label2": "MY GUT"
+      }
+    },
+    {
+      "say": "The lesson: how you feel about the market is not a strategy. Rules are.",
+      "mood": "calm",
+      "visual": {
+        "type": "lesson",
+        "lines": [
+          "Your feelings are not a strategy.",
+          "Rules are."
+        ]
+      }
+    },
+    {
+      "say": "The market doesn't care how sure you feel.",
+      "mood": "deep",
+      "visual": {
+        "type": "quote",
+        "text": "The market doesn't care how sure you feel.",
+        "by": "Rica"
+      }
+    },
+    {
+      "say": "Part two: I let an AI second-guess my bot. Follow so you don't miss it. My real trades, not financial advice.",
+      "mood": "hype",
+      "visual": {
+        "type": "outro",
+        "big": "PART 2",
+        "small": "an AI second-guesses my bot"
+      }
+    }
+  ]
+}

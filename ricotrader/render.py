@@ -459,7 +459,7 @@ def draw_compare(img, v, p, mood):
         bx0, bx1 = x0 + 300, x1 - 280
         bw = (bx1 - bx0) * abs(r["value"]) / mx * k
         d.rounded_rectangle([bx0, yy - 34, bx0 + max(bw, 20), yy + 34], radius=16, fill=col)
-        d.text((bx0 + bw + 18, yy), money(r["value"] * k), font=font("black", 50), fill=col, anchor="lm")
+        d.text((bx0 + bw + 18, yy), money(r["value"] * k, cents=not float(r["value"]).is_integer()), font=font("black", 50), fill=col, anchor="lm")
     if v.get("note") and p > 0.7:
         d.text((W // 2, y1 - 50), v["note"], font=font("bold", 42), fill=YELLOW, anchor="mm")
 
@@ -470,7 +470,8 @@ def draw_line(img, v, p, mood):
     x0, y0, x1, y1 = box
     d.text((W // 2, y0 + 50), v["title"], font=font("bold", 40), fill=(200, 190, 230), anchor="mm")
     pts = v["points"]
-    lo, hi = min(pts + [0]), max(pts + [0])
+    allp = pts + v.get("points2", []) + [0]
+    lo, hi = min(allp), max(allp)
     pad = (hi - lo) * 0.1 or 1
     lo, hi = lo - pad, hi + pad
     gx0, gx1, gy0, gy1 = x0 + 50, x1 - 50, y0 + 100, y1 - 90
@@ -480,8 +481,17 @@ def draw_line(img, v, p, mood):
     d.line([gx0, Y(0), gx1, Y(0)], fill=(90, 80, 120), width=2)
     n = max(2, int(len(pts) * ease(p / 0.8)))
     xy = [(gx0 + i * (gx1 - gx0) / (len(pts) - 1), Y(pts[i])) for i in range(n)]
+    pts2 = v.get("points2")
+    if pts2:  # second series (e.g. "my gut") in pink, drawn first so the main line sits on top
+        xy2 = [(gx0 + i * (gx1 - gx0) / (len(pts2) - 1), Y(pts2[i])) for i in range(min(n, len(pts2)))]
+        for a, b in zip(xy2, xy2[1:]):
+            d.line([a, b], fill=PINK, width=7)
+        if v.get("label2"):
+            d.text((xy2[-1][0] - 10, xy2[-1][1] + 34), v["label2"], font=font("bold", 30), fill=PINK, anchor="rm")
     for a, b in zip(xy, xy[1:]):
         d.line([a, b], fill=GREEN if b[1] <= Y(0) else RED, width=8)
+    if v.get("label"):
+        d.text((xy[-1][0] - 10, xy[-1][1] - 34), v["label"], font=font("bold", 30), fill=WHITE, anchor="rm")
     last = pts[n - 1]
     d.ellipse([xy[-1][0] - 12, xy[-1][1] - 12, xy[-1][0] + 12, xy[-1][1] + 12], fill=WHITE)
     d.text((W // 2, y1 - 45), money(last), font=font("black", 60), fill=GREEN if last >= 0 else RED, anchor="mm")
