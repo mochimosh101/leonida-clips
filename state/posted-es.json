@@ -264,5 +264,23 @@
     "youtube_id": "ukm-rtpGIR0",
     "dry_run": false,
     "posted_at": "2026-11-22T18:38:31Z"
+  },
+  {
+    "clip_id": "InspiringBumblingMuleSoonerLater-DIvkO9r7oRsY_fl4",
+    "streamer": "djmariio",
+    "views": 777,
+    "title": "DjMaRiiO y el peor chapuz\u00f3n en GTA 6",
+    "hook": "No te tires al agua en Leonida sin mirar primero. DjMaRiiO no mir\u00f3.",
+    "mid": "Ese chapuz\u00f3n tranquilo me da mala espina. Mira el agua.",
+    "verdict": "Consejo de Rico: en Leonida, si el agua est\u00e1 turbia, tiene due\u00f1o. Y ese due\u00f1o tiene dientes.",
+    "hook_style": "H6",
+    "verdict_style": "V3",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "dFS7ctj4QZg",
+    "dry_run": false,
+    "posted_at": "2026-11-22T21:05:41Z"
   }
 ]
