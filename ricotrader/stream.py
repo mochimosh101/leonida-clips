@@ -33,6 +33,54 @@ def cam_frames(path, n, work):
     return raw
 
 
+DEFAULT_CLIPS = {
+    "calm": "ricotrader/clips/talk-calm.mp4",
+    "deep": "ricotrader/clips/talk-calm.mp4",
+    "hype": "ricotrader/clips/talk-hype.mp4",
+    "pain": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 25.6, "to": 29.0},   # hands-on-head shock
+    "ugh": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 25.6, "to": 29.0},
+    "watch": "ricotrader/clips/talk-calm.mp4",
+    "wow": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 3.0, "to": 6.6},   # the big cheer
+}
+
+
+class MoodCam:
+    """Realistic Rica: plays the real webcam clip that matches the mood, ping-ponged so it never jumps.
+    A reaction face (e.g. 'wow' on a fill) cuts to its own clip from the start, like a live reaction."""
+
+    def __init__(self, cfg, work):
+        self.clips, self.dir = {}, os.path.join(work, "moodcam")
+        cache = {}
+        for mood, c in cfg.items():
+            c = {"file": c} if isinstance(c, str) else c
+            if not os.path.exists(c["file"]):
+                continue
+            key = (c["file"], c.get("from", 0), c.get("to"))
+            if key not in cache:
+                out = os.path.join(self.dir, str(len(cache)))
+                os.makedirs(out, exist_ok=True)
+                args = ["ffmpeg", "-y", "-v", "error", "-ss", str(c.get("from", 0)), "-i", c["file"]]
+                if c.get("to"):
+                    args += ["-t", str(c["to"] - c.get("from", 0))]
+                sh = int(W * 9 / 16) // 2 * 2
+                args += ["-vf", f"fps={FPS},scale={W}:{sh}:flags=lanczos,crop={W}:{CAM_H}:0:(ih-{CAM_H})*0.35,"
+                         "unsharp=5:5:0.5", "-q:v", "2", os.path.join(out, "%05d.jpg")]
+                subprocess.run(args, check=True)
+                cache[key] = (out, len(os.listdir(out)))
+            self.clips[mood] = cache[key]
+        self.ok = bool(self.clips) and "calm" in self.clips
+
+    def frame(self, mood, since, once=False):
+        out, n = self.clips.get(mood) or self.clips["calm"]
+        k = int(since * FPS)
+        if once:
+            i = min(k, n - 1)
+        else:
+            i = k % max(1, 2 * n - 2)
+            i = i if i < n else 2 * n - 2 - i
+        return Image.open(os.path.join(out, f"{i + 1:05d}.jpg")).convert("RGBA")
+
+
 SKIN_F = (236, 186, 150)
 SKIN_FD = (206, 150, 116)
 HAIR_F = (40, 22, 36)
@@ -213,8 +261,11 @@ def cam_placeholder(t, lv, mood="calm", since=9.0):
     return img
 
 
-def cam_overlay(img):
+def cam_overlay(img, real=False):
     d = ImageDraw.Draw(img)
+    if real:                                   # realistic AI host: disclose it on screen
+        d.text((W - 24, 84), "AI host · real trades", font=font("bold", 22), fill=(235, 235, 240), anchor="rm",
+               stroke_width=3, stroke_fill=(0, 0, 0))
     d.ellipse([28, 30, 50, 52], fill=RED)
     d.text((62, 41), "RICA", font=font("black", 34), fill=WHITE, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
     d.rounded_rectangle([W - 250, 22, W - 24, 62], radius=20, fill=(0, 0, 0))
@@ -417,6 +468,10 @@ def render_stream(ep, out_path, work=None):
         chrome = app_chrome(ep)
     cam_raw = cam_frames(ep.get("cam_video"), n, work)
     camf = open(cam_raw, "rb") if cam_raw else None
+    mcam = None
+    if not camf and ep.get("real_rica", True):
+        mcam = MoodCam(ep.get("cam_clips", DEFAULT_CLIPS), work)
+        mcam = mcam if mcam.ok else None
 
     ff = subprocess.Popen(
         ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
@@ -445,11 +500,14 @@ def render_stream(ep, out_path, work=None):
                     since = t - ft
             rq, rv = reaction_at(sc, t, a, b, fill_times_by_scene.get(si, []))
             face = rv.get("face", mood) if rv else mood
-            cam = cam_placeholder(t, lv, face, since if not rv else (t - rv["_t"]))
+            if mcam:
+                cam = mcam.frame(face, t - rv["_t"], once=True) if rv else mcam.frame(mood, t - a)
+            else:
+                cam = cam_placeholder(t, lv, face, since if not rv else (t - rv["_t"]))
             if rv:
                 cam = punch(cam, rq, rv)
         img.alpha_composite(cam, (0, 0))
-        cam_overlay(img)
+        cam_overlay(img, real=bool(mcam))
         if screen:
             img.alpha_composite(screen.frame(scenes, si, p, t, timeline), (0, CAM_H))
             for ft in fill_times:
