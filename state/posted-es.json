@@ -192,5 +192,23 @@
     "youtube_id": "RNXSR5zJsGo",
     "dry_run": false,
     "posted_at": "2026-11-21T23:20:04Z"
+  },
+  {
+    "clip_id": "DependableGiantOkapiWutFace-JAdtcS7X9QaCMSpM",
+    "streamer": "peereira7",
+    "views": 607,
+    "title": "Peereira7 recibe visita sorpresa en la cocina",
+    "hook": "Peereira7 en la cocina y llega el calvo con su vaper. \u00bfPor qu\u00e9?",
+    "mid": "Viene por una lechita, dice. Nadie le cree.",
+    "verdict": "Predicci\u00f3n: en GTA 6 esta cocina ser\u00eda una misi\u00f3n secundaria. Y el calvo, el NPC que nunca deja de aparecer.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "s_LvGr40qyo",
+    "dry_run": false,
+    "posted_at": "2026-11-22T02:39:03Z"
   }
 ]
