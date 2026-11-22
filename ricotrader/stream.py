@@ -37,9 +37,9 @@ DEFAULT_CLIPS = {
     "calm": "ricotrader/clips/talk-calm.mp4",
     "deep": "ricotrader/clips/talk-calm.mp4",
     "hype": "ricotrader/clips/talk-hype.mp4",
-    "pain": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 25.6, "to": 29.0},   # hands-on-head shock
-    "ugh": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 25.6, "to": 29.0},
-    "watch": "ricotrader/clips/talk-calm.mp4",
+    "pain": "ricotrader/clips/pain.mp4",                                               # wince, facepalm, laughs it off
+    "ugh": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 25.6, "to": 29.0},   # hands-on-head shock (reactions)
+    "watch": "ricotrader/clips/watch.mp4",
     "wow": {"file": "ricotrader/clips/walkaway-grok.mp4", "from": 3.0, "to": 6.6},   # the big cheer
 }
 
