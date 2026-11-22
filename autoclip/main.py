@@ -128,6 +128,10 @@ def main() -> int:
         candidates = twitch.clips_by_id([c.strip() for c in args.clip_id.split(",") if c.strip()])
     else:
         candidates = [c for c in twitch.top_clips(cfg) if twitch.eligible(c, cfg, posted)]
+        # Lean toward streamers whose Shorts get the most views (config boost_streamers).
+        boost = {k.lower(): float(v) for k, v in (cfg.get("boost_streamers") or {}).items()}
+        if boost:
+            candidates.sort(key=lambda c: c.view_count * boost.get(c.broadcaster_login.lower(), 1.0), reverse=True)
     if args.mode == "adult" and not args.clip_id:
         adult = [c for c in candidates if ADULT_WORDS.search(c.title)]
         if adult:

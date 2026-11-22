@@ -13,11 +13,18 @@ languages: ["en"]
 allow_any_broadcaster: true
 broadcaster_allowlist: []          # Twitch logins, e.g. ["streamer_one", "streamer_two"]
 broadcaster_blocklist: []          # never clip these
+# Clips from these streamers jump the queue (their Twitch views count this many times more).
+# Mochi 2026-11-22: ohnePixel and xQc Shorts get 2-3x the views of the rest.
+boost_streamers:
+  ohnepixel: 3
+  xqc: 3
 
 # Rico Neon, the channel's AI host
 host:
   name: "Rico Neon"
-  voice_engine: "edge"             # "edge" (free) or "elevenlabs" (needs ELEVENLABS_API_KEY + voice id)
+  voice_engine: "chatterbox"       # Mochi 2026-11-22: more human. "chatterbox" (free, Brian's voice with emotion), "edge" (free, Brian) or "elevenlabs" (paid)
+  chatterbox_exaggeration: 0.65    # higher = more emotional
+  chatterbox_cfg: 0.4
   edge_voice: "en-US-BrianMultilingualNeural"   # Mochi picked Brian (2026-11-18)
   edge_rate: "+0%"
   edge_pitch: "+0Hz"              # pitch shifts make it sound robotic

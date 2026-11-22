@@ -44,6 +44,11 @@ jobs:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-python@v6
+        id: py311
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -59,6 +64,25 @@ jobs:
         with:
           path: ~/.cache/huggingface
           key: whisper-small
+
+      # Rico's voice (Mochi 2026-11-22): Chatterbox copies Brian but with emotion. Own env so its pinned
+      # packages don't clash with the bot's. voice.py falls back to plain Brian if any of this fails.
+      - name: Cache Chatterbox env and model
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/cbx
+            ~/.cache/cbx-hf
+          key: chatterbox-v1-${{ steps.py311.outputs.python-version }}
+
+      - name: Install Chatterbox voice
+        continue-on-error: true
+        run: |
+          if [ ! -x ~/cbx/bin/python ]; then
+            "${{ steps.py311.outputs.python-path }}" -m venv ~/cbx
+            ~/cbx/bin/pip install -q --extra-index-url https://download.pytorch.org/whl/cpu chatterbox-tts
+          fi
+          echo "CHATTERBOX_PYTHON=$HOME/cbx/bin/python" >> "$GITHUB_ENV"
 
       - name: Run pipeline
         env:
