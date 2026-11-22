@@ -246,5 +246,23 @@
     "youtube_id": "k6UzJuZ760Q",
     "dry_run": false,
     "posted_at": "2026-11-22T15:37:34Z"
+  },
+  {
+    "clip_id": "AbstemiousVibrantButterFutureMan-hrMmdBE6TvkOKEyc",
+    "streamer": "juansguarnizo",
+    "views": 723,
+    "title": "Juansguarnizo vs los patos del parque GTA 6",
+    "hook": "Juansguarnizo entra a un parque sin un peso. \u00bfQu\u00e9 compra?",
+    "mid": "Cero d\u00f3lares y todav\u00eda quiere jugo. Eso es fe.",
+    "verdict": "Consejo de Rico: antes de pedir jugo, roba una cartera. En Leonida los patos cobran m\u00e1s respeto que t\u00fa.",
+    "hook_style": "H1",
+    "verdict_style": "V3",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "ukm-rtpGIR0",
+    "dry_run": false,
+    "posted_at": "2026-11-22T18:38:31Z"
   }
 ]
