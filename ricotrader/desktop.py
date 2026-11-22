@@ -291,6 +291,8 @@ class ScreenCam:
             if scenes[j].get("screen"):
                 prev = scenes[j]["screen"]
                 break
+        if not prev and cur.get("from_focus"):      # cold open: start already zoomed in, not on the full desktop
+            prev = {"focus": cur["from_focus"], "page": cur.get("page")}
         first_page = next((s["screen"]["page"] for s in scenes if s.get("screen")), None)
         page_prev = prev.get("page", first_page)
         page_cur = cur.get("page", page_prev)
