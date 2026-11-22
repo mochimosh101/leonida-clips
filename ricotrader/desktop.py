@@ -183,7 +183,56 @@ class ScreenCam:
         return make_desktop(p, url, title,
                             self.cfg.get("blur", {}).get(page, []))
 
-    def draw_overlays(self, img, scenes, si, p, page, ib):
+    def live_now(self, scenes, si, p):
+        """Chart clock (hour of day, price) for this frame: steps forward one 5-minute candle at a time."""
+        prev = self.cfg.get("live_start")
+        cur = None
+        for j in range(si):
+            prev = scenes[j].get("screen", {}).get("now", prev)
+        cur = scenes[si].get("screen", {}).get("now")
+        if prev is None:
+            prev = cur
+        if cur is None:
+            return prev
+        k = ease((p - 0.05) / 0.4)    # the chart catches up to 'now' in the first ~half of the line
+        h = prev[0] + (cur[0] - prev[0]) * k
+        h = math.floor(h * 12) / 12 if k < 1 else cur[0]
+        price = prev[1] + (cur[1] - prev[1]) * k
+        return h, price
+
+    def draw_live(self, d, L, now, k, ib, t):
+        """Hide the candles that haven't happened yet and move a live price tag, so the chart plays like live."""
+        X = lambda x: CONTENT[0] + x * k - ib[0]
+        Y = lambda y: CONTENT[1] + y * k - ib[1]
+        (h0, x0, pxh), (p0, y0, p1, y1) = L["time"], L["price"]
+        px = lambda h: x0 + (h - h0) * pxh
+        py = lambda pr: y0 + (p0 - pr) * (y1 - y0) / (p0 - p1)
+        a0, b0, a1, b1 = L["plot"]
+        cx = px(now[0] + 1 / 12)                       # right edge of the current candle
+        bg = tuple(L.get("bg", (17, 22, 31)))
+        if cx < a1:
+            d.rectangle([X(max(cx, a0)), Y(b0), X(a1), Y(b1)], fill=bg)
+            for gy in L.get("grid", []):
+                d.line([X(max(cx, a0)), Y(gy), X(a1), Y(gy)], fill=(26, 32, 43), width=max(1, int(k)))
+        ax0, ax1 = L["axis"]
+        d.rectangle([X(ax0), Y(b0 - 10), X(ax1), Y(b1)], fill=bg)
+        f = font("medium", int(13 * k))
+        v = p0
+        while v >= p1 - 0.01:
+            d.text((X(ax0 + 8), Y(py(v))), f"{v:.2f}", font=f, fill=(150, 156, 172), anchor="lm")
+            v -= L.get("step", 2.5)
+        price = now[1] + math.sin(t * 7.3) * 0.06 + math.sin(t * 2.9) * 0.05
+        yy = Y(py(price))
+        x = X(a0)
+        while x < X(ax0):                               # dashed live-price line
+            d.line([x, yy, min(x + 6 * k, X(ax0)), yy], fill=(80, 200, 255), width=max(1, int(k)))
+            x += 11 * k
+        d.ellipse([X(cx) - 5 * k, yy - 5 * k, X(cx) + 5 * k, yy + 5 * k], fill=(80, 200, 255))
+        fb = font("black", int(14 * k))
+        d.rounded_rectangle([X(ax0 + 1), yy - 11 * k, X(ax1 - 2), yy + 11 * k], radius=int(3 * k), fill=(80, 200, 255))
+        d.text(((X(ax0 + 1) + X(ax1 - 2)) / 2, yy), f"{price:.2f}", font=fb, fill=(8, 12, 20), anchor="mm")
+
+    def draw_overlays(self, img, scenes, si, p, page, ib, t=0.0):
         """Real fills (markers on the chart) and rows in the app's Today's trades list, page-pixel coords."""
         cfg = self.cfg.get("overlays", {}).get(page)
         if not cfg:
@@ -191,6 +240,10 @@ class ScreenCam:
         path = self.cfg["pages"][page]
         k = page_scale(path)
         d = ImageDraw.Draw(img)
+        if cfg.get("live"):
+            now = self.live_now(scenes, si, p)
+            if now:
+                self.draw_live(d, cfg["live"], now, k, ib, t)
         fills, rows = [], []
         for j in range(si + 1):
             sc = scenes[j].get("screen", {})
@@ -252,7 +305,7 @@ class ScreenCam:
         box = [cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2]
         ib = tuple(int(v) for v in box)
         img = self.desktop(page).crop(ib)
-        self.draw_overlays(img, scenes, si, p, page, ib)
+        self.draw_overlays(img, scenes, si, p, page, ib, t)
         img = img.resize((self.out_w, self.out_h), Image.BILINEAR)
         # pointer travels from the previous click to this one
         start = prev.get("click", [DW * 0.6, DH * 0.5])

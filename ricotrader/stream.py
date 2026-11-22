@@ -256,8 +256,13 @@ def pop(img, v, p, y):
     d = ImageDraw.Draw(img)
     k = R.ease(p / 0.12)
     col = R.COLORS.get(v.get("color", ""), WHITE)
+    text = v["text"]
+    if v.get("count"):                    # live P&L ticking up like the app's position card
+        a, b = v["count"]
+        val = a + (b - a) * R.ease((p - 0.05) / 0.45)
+        text = ("+$" if val >= 0 else "-$") + f"{abs(val):.0f}"
     size = int(130 * (0.7 + 0.3 * k) + 14 * max(0.0, 1 - abs(p - 0.1) / 0.1))
-    d.text((W // 2, y), v["text"], font=font("black", size), fill=col, anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0))
+    d.text((W // 2, y), text, font=font("black", size), fill=col, anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0))
     if v.get("sub"):
         d.text((W // 2, y + 95), v["sub"], font=font("bold", 40), fill=(200, 205, 225), anchor="mm",
                stroke_width=3, stroke_fill=(0, 0, 0))
@@ -357,7 +362,12 @@ def render_stream(ep, out_path, work=None):
         if camf:
             cam = Image.frombytes("RGB", (W, CAM_H), camf.read(W * CAM_H * 3)).convert("RGBA")
         else:
-            cam = cam_placeholder(t, lv, mood, t - a)
+            since = t - a
+            for f_ in sc.get("screen", {}).get("fills", []):   # react again the moment the order fills
+                ft = a + f_.get("at", 0.25) * (b - a)
+                if t >= ft:
+                    since = t - ft
+            cam = cam_placeholder(t, lv, mood, since)
         img.alpha_composite(cam, (0, 0))
         cam_overlay(img)
         if screen:
