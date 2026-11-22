@@ -66,38 +66,58 @@
   "live_start": [
    6.5,
    641.0
-  ]
+  ],
+  "blur": {
+   "xpro": [
+    [
+     12,
+     285,
+     445,
+     352
+    ]
+   ]
+  }
  },
  "scenes": [
   {
-   "say": "Okay, so this is my actual screen from Friday. Every little marker you're about to see? Real money.",
+   "say": "Wait. Wait! It's up seventy-eight dollars! Come on, come on!",
    "mood": "hype",
    "pop": {
-    "text": "FRIDAY",
-    "sub": "real money \u00b7 real fills",
-    "color": "cyan"
+    "text": "+$78",
+    "sub": "at the top",
+    "color": "green",
+    "count": [
+     0,
+     78
+    ]
    },
    "screen": {
     "page": "xpro",
     "focus": [
-     479,
-     301,
-     1499,
-     1004
+     916,
+     504,
+     1072,
+     712
     ],
     "now": [
-     7.8,
-     630.5
+     9.2,
+     620.6
     ]
    },
-   "clip": "ricotrader/clips/say-s4-0.mp4"
+   "react": {
+    "face": "wow",
+    "text": "LET'S GOOO",
+    "color": "green",
+    "at": 0.15
+   },
+   "clip": "ricotrader/clips/say-s4-2.mp4"
   },
   {
    "say": "Eight fifty-one. My trend book fires and grabs a triple Q put for a dollar fifty. It only trades when a few things line up. Which things? Not telling.",
    "mood": "calm",
    "pop": {
     "text": "TREND BOOK",
-    "sub": "fired \u00b7 put for $1.50",
+    "sub": "rewind · 8:51 AM · put for $1.50",
     "color": "yellow"
    },
    "screen": {
@@ -130,45 +150,11 @@
    "clip": "ricotrader/clips/say-s4-1.mp4"
   },
   {
-   "say": "Wait. Wait! It's up seventy-eight dollars! Come on, come on!",
-   "mood": "hype",
-   "pop": {
-    "text": "+$78",
-    "sub": "at the top",
-    "color": "green",
-    "count": [
-     0,
-     78
-    ]
-   },
-   "screen": {
-    "page": "xpro",
-    "focus": [
-     916,
-     504,
-     1072,
-     712
-    ],
-    "now": [
-     9.2,
-     620.6
-    ]
-   },
-   "pause": 0.1,
-   "react": {
-    "face": "wow",
-    "text": "LET'S GOOO",
-    "color": "green",
-    "at": 0.15
-   },
-   "clip": "ricotrader/clips/say-s4-2.mp4"
-  },
-  {
    "say": "Then the safety exit bails. Plus twenty-eight. It gave back fifty! I'll take it, I guess.",
    "mood": "pain",
    "pop": {
     "text": "+$28",
-    "sub": "safety exit \u00b7 594 PUT",
+    "sub": "safety exit · 594 PUT",
     "color": "green"
    },
    "screen": {
@@ -213,7 +199,7 @@
    "mood": "pain",
    "pop": {
     "text": "-$30",
-    "sub": "SPREAD BOOK \u00b7 strike rule",
+    "sub": "SPREAD BOOK · strike rule",
     "color": "red"
    },
    "screen": {
@@ -261,7 +247,7 @@
    "mood": "calm",
    "pop": {
     "text": "+$39",
-    "sub": "12 TRADES \u00b7 9 WINNERS",
+    "sub": "12 TRADES · 9 WINNERS",
     "color": "green"
    },
    "screen": {
@@ -299,16 +285,6 @@
     "at": 0.55
    },
    "clip": "ricotrader/clips/say-s4-5b.mp4"
-  },
-  {
-   "say": "Don't let one great trade make you greedy. Or one bad one make you scared.",
-   "mood": "deep",
-   "visual": {
-    "type": "quote",
-    "text": "Don't let one great trade make you greedy. Or one bad one make you scared.",
-    "by": "Rica"
-   },
-   "clip": "ricotrader/clips/say-s4-6.mp4"
   },
   {
    "say": "Next time, I'll show you which of my books is actually winning. Follow so you don't miss it.",

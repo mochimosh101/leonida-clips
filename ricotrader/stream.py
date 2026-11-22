@@ -472,7 +472,8 @@ def render_stream(ep, out_path, work=None):
             fill_times.append(ft)
             fill_times_by_scene.setdefault(i, []).append(ft)
     if fill_times and ep.get("fill_sound", True):
-        wav = R.mix_sfx(wav, R.fill_sound(work), fill_times, work)
+        wav = (R.mix_sfx(wav, R.fill_sound(work, speak=False), fill_times, work, duck=0.85) if say_clips
+               else R.mix_sfx(wav, R.fill_sound(work), fill_times, work))
     screen = None
     if ep.get("screen"):
         from ricotrader.desktop import ScreenCam

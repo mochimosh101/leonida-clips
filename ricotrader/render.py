@@ -97,7 +97,7 @@ async def _tts(text, voice, path, rate="+6%", pitch="+0Hz"):
     return words
 
 
-def fill_sound(work, voice="en-US-JennyNeural"):
+def fill_sound(work, voice="en-US-JennyNeural", speak=True):
     """Our own order-filled alert: a quick two-note chime, then a short 'Order filled.' in an app-alert voice."""
     chime = os.path.join(work, "chime.wav")
     expr = ("0.55*sin(2*PI*1318.5*t)*exp(-28*t)*lt(t,0.12)"
@@ -105,7 +105,7 @@ def fill_sound(work, voice="en-US-JennyNeural"):
             "+0.18*sin(2*PI*3520*(t-0.1))*exp(-14*(t-0.1))*gte(t,0.1)")
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "aevalsrc=" + expr.replace(",", "\\,") + ":s=48000:d=0.7",
                     "-ac", "1", chime], check=True)
-    if os.environ.get("RICO_FAKE_TTS"):
+    if os.environ.get("RICO_FAKE_TTS") or not speak:
         return chime
     said = os.path.join(work, "filled.mp3")
     asyncio.run(_tts("Order filled.", voice, said, "+0%", "+0Hz"))
@@ -453,11 +453,15 @@ def captions(img, words, t):
     idx = max([i for i, w in enumerate(words) if w["t"] <= t + 0.05] or [-1])
     if idx < 0 or t > words[idx]["t"] + words[idx]["d"] + 0.9:
         return
-    start = idx - (idx % 3)
-    # keep chunks inside one scene
-    while start < idx and words[start]["scene"] != words[idx]["scene"]:
-        start += 1
-    chunk = [w for w in words[start:start + 3] if w["scene"] == words[idx]["scene"]]
+    if "c" not in words[0]:
+        # chunks of up to 3 words that never cross a scene or a sentence/comma break
+        cid, n = 0, 0
+        for i, w in enumerate(words):
+            if i and (n >= 3 or w.get("scene") != words[i - 1].get("scene")
+                      or words[i - 1]["w"].rstrip().endswith((".", ",", "!", "?", ":", ";"))):
+                cid, n = cid + 1, 0
+            w["c"], n = cid, n + 1
+    chunk = [w for w in words if w["c"] == words[idx]["c"]]
     f = font("black", 88)
     d = ImageDraw.Draw(img)
     texts = [w["w"].upper() for w in chunk]
