@@ -17,6 +17,7 @@ import asyncio
 import json
 import math
 import os
+import re
 import random
 import subprocess
 import sys
@@ -164,6 +165,62 @@ def build_audio(scenes, voice, work):
         inputs += ["-i", mp3]
         filt.append(f"[{k}:a]aresample=48000,afade=t=in:d=0.015,areverse,afade=t=in:d=0.04,areverse,"
                     f"adelay={int(start * 1000)}|{int(start * 1000)}[a{k}]")
+    filt.append("".join(f"[a{k}]" for k in range(len(parts))) + f"amix=inputs={len(parts)}:normalize=0,apad[out]")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt),
+                    "-map", "[out]", "-t", f"{total:.2f}", "-ac", "1", wav], check=True)
+    return wav, timeline, words, total
+
+
+def _speech_span(path):
+    """(start, end) of speech in a clip's audio, from ffmpeg silencedetect."""
+    dur = probe_duration(path)
+    out = subprocess.run(["ffmpeg", "-i", path, "-af", "silencedetect=n=-35dB:d=0.35", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    starts = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", out)]
+    ends = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", out)]
+    s0 = ends[0] if starts and starts[0] < 0.05 and ends else 0.0
+    e0 = starts[-1] if starts and (len(ends) < len(starts) or ends[-1] >= dur - 0.05) else dur
+    return s0, max(s0 + 0.5, e0)
+
+
+def _clip_words(path, text, s0, e0):
+    """Word timings for captions: Whisper on the clip's own audio when available, else spread evenly."""
+    try:
+        from faster_whisper import WhisperModel
+        global _WHISPER
+        _WHISPER = globals().get("_WHISPER") or WhisperModel("base.en", device="cpu", compute_type="int8")
+        segs, _ = _WHISPER.transcribe(path, word_timestamps=True, initial_prompt=text)
+        ws = [{"t": w.start, "d": max(0.1, w.end - w.start), "w": w.word.strip()} for sg in segs for w in sg.words]
+        if ws:
+            return ws
+    except Exception as e:                       # noqa: BLE001  (no whisper locally: fall back)
+        print("whisper unavailable:", e)
+    toks = text.split()
+    step = (e0 - s0) / max(1, len(toks))
+    return [{"t": s0 + i * step, "d": step * 0.9, "w": w} for i, w in enumerate(toks)]
+
+
+def build_audio_clips(scenes, work):
+    """Voice from each scene's own lip-synced video clip (Rica actually saying the line).
+    Each clip plays from its start; the scene ends shortly after her speech ends."""
+    parts, timeline, words, t = [], [], [], 0.35
+    gaps = {"hype": 0.15, "pain": 0.35, "calm": 0.25, "deep": 0.45}
+    for i, sc in enumerate(scenes):
+        s0, e0 = _speech_span(sc["clip"])
+        end = min(probe_duration(sc["clip"]), e0 + 0.25)
+        wav_i = os.path.join(work, f"c{i}.wav")
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{end:.3f}", "-ac", "1",
+                        "-ar", "48000", "-af", "afade=t=out:st=%.3f:d=0.12" % max(0, end - 0.12), wav_i], check=True)
+        timeline.append((t, t + end))
+        words += [{**w, "t": w["t"] + t, "scene": i} for w in _clip_words(sc["clip"], sc["say"], s0, e0)]
+        parts.append((wav_i, t))
+        t += end + sc.get("pause", gaps.get(sc.get("mood", "calm"), 0.25))
+    total = t + 0.6
+    wav = os.path.join(work, "voice.wav")
+    inputs, filt = [], []
+    for k, (w, start) in enumerate(parts):
+        inputs += ["-i", w]
+        filt.append(f"[{k}:a]adelay={int(start * 1000)}|{int(start * 1000)}[a{k}]")
     filt.append("".join(f"[a{k}]" for k in range(len(parts))) + f"amix=inputs={len(parts)}:normalize=0,apad[out]")
     subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt),
                     "-map", "[out]", "-t", f"{total:.2f}", "-ac", "1", wav], check=True)

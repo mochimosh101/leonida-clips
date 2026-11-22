@@ -70,6 +70,20 @@ class MoodCam:
             self.clips[mood] = cache[key]
         self.ok = bool(self.clips) and "calm" in self.clips
 
+    def say_frame(self, key, path, since):
+        """Frame from a scene's own speaking clip, in sync with its audio (holds the last frame after)."""
+        if key not in self.clips:
+            out = os.path.join(self.dir, f"say{key}")
+            os.makedirs(out, exist_ok=True)
+            sh = int(W * 9 / 16) // 2 * 2
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", path, "-vf",
+                            f"fps={FPS},scale={W}:{sh}:flags=lanczos,crop={W}:{CAM_H}:0:(ih-{CAM_H})*0.35,"
+                            "unsharp=5:5:0.5", "-q:v", "2", os.path.join(out, "%05d.jpg")], check=True)
+            self.clips[key] = (out, len(os.listdir(out)))
+        out, n = self.clips[key]
+        i = min(n - 1, max(0, int(since * FPS)))
+        return Image.open(os.path.join(out, f"{i + 1:05d}.jpg")).convert("RGBA")
+
     def frame(self, mood, since, once=False):
         out, n = self.clips.get(mood) or self.clips["calm"]
         k = int(since * FPS)
@@ -437,7 +451,11 @@ def render_stream(ep, out_path, work=None):
     R.QUOTE_Y[0] = 1050
     scenes = ep["scenes"]
     voice = ep.get("voice", "en-US-AvaMultilingualNeural")
-    wav, timeline, words, total = R.build_audio(scenes, voice, work)
+    say_clips = all(os.path.exists(sc.get("clip", "")) for sc in scenes)   # Rica really says each line
+    if say_clips:
+        wav, timeline, words, total = R.build_audio_clips(scenes, work)
+    else:
+        wav, timeline, words, total = R.build_audio(scenes, voice, work)
     n = int(total * FPS)
     loud = R.loudness_per_frame(wav, n)
     # order-filled alerts: snap each fill to the nearest pause between words, so the alert doesn't talk over her
@@ -500,7 +518,9 @@ def render_stream(ep, out_path, work=None):
                     since = t - ft
             rq, rv = reaction_at(sc, t, a, b, fill_times_by_scene.get(si, []))
             face = rv.get("face", mood) if rv else mood
-            if mcam:
+            if say_clips and mcam:
+                cam = mcam.say_frame(si, sc["clip"], t - a)   # her lips match the line
+            elif mcam:
                 cam = mcam.frame(face, t - rv["_t"], once=True) if rv else mcam.frame(mood, t - a)
             else:
                 cam = cam_placeholder(t, lv, face, since if not rv else (t - rv["_t"]))

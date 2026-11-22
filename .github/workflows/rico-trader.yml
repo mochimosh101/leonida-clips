@@ -36,7 +36,7 @@ jobs:
       - name: Install ffmpeg and fonts
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-inter fonts-liberation fonts-dejavu-core
       - name: Install Python deps
-        run: pip install "edge-tts>=7" pillow google-api-python-client google-auth requests
+        run: pip install "edge-tts>=7" pillow google-api-python-client google-auth requests faster-whisper
 
       - name: Preview (push to a claude/ branch)
         if: github.event_name == 'push'
