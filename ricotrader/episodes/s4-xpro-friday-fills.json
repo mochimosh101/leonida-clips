@@ -1,6 +1,6 @@
 {
   "layout": "stream",
-  "voice": "en-US-AvaMultilingualNeural",
+  "voice": "en-US-AvaNeural",
   "date": "2026-11-20",
   "date_label": "FRI NOV 20, 2026",
   "title": "My bot's put was up $78... then this happened",
@@ -92,7 +92,7 @@
       }
     },
     {
-      "say": "Eight fifty-one. My trend book fires and grabs a QQQ put for a dollar fifty. It only trades when a few things line up. Which things? Not telling.",
+      "say": "Eight fifty-one. My trend book fires and grabs a triple Q put for a dollar fifty. It only trades when a few things line up. Which things? Not telling.",
       "mood": "calm",
       "pop": {
         "text": "TREND BOOK",
@@ -152,7 +152,6 @@
           620.6
         ]
       },
-      "rate": "+16%",
       "pause": 0.1,
       "react": {
         "face": "wow",
@@ -206,7 +205,7 @@
       }
     },
     {
-      "say": "Then my morning spread book. It has one rule I can tell you: if price crosses the strike, it's out. No hoping. QQQ crossed. Minus thirty dollars.",
+      "say": "Then my morning spread book. It has one rule I can tell you: if price crosses the strike, it's out. No hoping. Triple Q crossed. Minus thirty dollars.",
       "mood": "pain",
       "pop": {
         "text": "-$30",

@@ -107,7 +107,7 @@ def fill_sound(work, voice="en-US-JennyNeural"):
     if os.environ.get("RICO_FAKE_TTS"):
         return chime
     said = os.path.join(work, "filled.mp3")
-    asyncio.run(_tts("Order filled.", voice, said, "+12%", "+0Hz"))
+    asyncio.run(_tts("Order filled.", voice, said, "+0%", "+0Hz"))
     out = os.path.join(work, "fill_sfx.wav")
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", chime, "-i", said, "-filter_complex",
                     "[1:a]adelay=330|330,aresample=48000,volume=0.8[v];[0:a][v]amix=inputs=2:normalize=0[o]",
@@ -121,8 +121,9 @@ def mix_sfx(wav, sfx, times, work, duck=0.45):
         return wav
     out = os.path.join(work, "voice_sfx.wav")
     inputs = ["-i", wav] + sum([["-i", sfx] for _ in times], [])
-    vol = "+".join(f"between(t,{t0:.2f},{t0 + 1.3:.2f})" for t0 in times)
-    filt = [f"[0:a]volume='if({vol},{duck},1)':eval=frame[v]"]
+    # smooth dip (fade 0.12 s in/out) so the voice never jumps in level
+    env = "*".join(f"(1-{1 - duck}*clip(min((t-{t0 - 0.12:.2f})/0.12,({t0 + 1.4:.2f}-t)/0.12),0,1))" for t0 in times)
+    filt = [f"[0:a]aresample=48000,volume='{env}':eval=frame:precision=float[v]"]
     for k, t0 in enumerate(times):
         filt.append(f"[{k + 1}:a]adelay={int(t0 * 1000)}|{int(t0 * 1000)}[s{k}]")
     filt.append("[v]" + "".join(f"[s{k}]" for k in range(len(times))) +
@@ -143,8 +144,9 @@ def build_audio(scenes, voice, work):
     parts, timeline, words, t = [], [], [], 0.35
     # delivery per mood, so the host doesn't read every line in the same flat tone
     # (rate, pitch, pause after). Pitch stays small: big pitch shifts make the neural voice glitch.
-    style = {"hype": ("+12%", "+2Hz", 0.15), "pain": ("+0%", "-1Hz", 0.45), "calm": ("+6%", "+0Hz", 0.3),
-             "deep": ("-6%", "+0Hz", 0.6)}
+    # Any rate/pitch change makes the neural voice warble, so delivery stays natural and only the pauses vary.
+    style = {"hype": ("+0%", "+0Hz", 0.15), "pain": ("+0%", "+0Hz", 0.45), "calm": ("+0%", "+0Hz", 0.3),
+             "deep": ("+0%", "+0Hz", 0.6)}
     for i, sc in enumerate(scenes):
         mp3 = os.path.join(work, f"s{i}.mp3")
         rate, pitch, gap = style.get(sc.get("mood", "calm"), style["calm"])
