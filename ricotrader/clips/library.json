@@ -1,22 +1,68 @@
 {
-  "base": {
-    "file": "ricotrader/clips/rica-base.jpg",
-    "prompt": "Photorealistic webcam still of a 25-year-old woman day trader streaming from her bedroom at night, sitting at her desk facing the camera, chest-up framing centered. Long dark wavy hair with one pink streak, small cyan gaming headset with mic. She wears a fitted black sports bra with a cropped lilac zip-up hoodie worn open, a thin silver necklace; gym-girl streamer look, cute, confident, attractive, tasteful. Natural skin texture, friendly smile. Background: cozy bedroom with purple and pink neon LED strip lights, a window with city lights, a plant, soft monitor glow on her face. No monitor visible in frame. Shot on a Logitech webcam, slight grain, realistic.",
-    "aspect_ratio": "16:9"
-  },
-  "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit, same bedroom. Realistic webcam footage.",
-  "clips": [
+ "base": {
+  "file": "ricotrader/clips/rica-base.jpg",
+  "prompt": "Photorealistic webcam still of a 25-year-old woman day trader streaming from her bedroom at night, sitting at her desk facing the camera, chest-up framing centered. Long dark wavy hair with one pink streak, small cyan gaming headset with mic. She wears a black tank top under a lilac zip-up hoodie and a thin silver necklace; sporty streamer look, cute and confident. Natural skin texture, friendly smile. Background: cozy bedroom with purple and pink neon LED strip lights, a window with city lights, a plant, soft monitor glow on her face. No monitor visible in frame. Shot on a Logitech webcam, slight grain, realistic.",
+  "aspect_ratio": "16:9"
+ },
+ "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit (black tank top, lilac hoodie), same bedroom. Realistic webcam footage.",
+ "clips": [
+  {
+   "name": "walkaway",
+   "steps": [
     {
-      "name": "walkaway",
-      "steps": [
-        {"duration": 8, "audio": false, "prompt": "She watches her trading screen just below the camera, calm and focused for 2 seconds, then her eyes go wide, she smiles big and throws both fists up cheering, bouncing in her chair."},
-        {"duration": 6, "prompt": "Still smiling, she pulls off her headset, stands up, pushes the chair back and walks out of frame to the right. The empty chair stays in view for the last 2 seconds."},
-        {"duration": 10, "prompt": "The empty chair for 1 second, then she walks back in from the right eating a snack, sits down smiling, looks down at her trading screen, freezes, her smile drops, eyes wide in shock, both hands go to her head in disbelief, then she stares into the camera stunned."}
-      ]
+     "duration": 8,
+     "audio": false,
+     "prompt": "She watches her trading screen just below the camera, calm and focused for 2 seconds, then her eyes go wide, she smiles big and throws both fists up cheering, bouncing in her chair."
     },
-    {"name": "talk-hype", "steps": [{"duration": 12, "audio": false, "prompt": "She talks excitedly to the camera like a streamer explaining a winning trade, big smile, hand gestures, glances down at her screen and back, nods."}]},
-    {"name": "talk-calm", "steps": [{"duration": 12, "audio": false, "prompt": "She calmly explains something to the camera, relaxed and confident, small hand gestures, occasional glance down at her screen, soft smile."}]},
-    {"name": "pain", "steps": [{"duration": 8, "audio": false, "prompt": "She watches her screen and winces, covers her face with one hand, groans, shakes her head, then laughs it off at the camera."}]},
-    {"name": "watch", "steps": [{"duration": 8, "audio": false, "prompt": "She watches her trading screen just below the camera, focused, biting her lip, small natural movements, blinking, leaning in slightly."}]}
-  ]
+    {
+     "duration": 6,
+     "prompt": "Still smiling, she pulls off her headset, stands up, pushes the chair back and walks out of frame to the right. The empty chair stays in view for the last 2 seconds."
+    },
+    {
+     "duration": 10,
+     "prompt": "The empty chair for 1 second, then she walks back in from the right eating a snack, sits down smiling, looks down at her trading screen, freezes, her smile drops, eyes wide in shock, both hands go to her head in disbelief, then she stares into the camera stunned."
+    }
+   ]
+  },
+  {
+   "name": "talk-hype",
+   "steps": [
+    {
+     "duration": 12,
+     "audio": false,
+     "prompt": "She talks excitedly to the camera like a streamer explaining a winning trade, big smile, hand gestures, glances down at her screen and back, nods."
+    }
+   ]
+  },
+  {
+   "name": "talk-calm",
+   "steps": [
+    {
+     "duration": 12,
+     "audio": false,
+     "prompt": "She calmly explains something to the camera, relaxed and confident, small hand gestures, occasional glance down at her screen, soft smile."
+    }
+   ]
+  },
+  {
+   "name": "pain",
+   "steps": [
+    {
+     "duration": 8,
+     "audio": false,
+     "prompt": "She watches her screen and winces, covers her face with one hand, groans, shakes her head, then laughs it off at the camera."
+    }
+   ]
+  },
+  {
+   "name": "watch",
+   "steps": [
+    {
+     "duration": 8,
+     "audio": false,
+     "prompt": "She watches her trading screen just below the camera, focused, biting her lip, small natural movements, blinking, leaning in slightly."
+    }
+   ]
+  }
+ ]
 }
