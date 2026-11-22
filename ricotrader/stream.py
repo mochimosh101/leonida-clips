@@ -274,26 +274,27 @@ def reaction_at(sc, t, a, b, fills):
 
 def punch(cam, q, rv):
     """Camera punch-in with a shake, a coloured flash and a big reaction word, like a streamer's webcam."""
+    CH = cam.height
     z = 1 + 0.16 * R.ease(q / 0.1) * (1 - R.ease((q - 0.72) / 0.28))
     sh = 14 * math.exp(-5 * q) * math.sin(q * 70)
-    cw, chh = W / z, CAM_H / z
+    cw, chh = W / z, CH / z
     x0 = (W - cw) / 2 + sh
-    y0 = (CAM_H - chh) / 2 - sh * 0.4
-    cam = cam.crop((int(x0), int(y0), int(x0 + cw), int(y0 + chh))).resize((W, CAM_H), Image.BILINEAR)
+    y0 = (CH - chh) / 2 - sh * 0.4
+    cam = cam.crop((int(x0), int(y0), int(x0 + cw), int(y0 + chh))).resize((W, CH), Image.BILINEAR)
     col = R.COLORS.get(rv.get("color", "green"), GREEN)
     d = ImageDraw.Draw(cam)
     fl = int(255 * max(0.0, 1 - q / 0.35))
     if fl > 0:
-        over = Image.new("RGBA", (W, CAM_H), col + (int(fl * 0.28),))
+        over = Image.new("RGBA", (W, CH), col + (int(fl * 0.28),))
         cam.alpha_composite(over)
-    d.rectangle([0, 0, W - 1, CAM_H - 1], outline=col, width=10)
+    d.rectangle([0, 0, W - 1, CH - 1], outline=col, width=10)
     if rv.get("text"):
         k = R.ease(q / 0.12)
         size = int(96 * (0.5 + 0.5 * k) + 18 * max(0.0, 1 - abs(q - 0.12) / 0.12))
-        layer = Image.new("RGBA", (W, CAM_H), (0, 0, 0, 0))
-        ImageDraw.Draw(layer).text((W // 2, CAM_H - 90), rv["text"], font=font("black", size), fill=col,
+        layer = Image.new("RGBA", (W, CH), (0, 0, 0, 0))
+        ImageDraw.Draw(layer).text((W // 2, CH - 90), rv["text"], font=font("black", size), fill=col,
                                    anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
-        layer = layer.rotate(-4 if rv.get("color") != "red" else 4, center=(W // 2, CAM_H - 90))
+        layer = layer.rotate(-4 if rv.get("color") != "red" else 4, center=(W // 2, CH - 90))
         cam.alpha_composite(layer)
     return cam
 
