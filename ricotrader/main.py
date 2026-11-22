@@ -25,7 +25,7 @@ YT = {"category_id": "27", "privacy_status": "public", "made_for_kids": False}  
 
 def describe(ep):
     lines = [ep.get("description", ep["title"]), "", DISCLAIMER, "",
-             "Rica is a cartoon host. The numbers are real results from my own trading account.",
+             "Rica is an AI host. The trades and numbers are real results from my own trading account.",
              "", "#trading #daytrading #options #stockmarket #shorts"]
     return "\n".join(lines)
 
