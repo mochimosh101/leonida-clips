@@ -164,7 +164,7 @@
    "clip": "ricotrader/clips/say-s4-2.mp4"
   },
   {
-   "say": "Then its safety exit kicks in. When the move starts snapping back, it bails. Plus twenty-eight. It gave back fifty dollars! I'll take it, I guess.",
+   "say": "Then the safety exit bails. Plus twenty-eight. It gave back fifty! I'll take it, I guess.",
    "mood": "pain",
    "pop": {
     "text": "+$28",
@@ -206,7 +206,7 @@
     "text": "SO CLOSE",
     "color": "yellow"
    },
-   "clip": "ricotrader/clips/say-s4-3.mp4"
+   "clip": "ricotrader/clips/say-s4-3b.mp4"
   },
   {
    "say": "Then my morning spread book. It has one rule I can tell you: if price crosses the strike, it's out. No hoping. Triple Q crossed. Minus thirty dollars.",
@@ -298,7 +298,7 @@
     "color": "green",
     "at": 0.55
    },
-   "clip": "ricotrader/clips/say-s4-5.mp4"
+   "clip": "ricotrader/clips/say-s4-5b.mp4"
   },
   {
    "say": "Don't let one great trade make you greedy. Or one bad one make you scared.",

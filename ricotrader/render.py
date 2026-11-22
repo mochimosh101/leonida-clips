@@ -210,7 +210,7 @@ def build_audio_clips(scenes, work):
         end = min(probe_duration(sc["clip"]), e0 + 0.25)
         wav_i = os.path.join(work, f"c{i}.wav")
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{end:.3f}", "-ac", "1",
-                        "-ar", "48000", "-af", "afade=t=out:st=%.3f:d=0.12" % max(0, end - 0.12), wav_i], check=True)
+                        "-ar", "48000", "-af", "loudnorm=I=-15:TP=-1.5:LRA=11,afade=t=out:st=%.3f:d=0.12" % max(0, end - 0.12), wav_i], check=True)
         timeline.append((t, t + end))
         words += [{**w, "t": w["t"] + t, "scene": i} for w in _clip_words(sc["clip"], sc["say"], s0, e0)]
         parts.append((wav_i, t))
