@@ -379,5 +379,22 @@
     "youtube_id": "26XUUS4UNsg",
     "dry_run": false,
     "posted_at": "2026-11-22T17:00:03Z"
+  },
+  {
+    "clip_id": "series:7mistakestoavoidingta6:7",
+    "format": "series",
+    "series": "7 Mistakes to Avoid in GTA 6",
+    "part": 7,
+    "of": 7,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "HeadstrongMiniatureMeerkatChefFrank-nbtWhXGIzTSMRThf",
+    "streamer": "ludwig",
+    "title": "7 Mistakes to Avoid in GTA 6 (Part 7)",
+    "hook": "Don't pay for a tow when your car flips",
+    "source_url": "https://www.thebiglead.com/gta-6-tips-the-game-doesnt-tell-you/",
+    "youtube_id": "HSB1s0XtSaw",
+    "dry_run": false,
+    "posted_at": "2026-11-22T18:29:17Z"
   }
 ]
