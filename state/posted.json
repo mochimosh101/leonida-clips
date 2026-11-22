@@ -344,5 +344,22 @@
     "youtube_id": "pZZFIqm9bTs",
     "dry_run": false,
     "posted_at": "2026-11-21T21:30:37Z"
+  },
+  {
+    "clip_id": "series:7mistakestoavoidingta6:6",
+    "format": "series",
+    "series": "7 Mistakes to Avoid in GTA 6",
+    "part": 6,
+    "of": 7,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "ZanySaltyWatercressPanicVis-yPdETsO64K_qizkz",
+    "streamer": "yugi2x",
+    "title": "7 Mistakes to Avoid in GTA 6 (Part 6)",
+    "hook": "Don't expect GTA 5-style auto-aim",
+    "source_url": "https://metaforge.app/gta-6/gta-6-beginner-tips-things-to-do-first",
+    "youtube_id": "7S9XBs_oNBo",
+    "dry_run": false,
+    "posted_at": "2026-11-22T03:29:17Z"
   }
 ]
