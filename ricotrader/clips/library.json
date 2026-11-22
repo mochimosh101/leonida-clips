@@ -1,10 +1,11 @@
 {
  "base": {
-  "file": "ricotrader/clips/rica-base.jpg",
+  "file": "ricotrader/clips/rica-grok-look.jpg",
   "prompt": "Photorealistic webcam still of a 25-year-old woman day trader streaming from her bedroom at night, sitting at her desk facing the camera, chest-up framing centered. Long dark wavy hair with one pink streak, small cyan gaming headset with mic. She wears a fitted black crop top that shows her midriff, with a lilac zip-up hoodie worn open and a thin silver necklace; sporty, stylish streamer look, cute and confident. Natural skin texture, friendly smile. Background: cozy bedroom with purple and pink neon LED strip lights, a window with city lights, a plant, soft monitor glow on her face. No monitor visible in frame. Shot on a Logitech webcam, slight grain, realistic.",
-  "aspect_ratio": "16:9"
+  "aspect_ratio": "16:9",
+  "note": "Locked look (Mochi, Nov 22): black sports bra + open lilac hoodie, from the grok.com clip Mochi picked. Do not regenerate."
  },
- "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit (fitted black crop top, open lilac hoodie), same bedroom. Realistic webcam footage.",
+ "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit (black sports bra, open lilac hoodie), same bedroom. Realistic webcam footage.",
  "clips": [
   {
    "name": "walkaway",
