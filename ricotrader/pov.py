@@ -89,6 +89,42 @@ def cam_frame(t, lv, face, blink):
     return cam.crop((off, 0, off + W, CAM_H))
 
 
+class ClipCam:
+    """Realistic webcam from a generated video clip. ep["cam_clip"] = {"file": path, "map": [[t, src_t], ...]}:
+    output time t plays source time src_t, linearly in between (equal src_t = freeze, slower = slow-mo)."""
+
+    def __init__(self, cfg, work):
+        self.map = cfg["map"]
+        self.dir = os.path.join(work, "camframes")
+        os.makedirs(self.dir, exist_ok=True)
+        info = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                               "stream=r_frame_rate,width,height", "-of", "csv=p=0", cfg["file"]],
+                              capture_output=True, text=True, check=True).stdout.strip().split(",")
+        w, h, rate = int(info[0]), int(info[1]), info[2]
+        a, b = rate.split("/")
+        self.fps = float(a) / float(b)
+        cw = int(w * CAM_H / h) // 2 * 2
+        crop = cfg.get("crop", 0)                     # optional extra zoom (0..0.3)
+        sw, sh = int(cw * (1 + crop)) // 2 * 2, int(CAM_H * (1 + crop)) // 2 * 2
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", cfg["file"], "-vf",
+                        f"scale={sw}:{sh}:flags=lanczos,crop={W}:{CAM_H}:(iw-{W})/2:(ih-{CAM_H})/2*{cfg.get('ybias', 1)},"
+                        "unsharp=5:5:0.6", "-q:v", "2", os.path.join(self.dir, "%05d.jpg")], check=True)
+        self.n = len(os.listdir(self.dir))
+
+    def src_t(self, t):
+        m = self.map
+        if t <= m[0][0]:
+            return m[0][1]
+        for (t0, s0), (t1, s1) in zip(m, m[1:]):
+            if t <= t1:
+                return s0 + (s1 - s0) * (t - t0) / max(1e-6, t1 - t0)
+        return m[-1][1]
+
+    def frame(self, t):
+        i = min(self.n, max(1, int(self.src_t(t) * self.fps) + 1))
+        return Image.open(os.path.join(self.dir, f"{i:05d}.jpg")).convert("RGB")
+
+
 # ---------------------------------------------------------------- chart
 
 class Chart:
@@ -267,6 +303,7 @@ def render_pov(ep, out_path, work=None):
     n = int(T_END * FPS)
     loud = R.loudness_per_frame(wav, n)
     chart = Chart(ep)
+    clipcam = ClipCam(ep["cam_clip"], work) if ep.get("cam_clip") and os.path.exists(ep["cam_clip"]["file"]) else None
     m = ep["marks"]
     peak_i = max(range(len(m)), key=lambda i: m[i])
     entry, exit_ = ep["entry"], ep["exit"]
@@ -298,7 +335,7 @@ def render_pov(ep, out_path, work=None):
         else:
             face = "ugh"
         blink = (t % 3.3) < 0.11 and face != "wow"
-        cam = cam_frame(t, lv, face, blink)
+        cam = clipcam.frame(t) if clipcam else cam_frame(t, lv, face, blink)
         if T_FILL + 1.4 <= t < T_FILL + 2.4:
             cam = punch(cam.convert("RGBA"), (t - T_FILL - 1.4) / 1.0, {"text": "WE'RE IN", "color": "green"})
         if T_PEAK - 0.1 <= t < T_PEAK + 0.9:
@@ -309,6 +346,9 @@ def render_pov(ep, out_path, work=None):
         d = ImageDraw.Draw(img)
         d.ellipse([28, 30, 50, 52], fill=RED)
         d.text((62, 41), "RICA", font=font("black", 34), fill=WHITE, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
+        if clipcam:                                   # realistic AI host: say so on screen
+            d.text((W - 24, 41), "AI host · real trades", font=font("bold", 26), fill=(235, 235, 240), anchor="rm",
+                   stroke_width=3, stroke_fill=(0, 0, 0))
         # chart
         idx = mark_index(t, len(m), peak_i)
         filled = t >= T_FILL

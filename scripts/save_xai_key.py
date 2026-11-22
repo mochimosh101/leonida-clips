@@ -7,11 +7,55 @@ Run on your own computer, right after you click "Copy" on the new key at console
 It reads the key from your clipboard, checks it with xAI, saves it as the GitHub secret XAI_API_KEY,
 then clears your clipboard. Nothing secret is printed.
 """
+import base64
+import shutil
+import subprocess
 import sys
 
 import requests
 
-from connect_channel import git_saved_token, set_secret_api, set_secret_gh
+REPO = "mochimosh101/leonida-clips"
+
+
+def set_secret_gh(name: str, value: str) -> bool:
+    gh = shutil.which("gh")
+    if not gh:
+        return False
+    if subprocess.run([gh, "auth", "status"], capture_output=True).returncode != 0:
+        return False
+    r = subprocess.run([gh, "secret", "set", name, "--repo", REPO], input=value.encode(),
+                       capture_output=True)
+    return r.returncode == 0
+
+
+
+def git_saved_token() -> str | None:
+    try:
+        r = subprocess.run(["git", "credential", "fill"], input=b"protocol=https\nhost=github.com\n\n",
+                           capture_output=True, timeout=60)
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+    for line in r.stdout.decode().splitlines():
+        if line.startswith("password="):
+            return line.split("=", 1)[1]
+    return None
+
+
+
+def set_secret_api(name: str, value: str, token: str) -> bool:
+    import requests
+    from nacl import encoding, public
+
+    h = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+    key = requests.get(f"https://api.github.com/repos/{REPO}/actions/secrets/public-key", headers=h, timeout=30)
+    if key.status_code != 200:
+        return False
+    k = key.json()
+    box = public.SealedBox(public.PublicKey(k["key"].encode(), encoding.Base64Encoder()))
+    enc = base64.b64encode(box.encrypt(value.encode())).decode()
+    r = requests.put(f"https://api.github.com/repos/{REPO}/actions/secrets/{name}", headers=h,
+                     json={"encrypted_value": enc, "key_id": k["key_id"]}, timeout=30)
+    return r.status_code in (201, 204)
 
 
 def clipboard() -> str:
