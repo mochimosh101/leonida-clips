@@ -1,10 +1,10 @@
 {
  "base": {
   "file": "ricotrader/clips/rica-base.jpg",
-  "prompt": "Photorealistic webcam still of a 25-year-old woman day trader streaming from her bedroom at night, sitting at her desk facing the camera, chest-up framing centered. Long dark wavy hair with one pink streak, small cyan gaming headset with mic. She wears a black tank top under a lilac zip-up hoodie and a thin silver necklace; sporty streamer look, cute and confident. Natural skin texture, friendly smile. Background: cozy bedroom with purple and pink neon LED strip lights, a window with city lights, a plant, soft monitor glow on her face. No monitor visible in frame. Shot on a Logitech webcam, slight grain, realistic.",
+  "prompt": "Photorealistic webcam still of a 25-year-old woman day trader streaming from her bedroom at night, sitting at her desk facing the camera, chest-up framing centered. Long dark wavy hair with one pink streak, small cyan gaming headset with mic. She wears a fitted black crop top that shows her midriff, with a lilac zip-up hoodie worn open and a thin silver necklace; sporty, stylish streamer look, cute and confident. Natural skin texture, friendly smile. Background: cozy bedroom with purple and pink neon LED strip lights, a window with city lights, a plant, soft monitor glow on her face. No monitor visible in frame. Shot on a Logitech webcam, slight grain, realistic.",
   "aspect_ratio": "16:9"
  },
- "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit (black tank top, lilac hoodie), same bedroom. Realistic webcam footage.",
+ "style": "Static webcam shot, the camera never moves, no monitor in frame. Same woman, same outfit (fitted black crop top, open lilac hoodie), same bedroom. Realistic webcam footage.",
  "clips": [
   {
    "name": "walkaway",
