@@ -77,7 +77,7 @@ def mix(a, b, k):
 
 # ---------------------------------------------------------------- voice
 
-async def _tts(text, voice, path):
+async def _tts(text, voice, path, rate="+6%", pitch="+0Hz"):
     if os.environ.get("RICO_FAKE_TTS"):  # offline preview: buzzing tone + evenly timed words
         ws = text.split()
         dur = 0.32 * len(ws)
@@ -86,7 +86,7 @@ async def _tts(text, voice, path):
         return [{"t": i * 0.32, "d": 0.3, "w": w} for i, w in enumerate(ws)]
     import edge_tts
     words = []
-    com = edge_tts.Communicate(text, voice, rate="+6%", boundary="WordBoundary")
+    com = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch, boundary="WordBoundary")
     with open(path, "wb") as f:
         async for chunk in com.stream():
             if chunk["type"] == "audio":
@@ -105,10 +105,14 @@ def probe_duration(path):
 def build_audio(scenes, voice, work):
     """Speak every scene, join with short pauses. Returns (wav path, per-scene timing, word list)."""
     parts, timeline, words, t = [], [], [], 0.35
-    gap = 0.35
+    # delivery per mood, so the host doesn't read every line in the same flat tone
+    style = {"hype": ("+14%", "+6Hz", 0.15), "pain": ("+0%", "-3Hz", 0.5), "calm": ("+6%", "+0Hz", 0.3),
+             "deep": ("-6%", "-2Hz", 0.6)}
     for i, sc in enumerate(scenes):
         mp3 = os.path.join(work, f"s{i}.mp3")
-        ws = asyncio.run(_tts(sc["say"], voice, mp3))
+        rate, pitch, gap = style.get(sc.get("mood", "calm"), style["calm"])
+        rate, pitch, gap = sc.get("rate", rate), sc.get("pitch", pitch), sc.get("pause", gap)
+        ws = asyncio.run(_tts(sc["say"], voice, mp3, rate, pitch))
         dur = probe_duration(mp3)
         timeline.append((t, t + dur))
         words += [{**w, "t": w["t"] + t, "scene": i} for w in ws]

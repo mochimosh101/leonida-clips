@@ -4,7 +4,7 @@
   "date": "2026-11-20",
   "date_label": "FRI NOV 20, 2026",
   "title": "My bot's put was up $78... then this happened",
-  "description": "Friday on my Desk Trader XPRO screen: every fill is a real trade from my bot.",
+  "description": "Friday on my Desk Trader screen: every fill is a real trade from my bot.",
   "tags": [
     "day trading",
     "options trading",
@@ -42,11 +42,11 @@
   },
   "scenes": [
     {
-      "say": "This is my XPRO screen from Friday. Every marker you're about to see is a real fill.",
+      "say": "Okay, so this is my actual screen from Friday. Every little marker you're about to see? Real money.",
       "mood": "hype",
       "pop": {
         "text": "FRIDAY",
-        "sub": "QQQ \u00b7 real money",
+        "sub": "real money \u00b7 real fills",
         "color": "cyan"
       },
       "screen": {
@@ -60,7 +60,7 @@
       }
     },
     {
-      "say": "Eight fifty-one. My bot buys a QQQ 594 put for a dollar fifty.",
+      "say": "So. Eight fifty-one... my bot grabs a QQQ put for a dollar fifty. Market's dumping, so, yeah. Let's go.",
       "mood": "calm",
       "pop": {
         "text": "BUY $1.50",
@@ -87,7 +87,7 @@
       }
     },
     {
-      "say": "QQQ keeps dropping. My put is up seventy-eight dollars!",
+      "say": "Wait. Wait! It's up seventy-eight bucks! Come on, come on!",
       "mood": "hype",
       "pop": {
         "text": "+$78",
@@ -102,10 +102,13 @@
           1072,
           712
         ]
-      }
+      },
+      "rate": "+20%",
+      "pitch": "+9Hz",
+      "pause": 0.1
     },
     {
-      "say": "Nine thirty-three, it sells. Plus twenty-eight. It gave back fifty dollars. Ugh.",
+      "say": "Aaand... it sells. Plus twenty-eight. It literally gave back fifty dollars. Ugh. I'll take it, I guess.",
       "mood": "pain",
       "pop": {
         "text": "+$28",
@@ -140,7 +143,7 @@
       }
     },
     {
-      "say": "Then my call spread. QQQ crosses the strike. Stopped out. Minus thirty.",
+      "say": "Then my call spread. QQQ pops right through the strike, and... yep. Stopped out. Minus thirty. Of course.",
       "mood": "pain",
       "pop": {
         "text": "-$30",
@@ -178,7 +181,7 @@
       }
     },
     {
-      "say": "By the close: twelve options trades, nine winners. Plus thirty-nine dollars on options.",
+      "say": "By the close? Twelve options trades, nine green. Plus thirty-nine on options. Not bad. Not amazing.",
       "mood": "calm",
       "pop": {
         "text": "+$39",
@@ -211,16 +214,16 @@
       }
     },
     {
-      "say": "Don't let one great trade make you greedy, or one bad trade make you scared.",
+      "say": "Don't let one great trade make you greedy. Or one bad one make you scared.",
       "mood": "deep",
       "visual": {
         "type": "quote",
-        "text": "Don't let one great trade make you greedy, or one bad trade make you scared.",
+        "text": "Don't let one great trade make you greedy. Or one bad one make you scared.",
         "by": "Rica"
       }
     },
     {
-      "say": "I trade live again Monday. Follow, and watch it happen. Real trades, not financial advice.",
+      "say": "I'm trading again Monday, live. Follow and watch it with me. Real trades, not financial advice, okay?",
       "mood": "hype",
       "pop": {
         "text": "FOLLOW",

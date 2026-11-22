@@ -170,13 +170,34 @@ def bedroom():
     return img
 
 
-def cam_placeholder(t, lv, mood="calm"):
-    """Cartoon webcam: Rica in her bedroom, lip-synced to the voice, blinking, slight sway."""
+def _blink(t):
+    """Irregular blinking (2-5 s apart, sometimes a double blink), like a person, not a metronome."""
+    n = int(t / 0.9)
+    for k in (n, n - 1):
+        h = (k * 2654435761) % 1000 / 1000
+        if h < 0.28:
+            start = k * 0.9 + h
+            if start <= t < start + 0.11 or (h < 0.06 and start + 0.22 <= t < start + 0.32):
+                return True
+    return False
+
+
+def cam_placeholder(t, lv, mood="calm", since=9.0):
+    """Cartoon webcam: Rica in her bedroom, lip-synced, blinking, and reacting at the start of each line:
+    a happy bounce for hype, a slump and head shake for pain, a slow lean in for deep."""
     img = bedroom().copy()
     mouth = 0 if lv < 0.12 else min(5, 1 + int(lv * 5))
-    blink = (t % 3.7) < 0.12
-    bob = math.sin(t * 2.0) * 4 + lv * 5
-    sway = math.sin(t * 1.1) * 6
+    blink = _blink(t)
+    bob = math.sin(t * 1.7) * 3 + lv * 7 + math.sin(t * 0.37) * 3
+    sway = math.sin(t * 0.9) * 5 + math.sin(t * 2.3) * 2
+    e = math.exp(-3.5 * max(0.0, since))
+    if mood == "hype":
+        bob -= 28 * e * abs(math.sin(since * 11))
+    elif mood == "pain":
+        bob += 14 * (1 - e) * math.exp(-0.6 * max(0.0, since))
+        sway += 16 * e * math.sin(since * 17)
+    elif mood == "deep":
+        bob += 8 * min(1.0, since / 1.5)
     img.alpha_composite(rica(mouth, mood, blink), (int(W / 2 - RICA_W / 2 + sway), int(14 + bob)))
     # cyan monitor light on the lower frame
     return img
@@ -336,7 +357,7 @@ def render_stream(ep, out_path, work=None):
         if camf:
             cam = Image.frombytes("RGB", (W, CAM_H), camf.read(W * CAM_H * 3)).convert("RGBA")
         else:
-            cam = cam_placeholder(t, lv, mood)
+            cam = cam_placeholder(t, lv, mood, t - a)
         img.alpha_composite(cam, (0, 0))
         cam_overlay(img)
         if screen:
