@@ -396,5 +396,23 @@
     "youtube_id": "HSB1s0XtSaw",
     "dry_run": false,
     "posted_at": "2026-11-22T18:29:17Z"
+  },
+  {
+    "clip_id": "HeadstrongMiniatureMeerkatChefFrank-nbtWhXGIzTSMRThf",
+    "streamer": "ludwig",
+    "views": 9233,
+    "title": "Ludwig Tries Insurance Fraud in GTA 6",
+    "hook": "Ludwig wants an insurance payout. Is Lucia really the right victim?",
+    "mid": "Chat says karma. I say terrible claim paperwork.",
+    "verdict": "Prediction: no payout ever. GTA 5 never paid for crashes either, and Leonida's adjusters clearly watched the footage.",
+    "hook_style": "H3",
+    "verdict_style": "V4",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "zDVdvIsx6Fs",
+    "dry_run": false,
+    "posted_at": "2026-11-22T21:30:36Z"
   }
 ]
