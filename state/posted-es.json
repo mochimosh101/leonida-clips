@@ -210,5 +210,23 @@
     "youtube_id": "s_LvGr40qyo",
     "dry_run": false,
     "posted_at": "2026-11-22T02:39:03Z"
+  },
+  {
+    "clip_id": "MushyTrappedNewtJonCarnage-J575FSIhK66tRYzP",
+    "streamer": "danielaazuaje_",
+    "views": 618,
+    "title": "DanielaAzuaje_ y la salida de la izquierda GTA 6",
+    "hook": "DanielaAzuaje_ ten\u00eda la autopista libre. Luego lleg\u00f3 la salida.",
+    "mid": "Atardecer perfecto, salida perfecta... ese \u00e1ngulo no me gusta nada.",
+    "verdict": "Puntuaci\u00f3n Neon: 6 de 10. Tom\u00f3 la salida correcta, pero con el coche medio de lado. Estilo s\u00ed, frenos no.",
+    "hook_style": "H3",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "TyYNrIwjqE0",
+    "dry_run": false,
+    "posted_at": "2026-11-22T03:08:16Z"
   }
 ]
