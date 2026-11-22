@@ -28,12 +28,15 @@ UP, DOWN = (8, 153, 129), (242, 54, 69)          # candle colours
 BLUE = (41, 98, 255)
 
 # beats (seconds)
-T_RISE0, T_PEAK = 1.0, 6.0          # price runs from entry to the high
-T_LEAVE0, T_LEAVE1 = 6.6, 8.0       # she stands up and walks out
-T_FALL1 = 11.6                      # price slides back; the exit fills here
-T_BACK0, T_BACK1 = 12.0, 13.3       # she walks back in
-T_SEE = 13.5                        # "Guys... what happened?"
-T_END = 18.0
+T_SIG0, T_FILL = 0.3, 3.4           # waiting on the book's signal, then the buy fills
+T_RISE0, T_PEAK = 3.9, 8.8          # price runs from entry to the high
+T_LEAVE0, T_LEAVE1 = 9.4, 10.8      # she stands up and walks out
+T_FALL1 = 14.4                      # price slides back; the exit fills here
+T_BACK0, T_BACK1 = 14.8, 16.1       # she walks back in
+T_SEE = 16.3                        # "Guys... what happened?"
+T_END = 21.0
+GRADES = ["D", "C", "B", "A", "A+"]
+GRADE_T = [0.5, 1.2, 1.9, 2.5, 3.0]  # when each grade lights up (vague "how close to a trade" meter)
 
 
 def ease(x):
@@ -101,7 +104,7 @@ class Chart:
     def py(self, p):
         return self.y1 - (p - self.lo) / (self.hi - self.lo) * (self.y1 - self.y0)
 
-    def draw(self, img, idx, t):
+    def draw(self, img, idx, t, live=True):
         d = ImageDraw.Draw(img)
         d.rectangle([0, CHART_TOP, W, H], fill=BG)
         # grid + axis labels
@@ -123,7 +126,8 @@ class Chart:
         ya, yb = int(min(ye, yl)), int(max(ye, yl)) + 1
         shade = Image.new("RGBA", (int(xe - xs) + 1, yb - ya + 1),
                           (8, 153, 129, 46) if last >= entry else (242, 54, 69, 46))
-        img.alpha_composite(shade, (int(xs), ya))
+        if live:
+            img.alpha_composite(shade, (int(xs), ya))
         d = ImageDraw.Draw(img)
         for i in range(n_show):
             o, hi_, lo_, c = self.c[i]
@@ -134,16 +138,61 @@ class Chart:
             col = UP if c >= o else DOWN
             d.line([x + cw / 2, self.py(hi_), x + cw / 2, self.py(lo_)], fill=col, width=2)
             d.rectangle([x + 1, self.py(max(o, c)), x + cw - 1, self.py(min(o, c)) + 1], fill=col)
-        # entry line + LONG tag
-        for x in range(int(xs), self.x1, 18):
-            d.line([x, ye, x + 9, ye], fill=(120, 126, 140), width=2)
-        d.rounded_rectangle([xs - 40, ye + 16, xs + 52, ye + 52], radius=6, fill=UP)
-        d.text((xs + 6, ye + 34), "LONG", font=font("black", 22), fill=WHITE, anchor="mm")
         # live price tag on the axis
         col = UP if last >= entry else DOWN
+        if not live:
+            col = (120, 126, 140)
+        else:
+            # entry line, LONG tag and the BUY fill marker
+            for x in range(int(xs), self.x1, 18):
+                d.line([x, ye, x + 9, ye], fill=(120, 126, 140), width=2)
+            d.rounded_rectangle([xs - 40, ye + 16, xs + 52, ye + 52], radius=6, fill=UP)
+            d.text((xs + 6, ye + 34), "LONG", font=font("black", 22), fill=WHITE, anchor="mm")
+            k = ease((t - T_FILL) / 0.25)
+            bx = self.x0 + cw / 2
+            r = 16 + 10 * max(0, 1 - (t - T_FILL) / 0.4)
+            d.polygon([(bx, ye - 14), (bx - r, ye - 14 - r * 1.4), (bx + r, ye - 14 - r * 1.4)], fill=UP)
+            d.rounded_rectangle([bx - 22, ye - 96 - 20 * (1 - k), bx + 138, ye - 48 - 20 * (1 - k)], radius=8, fill=UP)
+            d.text((bx + 58, ye - 72 - 20 * (1 - k)), f"BUY {entry:.2f}", font=font("black", 28), fill=WHITE, anchor="mm")
+            if t >= T_FALL1:                              # the SELL marker where the exit filled
+                sx = self.x0 + (len(self.c) - 0.5) * cw
+                sy = self.py(self.ep["exit"])
+                d.polygon([(sx, sy - 14), (sx - 16, sy - 36), (sx + 16, sy - 36)], fill=(230, 160, 20))
+                d.rounded_rectangle([sx - 170, sy - 92, sx - 6, sy - 46], radius=8, fill=(230, 160, 20))
+                d.text((sx - 88, sy - 69), f"SELL {self.ep['exit']:.2f}", font=font("black", 28), fill=WHITE, anchor="mm")
         d.rounded_rectangle([self.x1 + 4, yl - 20, W - 8, yl + 20], radius=5, fill=col)
         d.text(((self.x1 + W - 4) / 2, yl), f"{last:.2f}", font=font("black", 26), fill=WHITE, anchor="mm")
         return last
+
+    def signal_card(self, img, t):
+        """Vague 'waiting for the signal' meter: the book's grade climbs D -> A+, then it fires."""
+        a = 1 - ease((t - T_FILL - 0.5) / 0.35)
+        if a <= 0:
+            return
+        card = Image.new("RGBA", (800, 300), (0, 0, 0, 0))
+        d = ImageDraw.Draw(card)
+        fired = t >= T_FILL - 0.15
+        d.rounded_rectangle([0, 0, 799, 299], radius=26, fill=(255, 255, 255, 245),
+                            outline=UP if fired else (205, 210, 220), width=4)
+        d.text((40, 48), "TREND BOOK", font=font("black", 34), fill=(20, 22, 30), anchor="lm")
+        dots = "." * (1 + int(t * 3) % 3)
+        d.text((760, 48), "SIGNAL ✓" if fired else f"waiting for signal{dots}", font=font("bold", 30),
+               fill=UP if fired else (120, 126, 140), anchor="rm")
+        lit = sum(1 for g in GRADE_T if t >= g)
+        for i, g in enumerate(GRADES):
+            x = 40 + i * 146
+            on = i < lit
+            pulse = 1 + 0.12 * max(0, 1 - (t - GRADE_T[i]) / 0.25) if on else 1
+            col = [(242, 54, 69), (240, 130, 40), (230, 190, 30), (120, 190, 60), UP][i] if on else (232, 235, 240)
+            w2, h2 = 62 * pulse, 48 * pulse
+            d.rounded_rectangle([x + 62 - w2, 150 - h2, x + 62 + w2, 150 + h2], radius=16, fill=col)
+            d.text((x + 62, 150), g, font=font("black", 46), fill=WHITE if on else (170, 175, 186), anchor="mm")
+        prog = min(1, max(0, (t - T_SIG0) / (GRADE_T[-1] + 0.2 - T_SIG0)))
+        d.rounded_rectangle([40, 232, 760, 258], radius=13, fill=(236, 239, 244))
+        d.rounded_rectangle([40, 232, 40 + max(26, 720 * ease(prog)), 258], radius=13, fill=UP if fired else BLUE)
+        if a < 1:
+            card.putalpha(card.getchannel("A").point(lambda v: int(v * a)))
+        img.alpha_composite(card, (W // 2 - 400, int(CHART_TOP + 560 - 40 * (1 - a))))
 
     def bubble(self, img, pnl, closed):
         """The P&L pill that sits on the webcam edge, like a trading app's position tool."""
@@ -166,7 +215,8 @@ class Chart:
 # ---------------------------------------------------------------- audio
 
 def build_audio(ep, work):
-    lines = [(T_PEAK - 0.1, "Let's go!"), (T_LEAVE0 + 0.2, "Okay. Snack break."), (T_SEE + 0.1, "Guys... what happened?")]
+    lines = [(T_SIG0 + 0.2, "Come on... give me the signal."), (T_FILL + 1.5, "We're in!"),
+             (T_PEAK - 0.1, "Let's go!"), (T_LEAVE0 + 0.2, "Okay. Snack break."), (T_SEE + 0.1, "Guys... what happened?")]
     lines = ep.get("lines") and [(float(a), s) for a, s in ep["lines"]] or lines
     parts, words = [], []
     for k, (t0, text) in enumerate(lines):
@@ -184,15 +234,24 @@ def build_audio(ep, work):
         inputs += ["-i", mp3]
         filt.append(f"[{k}:a]aresample=48000,adelay={int(t0 * 1000)}|{int(t0 * 1000)}[a{k}]")
         k += 1
+    blip = os.path.join(work, "blip.wav")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+                    "aevalsrc=0.22*sin(2*PI*(700+300*t*8)*t)*exp(-25*t):s=48000:d=0.18", blip], check=True)
+    for i, g in enumerate(GRADE_T):                      # a rising blip each time the grade climbs
+        inputs += ["-i", blip]
+        filt.append(f"[{k}:a]adelay={int(g * 1000)}|{int(g * 1000)},asetrate=48000*{1 + 0.12 * i:.2f},"
+                    f"aresample=48000,volume=0.8[a{k}]")
+        k += 1
     tt = T_LEAVE1 + 0.3
     while tt < T_FALL1 - 0.2:
         inputs += ["-i", tick]
         filt.append(f"[{k}:a]adelay={int(tt * 1000)}|{int(tt * 1000)},volume=0.7[a{k}]")
         k += 1
         tt += 0.5
-    inputs += ["-i", sfx]
-    filt.append(f"[{k}:a]adelay={int(T_FALL1 * 1000)}|{int(T_FALL1 * 1000)}[a{k}]")
-    k += 1
+    for tf in (T_FILL, T_FALL1):                         # order-filled alert at the buy and at the exit
+        inputs += ["-i", sfx]
+        filt.append(f"[{k}:a]adelay={int(tf * 1000)}|{int(tf * 1000)}[a{k}]")
+        k += 1
     filt.append("".join(f"[a{i}]" for i in range(k)) + f"amix=inputs={k}:normalize=0,apad[o]")
     wav = os.path.join(work, "pov.wav")
     subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt), "-map", "[o]",
@@ -222,7 +281,11 @@ def render_pov(ep, out_path, work=None):
         img = Image.new("RGBA", (W, H), BG + (255,))
         lv = loud[fi]
         # Rica's face follows the trade
-        if t < T_RISE0 + 2:
+        if t < T_FILL:
+            face = "calm"
+        elif t < T_FILL + 1.4:
+            face = "wow"
+        elif t < T_RISE0 + 2:
             face = "calm"
         elif t < T_PEAK - 0.4:
             face = "hype"
@@ -236,6 +299,8 @@ def render_pov(ep, out_path, work=None):
             face = "ugh"
         blink = (t % 3.3) < 0.11 and face != "wow"
         cam = cam_frame(t, lv, face, blink)
+        if T_FILL + 1.4 <= t < T_FILL + 2.4:
+            cam = punch(cam.convert("RGBA"), (t - T_FILL - 1.4) / 1.0, {"text": "WE'RE IN", "color": "green"})
         if T_PEAK - 0.1 <= t < T_PEAK + 0.9:
             cam = punch(cam.convert("RGBA"), (t - T_PEAK + 0.1) / 1.0, {"text": "LET'S GOOO", "color": "green"})
         if T_SEE <= t < T_SEE + 1.8:
@@ -246,10 +311,13 @@ def render_pov(ep, out_path, work=None):
         d.text((62, 41), "RICA", font=font("black", 34), fill=WHITE, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
         # chart
         idx = mark_index(t, len(m), peak_i)
-        last = chart.draw(img, idx, t)
+        filled = t >= T_FILL
+        last = chart.draw(img, idx, t, live=filled)
         closed = t >= T_FALL1
         pnl = final_pnl if closed else (last - entry) * 100 * ep.get("contracts", 1)
-        chart.bubble(img, pnl, closed)
+        if filled:
+            chart.bubble(img, pnl, closed)
+        chart.signal_card(img, t)
         d = ImageDraw.Draw(img)
         # hook text on the chart, then the punchline
         f = font("black", 58)
@@ -261,6 +329,8 @@ def render_pov(ep, out_path, work=None):
             d.text((W / 2, CHART_TOP + 150), f"+${peak_pnl:.0f}  →  +${final_pnl:.0f}",
                    font=font("black", int(70 + 20 * k)), fill=DOWN, anchor="mm")
             d.text((W / 2, CHART_TOP + 240), "it sold while I was gone", font=font("bold", 40), fill=(60, 64, 76), anchor="mm")
+        if filled and t < T_FILL + 1.8:
+            filled_toast(img, CHART_TOP + 270, (t - T_FILL) / 1.8)
         if closed and t < T_FALL1 + 1.8:
             filled_toast(img, CHART_TOP + 270 if t < T_SEE else CHART_TOP + 300, (t - T_FALL1) / 1.8)
         # footer: what it is, faint
