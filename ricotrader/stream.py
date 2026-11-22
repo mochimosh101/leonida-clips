@@ -91,12 +91,14 @@ def rica(mouth, mood, blink):
     L([(200, 245), (225, 300), (262, 312)], 6, fill=(30, 30, 44))
     E(256, 304, 274, 322, fill=(30, 30, 44))
     # eyebrows (mood)
-    br = {"hype": (-10, -12), "pain": (-9, 5), "calm": (0, 0), "deep": (-3, 3)}[mood]
+    br = {"hype": (-10, -12), "pain": (-9, 5), "calm": (0, 0), "deep": (-3, 3), "wow": (-18, -20), "ugh": (-12, 8)}[mood]
     L([(242, 176 + br[1]), (282, 170 + br[0])], 6, fill=HAIR_F)
     L([(318, 170 + br[0]), (358, 176 + br[1])], 6, fill=HAIR_F)
     # eyes
     for cx in (262, 338):
-        if blink:
+        if mood == "wow" and not blink:           # squeezed happy eyes  ^ ^
+            A((cx - 22, 192, cx + 22, 232), 200, 340, 7, fill=HAIR_F)
+        elif blink:
             A((cx - 22, 190, cx + 22, 214), 10, 170, 5, fill=HAIR_F)
         else:
             E(cx - 22, 188, cx + 22, 222, fill=WHITE)
@@ -105,6 +107,9 @@ def rica(mouth, mood, blink):
             E(cx + 2, 196, cx + 8, 202, fill=WHITE)
             A((cx - 24, 184, cx + 24, 222), 195, 345, 6, fill=HAIR_F)  # lashes
             L([(cx + 18, 190), (cx + 28, 182)], 4, fill=HAIR_F)
+            if mood == "ugh":                      # heavy, half-closed lids
+                Rr(cx - 26, 182, cx + 26, 204, r=8, fill=SKIN_F)
+                L([(cx - 24, 204), (cx + 24, 204)], 5, fill=HAIR_F)
     # blush + nose
     E(228, 236, 262, 252, fill=(246, 150, 150))
     E(338, 236, 372, 252, fill=(246, 150, 150))
@@ -112,7 +117,12 @@ def rica(mouth, mood, blink):
     # mouth
     my, lip = 282, (210, 60, 100)
     if mouth <= 0:
-        if mood == "hype":
+        if mood == "wow":
+            P([(266, my - 6), (334, my - 6), (322, my + 22), (300, my + 30), (278, my + 22)], fill=(110, 24, 50))
+            Rr(272, my - 6, 328, my + 2, r=3, fill=WHITE)
+        elif mood == "ugh":
+            L([(276, my + 10), (300, my + 4), (324, my + 12)], 6, fill=lip)
+        elif mood == "hype":
             A((270, my - 22, 330, my + 10), 20, 160, 6, fill=lip)
         elif mood == "pain":
             A((274, my - 2, 326, my + 22), 200, 340, 6, fill=lip)
@@ -191,9 +201,9 @@ def cam_placeholder(t, lv, mood="calm", since=9.0):
     bob = math.sin(t * 1.7) * 3 + lv * 7 + math.sin(t * 0.37) * 3
     sway = math.sin(t * 0.9) * 5 + math.sin(t * 2.3) * 2
     e = math.exp(-3.5 * max(0.0, since))
-    if mood == "hype":
-        bob -= 28 * e * abs(math.sin(since * 11))
-    elif mood == "pain":
+    if mood in ("hype", "wow"):
+        bob -= (44 if mood == "wow" else 28) * e * abs(math.sin(since * 11))
+    elif mood in ("pain", "ugh"):
         bob += 14 * (1 - e) * math.exp(-0.6 * max(0.0, since))
         sway += 16 * e * math.sin(since * 17)
     elif mood == "deep":
@@ -247,6 +257,58 @@ def screen_chrome(ep, y_screen_end):
     d.text((W // 2, 1890), "Education only · Not financial advice · Trading can lose money",
            font=font("medium", 24), fill=MUTED, anchor="mm")
     return img
+
+
+REACT_LEN = 1.8
+
+
+def reaction_at(sc, t, a, b, fills):
+    """Streamer-style reaction for this scene: starts on the order fill if there is one, else at 'at'."""
+    rv = sc.get("react")
+    if not rv:
+        return 0, None
+    t0 = fills[0] + 0.15 if fills else a + rv.get("at", 0.0) * (b - a)
+    q = (t - t0) / REACT_LEN
+    if 0 <= q < 1:
+        return q, {**rv, "_t": t0}
+    return 0, None
+
+
+def punch(cam, q, rv):
+    """Camera punch-in with a shake, a coloured flash and a big reaction word, like a streamer's webcam."""
+    z = 1 + 0.16 * R.ease(q / 0.1) * (1 - R.ease((q - 0.72) / 0.28))
+    sh = 14 * math.exp(-5 * q) * math.sin(q * 70)
+    cw, chh = W / z, CAM_H / z
+    x0 = (W - cw) / 2 + sh
+    y0 = (CAM_H - chh) / 2 - sh * 0.4
+    cam = cam.crop((int(x0), int(y0), int(x0 + cw), int(y0 + chh))).resize((W, CAM_H), Image.BILINEAR)
+    col = R.COLORS.get(rv.get("color", "green"), GREEN)
+    d = ImageDraw.Draw(cam)
+    fl = int(255 * max(0.0, 1 - q / 0.35))
+    if fl > 0:
+        over = Image.new("RGBA", (W, CAM_H), col + (int(fl * 0.28),))
+        cam.alpha_composite(over)
+    d.rectangle([0, 0, W - 1, CAM_H - 1], outline=col, width=10)
+    if rv.get("text"):
+        k = R.ease(q / 0.12)
+        size = int(96 * (0.5 + 0.5 * k) + 18 * max(0.0, 1 - abs(q - 0.12) / 0.12))
+        layer = Image.new("RGBA", (W, CAM_H), (0, 0, 0, 0))
+        ImageDraw.Draw(layer).text((W // 2, CAM_H - 90), rv["text"], font=font("black", size), fill=col,
+                                   anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+        layer = layer.rotate(-4 if rv.get("color") != "red" else 4, center=(W // 2, CAM_H - 90))
+        cam.alpha_composite(layer)
+    return cam
+
+
+def filled_toast(img, y, q):
+    """'Order filled' banner that slides down over the screen, like a trading app notification."""
+    d = ImageDraw.Draw(img)
+    k = R.ease(q / 0.15) * (1 - R.ease((q - 0.8) / 0.2))
+    yy = y - 90 * (1 - k)
+    d.rounded_rectangle([W / 2 - 250, yy, W / 2 + 250, yy + 76], radius=38, fill=(18, 24, 34), outline=GREEN, width=4)
+    d.ellipse([W / 2 - 228, yy + 16, W / 2 - 184, yy + 60], fill=GREEN)
+    d.text((W / 2 - 206, yy + 38), "✓", font=font("black", 30), fill=(10, 14, 20), anchor="mm")
+    d.text((W / 2 - 165, yy + 38), "ORDER FILLED", font=font("black", 40), fill=WHITE, anchor="lm")
 
 
 def pop(img, v, p, y):
@@ -328,6 +390,21 @@ def render_stream(ep, out_path, work=None):
     wav, timeline, words, total = R.build_audio(scenes, voice, work)
     n = int(total * FPS)
     loud = R.loudness_per_frame(wav, n)
+    # order-filled alerts: snap each fill to the nearest pause between words, so the alert doesn't talk over her
+    fill_times, fill_times_by_scene = [], {}
+    for i, sc in enumerate(scenes):
+        a_, b_ = timeline[i]
+        for f in sc.get("screen", {}).get("fills", []):
+            want = a_ + f.get("at", 0.25) * (b_ - a_)
+            ws = [w for w in words if w["scene"] == i]
+            gaps = [(w1["t"] + w1["d"], w2["t"]) for w1, w2 in zip(ws, ws[1:])] + [(ws[-1]["t"] + ws[-1]["d"], b_)] if ws else []
+            best = min(gaps, key=lambda g: abs(g[0] - want) - 0.6 * (g[1] - g[0]), default=(want, want))
+            ft = best[0] + 0.05
+            f["at"] = max(0.0, min(1.0, (ft - a_) / max(0.1, b_ - a_)))
+            fill_times.append(ft)
+            fill_times_by_scene.setdefault(i, []).append(ft)
+    if fill_times and ep.get("fill_sound", True):
+        wav = R.mix_sfx(wav, R.fill_sound(work), fill_times, work)
     screen = None
     if ep.get("screen"):
         from ricotrader.desktop import ScreenCam
@@ -367,11 +444,18 @@ def render_stream(ep, out_path, work=None):
                 ft = a + f_.get("at", 0.25) * (b - a)
                 if t >= ft:
                     since = t - ft
-            cam = cam_placeholder(t, lv, mood, since)
+            rq, rv = reaction_at(sc, t, a, b, fill_times_by_scene.get(si, []))
+            face = rv.get("face", mood) if rv else mood
+            cam = cam_placeholder(t, lv, face, since if not rv else (t - rv["_t"]))
+            if rv:
+                cam = punch(cam, rq, rv)
         img.alpha_composite(cam, (0, 0))
         cam_overlay(img)
         if screen:
             img.alpha_composite(screen.frame(scenes, si, p, t, timeline), (0, CAM_H))
+            for ft in fill_times:
+                if ft <= t < ft + 1.8:
+                    filled_toast(img, CAM_H + 26, (t - ft) / 1.8)
             ImageDraw.Draw(img).line([0, CAM_H, W, CAM_H], fill=PINK, width=4)
         else:
             tiles(img, ep, t)

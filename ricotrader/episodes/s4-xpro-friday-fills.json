@@ -92,11 +92,11 @@
       }
     },
     {
-      "say": "So. Eight fifty-one... my bot grabs a QQQ put for a dollar fifty. Market's dumping, so, yeah. Let's go.",
+      "say": "Eight fifty-one. My trend book fires and grabs a QQQ put for a dollar fifty. It only trades when a few things line up. Which things? Not telling.",
       "mood": "calm",
       "pop": {
-        "text": "BUY $1.50",
-        "sub": "QQQ 594 PUT",
+        "text": "TREND BOOK",
+        "sub": "fired \u00b7 put for $1.50",
         "color": "yellow"
       },
       "screen": {
@@ -120,10 +120,15 @@
           8.857,
           623.07
         ]
+      },
+      "react": {
+        "face": "hype",
+        "text": "WE'RE IN",
+        "color": "yellow"
       }
     },
     {
-      "say": "Wait. Wait! It's up seventy-eight bucks! Come on, come on!",
+      "say": "Wait. Wait! It's up seventy-eight dollars! Come on, come on!",
       "mood": "hype",
       "pop": {
         "text": "+$78",
@@ -147,16 +152,21 @@
           620.6
         ]
       },
-      "rate": "+20%",
-      "pitch": "+9Hz",
-      "pause": 0.1
+      "rate": "+16%",
+      "pause": 0.1,
+      "react": {
+        "face": "wow",
+        "text": "LET'S GOOO",
+        "color": "green",
+        "at": 0.15
+      }
     },
     {
-      "say": "Aaand... it sells. Plus twenty-eight. It literally gave back fifty dollars. Ugh. I'll take it, I guess.",
+      "say": "Then its safety exit kicks in. When the move starts snapping back, it bails. Plus twenty-eight. It gave back fifty dollars! I'll take it, I guess.",
       "mood": "pain",
       "pop": {
         "text": "+$28",
-        "sub": "594 PUT \u00b7 SOLD",
+        "sub": "safety exit \u00b7 594 PUT",
         "color": "green"
       },
       "screen": {
@@ -188,14 +198,19 @@
           9.553,
           621.79
         ]
+      },
+      "react": {
+        "face": "ugh",
+        "text": "SO CLOSE",
+        "color": "yellow"
       }
     },
     {
-      "say": "Then my call spread. QQQ pops right through the strike, and... yep. Stopped out. Minus thirty. Of course.",
+      "say": "Then my morning spread book. It has one rule I can tell you: if price crosses the strike, it's out. No hoping. QQQ crossed. Minus thirty dollars.",
       "mood": "pain",
       "pop": {
         "text": "-$30",
-        "sub": "CALL SPREAD \u00b7 STOPPED",
+        "sub": "SPREAD BOOK \u00b7 strike rule",
         "color": "red"
       },
       "screen": {
@@ -230,6 +245,11 @@
           10.36,
           622.0
         ]
+      },
+      "react": {
+        "face": "ugh",
+        "text": "NOOO",
+        "color": "red"
       }
     },
     {
@@ -267,6 +287,12 @@
           12.4,
           613.8
         ]
+      },
+      "react": {
+        "face": "hype",
+        "text": "GREEN DAY",
+        "color": "green",
+        "at": 0.55
       }
     },
     {
@@ -279,11 +305,11 @@
       }
     },
     {
-      "say": "I'm trading again Monday, live. Follow and watch it with me. Real trades, not financial advice, okay?",
+      "say": "Next time, I'll show you which of my books is actually winning. Follow so you don't miss it. Real trades, not financial advice, okay?",
       "mood": "hype",
       "pop": {
         "text": "FOLLOW",
-        "sub": "live again Monday",
+        "sub": "which book wins? next video",
         "color": "pink"
       },
       "screen": {

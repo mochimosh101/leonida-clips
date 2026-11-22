@@ -96,6 +96,42 @@ async def _tts(text, voice, path, rate="+6%", pitch="+0Hz"):
     return words
 
 
+def fill_sound(work, voice="en-US-JennyNeural"):
+    """Our own order-filled alert: a quick two-note chime, then a short 'Order filled.' in an app-alert voice."""
+    chime = os.path.join(work, "chime.wav")
+    expr = ("0.55*sin(2*PI*1318.5*t)*exp(-28*t)*lt(t,0.12)"
+            "+0.6*sin(2*PI*1760*(t-0.1))*exp(-9*(t-0.1))*gte(t,0.1)"
+            "+0.18*sin(2*PI*3520*(t-0.1))*exp(-14*(t-0.1))*gte(t,0.1)")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "aevalsrc=" + expr.replace(",", "\\,") + ":s=48000:d=0.7",
+                    "-ac", "1", chime], check=True)
+    if os.environ.get("RICO_FAKE_TTS"):
+        return chime
+    said = os.path.join(work, "filled.mp3")
+    asyncio.run(_tts("Order filled.", voice, said, "+12%", "+0Hz"))
+    out = os.path.join(work, "fill_sfx.wav")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", chime, "-i", said, "-filter_complex",
+                    "[1:a]adelay=330|330,aresample=48000,volume=0.8[v];[0:a][v]amix=inputs=2:normalize=0[o]",
+                    "-map", "[o]", "-ac", "1", out], check=True)
+    return out
+
+
+def mix_sfx(wav, sfx, times, work, duck=0.45):
+    """Lay the alert over the voice track at each time; the voice dips while it plays."""
+    if not times:
+        return wav
+    out = os.path.join(work, "voice_sfx.wav")
+    inputs = ["-i", wav] + sum([["-i", sfx] for _ in times], [])
+    vol = "+".join(f"between(t,{t0:.2f},{t0 + 1.3:.2f})" for t0 in times)
+    filt = [f"[0:a]volume='if({vol},{duck},1)':eval=frame[v]"]
+    for k, t0 in enumerate(times):
+        filt.append(f"[{k + 1}:a]adelay={int(t0 * 1000)}|{int(t0 * 1000)}[s{k}]")
+    filt.append("[v]" + "".join(f"[s{k}]" for k in range(len(times))) +
+                f"amix=inputs={len(times) + 1}:normalize=0:duration=first[o]")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt),
+                    "-map", "[o]", "-ac", "1", out], check=True)
+    return out
+
+
 def probe_duration(path):
     out = subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                    "-of", "csv=p=0", path])
@@ -106,8 +142,9 @@ def build_audio(scenes, voice, work):
     """Speak every scene, join with short pauses. Returns (wav path, per-scene timing, word list)."""
     parts, timeline, words, t = [], [], [], 0.35
     # delivery per mood, so the host doesn't read every line in the same flat tone
-    style = {"hype": ("+14%", "+6Hz", 0.15), "pain": ("+0%", "-3Hz", 0.5), "calm": ("+6%", "+0Hz", 0.3),
-             "deep": ("-6%", "-2Hz", 0.6)}
+    # (rate, pitch, pause after). Pitch stays small: big pitch shifts make the neural voice glitch.
+    style = {"hype": ("+12%", "+2Hz", 0.15), "pain": ("+0%", "-1Hz", 0.45), "calm": ("+6%", "+0Hz", 0.3),
+             "deep": ("-6%", "+0Hz", 0.6)}
     for i, sc in enumerate(scenes):
         mp3 = os.path.join(work, f"s{i}.mp3")
         rate, pitch, gap = style.get(sc.get("mood", "calm"), style["calm"])
@@ -123,7 +160,8 @@ def build_audio(scenes, voice, work):
     inputs, filt = [], []
     for k, (mp3, start) in enumerate(parts):
         inputs += ["-i", mp3]
-        filt.append(f"[{k}:a]adelay={int(start * 1000)}|{int(start * 1000)},aresample=48000[a{k}]")
+        filt.append(f"[{k}:a]aresample=48000,afade=t=in:d=0.015,areverse,afade=t=in:d=0.04,areverse,"
+                    f"adelay={int(start * 1000)}|{int(start * 1000)}[a{k}]")
     filt.append("".join(f"[a{k}]" for k in range(len(parts))) + f"amix=inputs={len(parts)}:normalize=0,apad[out]")
     subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", ";".join(filt),
                     "-map", "[out]", "-t", f"{total:.2f}", "-ac", "1", wav], check=True)
