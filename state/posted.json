@@ -361,5 +361,23 @@
     "youtube_id": "7S9XBs_oNBo",
     "dry_run": false,
     "posted_at": "2026-11-22T03:29:17Z"
+  },
+  {
+    "clip_id": "EnticingFrailTortoiseCharlieBitMe-gljPQtpIAF3An235",
+    "streamer": "ludwig",
+    "views": 13511,
+    "title": "Ludwig's Salon Trip Goes Wrong in GTA 6",
+    "hook": "Ludwig got Lucia fresh highlights. Why is Jason running?",
+    "mid": "Map open, partner gone. That's never a good sign.",
+    "verdict": "Neon score: 8 out of 10. Paid for the hair, skipped the bill. Bonnie and Clyde energy, salon edition.",
+    "hook_style": "H3",
+    "verdict_style": "V1",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "26XUUS4UNsg",
+    "dry_run": false,
+    "posted_at": "2026-11-22T17:00:03Z"
   }
 ]
