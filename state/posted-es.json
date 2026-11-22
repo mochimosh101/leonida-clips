@@ -228,5 +228,23 @@
     "youtube_id": "TyYNrIwjqE0",
     "dry_run": false,
     "posted_at": "2026-11-22T03:08:16Z"
+  },
+  {
+    "clip_id": "SolidWildStinkbugDatBoi-IK4p8veqZ7xPGh7f",
+    "streamer": "carola",
+    "views": 1978,
+    "title": "Carola y el timing de los 20 subs GTA 6",
+    "hook": "Este podr\u00eda ser el timing m\u00e1s perfecto de Carola en GTA 6.",
+    "mid": "Pantalla negra justo ah\u00ed. Ni Rockstar lo planea mejor.",
+    "verdict": "Cinco estrellas. Nivel de b\u00fasqueda, no calificaci\u00f3n. Juampi pag\u00f3 20 subs por un estreno con pantalla negra.",
+    "hook_style": "H2",
+    "verdict_style": "V5",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "k6UzJuZ760Q",
+    "dry_run": false,
+    "posted_at": "2026-11-22T15:37:34Z"
   }
 ]
