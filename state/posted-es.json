@@ -282,5 +282,23 @@
     "youtube_id": "dFS7ctj4QZg",
     "dry_run": false,
     "posted_at": "2026-11-22T21:05:41Z"
+  },
+  {
+    "clip_id": "FineFastPotatoOptimizePrime-inV4L6UqTN4eWTV2",
+    "streamer": "auronplay",
+    "views": 1417,
+    "title": "Auronplay y su gran preocupaci\u00f3n en GTA 6",
+    "hook": "Auronplay con el maletero lleno en pleno puente. \u00bfY Luc\u00eda?",
+    "mid": "Prioridades claras: primero las cervezas, luego la novia.",
+    "verdict": "Consejo de Rico: vende el bot\u00edn antes de parar en un puente. Las cervezas se lloran despu\u00e9s, Luc\u00eda primero.",
+    "hook_style": "H1",
+    "verdict_style": "V3",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "VueRsiTblK8",
+    "dry_run": false,
+    "posted_at": "2026-11-22T23:38:31Z"
   }
 ]
