@@ -1,7 +1,7 @@
 {
   "channels": {
     "en": {
-      "updated": "2026-11-22T18:39:30Z",
+      "updated": "2026-11-22T21:36:24Z",
       "videos_scored": 24,
       "weights": {
         "caption_style": {
@@ -70,8 +70,8 @@
       "lessons": []
     },
     "es": {
-      "updated": "2026-11-22T18:39:31Z",
-      "videos_scored": 10,
+      "updated": "2026-11-22T21:36:24Z",
+      "videos_scored": 11,
       "weights": {
         "caption_style": {
           "A": 0.333,
@@ -107,11 +107,11 @@
       "tested": {
         "caption_style": {
           "A": 3,
-          "B": 4,
+          "B": 5,
           "C": 3
         },
         "hook_style": {
-          "H1": 2,
+          "H1": 3,
           "H2": 2,
           "H3": 2,
           "H4": 1,
@@ -125,7 +125,7 @@
           "V3": 3,
           "V4": 2,
           "V5": 0,
-          "V6": 1
+          "V6": 2
         },
         "title_style": {
           "count": 0,
