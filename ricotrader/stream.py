@@ -217,8 +217,8 @@ def cam_overlay(img):
     d = ImageDraw.Draw(img)
     d.ellipse([28, 30, 50, 52], fill=RED)
     d.text((62, 41), "RICA", font=font("black", 34), fill=WHITE, anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
-    d.rounded_rectangle([W - 420, 22, W - 24, 62], radius=20, fill=(0, 0, 0))
-    d.text((W - 222, 42), "MY REAL TRADES · NOT ADVICE", font=font("bold", 24), fill=CYAN, anchor="mm")
+    d.rounded_rectangle([W - 250, 22, W - 24, 62], radius=20, fill=(0, 0, 0))
+    d.text((W - 137, 42), "MY REAL TRADES", font=font("bold", 24), fill=CYAN, anchor="mm")
     d.line([0, CAM_H - 2, W, CAM_H - 2], fill=PINK, width=4)
 
 
@@ -241,8 +241,7 @@ def app_chrome(ep):
             d.rectangle([x, y + 128, x + d.textlength(tab, font=font("bold", 28)), y + 132], fill=CYAN)
         x += d.textlength(tab, font=font("bold", 28)) + 48
     d.line([0, y + 140, W, y + 140], fill=APP_LINE, width=2)
-    d.text((W // 2, 1890), "Education only · Not financial advice · Trading can lose money",
-           font=font("medium", 24), fill=MUTED, anchor="mm")
+    d.text((W // 2, 1898), "Not financial advice", font=font("medium", 20), fill=(52, 56, 72), anchor="mm")
     return img
 
 
@@ -254,8 +253,7 @@ def screen_chrome(ep, y_screen_end):
     tag = ep["screen"].get("tag", "")
     if tag:
         d.text((W // 2, 1845), tag, font=font("bold", 28), fill=CYAN, anchor="mm")
-    d.text((W // 2, 1890), "Education only · Not financial advice · Trading can lose money",
-           font=font("medium", 24), fill=MUTED, anchor="mm")
+    d.text((W // 2, 1898), "Not financial advice", font=font("medium", 20), fill=(52, 56, 72), anchor="mm")
     return img
 
 
@@ -421,7 +419,7 @@ def render_stream(ep, out_path, work=None):
 
     ff = subprocess.Popen(
         ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-         "-i", "-", "-i", wav, "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
+         "-i", "-", "-i", wav, "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p",
          "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", out_path],
         stdin=subprocess.PIPE)
     for fi in range(n):

@@ -53,7 +53,7 @@
             462,
             232,
             1381,
-            842
+            853
           ],
           "axis": [
             1382,
@@ -304,7 +304,7 @@
       }
     },
     {
-      "say": "Next time, I'll show you which of my books is actually winning. Follow so you don't miss it. Real trades, not financial advice, okay?",
+      "say": "Next time, I'll show you which of my books is actually winning. Follow so you don't miss it.",
       "mood": "hype",
       "pop": {
         "text": "FOLLOW",

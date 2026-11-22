@@ -27,6 +27,7 @@ TABBAR = 42
 ADDR = 46
 CONTENT = (0, TABBAR + ADDR, DW, DH - TASKBAR)      # where the page screenshot goes
 _desk_cache = {}
+MIN_VIEW_W = 900
 
 
 def _wallpaper():
@@ -124,6 +125,10 @@ def fit_aspect(box, aspect):
     """Grow the box to the output aspect (w/h) around its center, kept inside the desktop."""
     x0, y0, x1, y1 = box
     w, h = x1 - x0, y1 - y0
+    cx_, cy_ = (x0 + x1) / 2, (y0 + y1) / 2
+    if w < MIN_VIEW_W:                 # never zoom past ~1.2x of the real screenshot pixels (keeps text sharp)
+        w = MIN_VIEW_W
+        x0, x1 = cx_ - w / 2, cx_ + w / 2
     if w / h > aspect:
         h = w / aspect
     else:
@@ -303,10 +308,13 @@ class ScreenCam:
         cx, cy = (box[0] + box[2]) / 2, (box[1] + box[3]) / 2
         bw, bh = (box[2] - box[0]) * push, (box[3] - box[1]) * push
         box = [cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2]
-        ib = tuple(int(v) for v in box)
+        ib = (max(0, int(box[0]) - 1), max(0, int(box[1]) - 1), min(DW, int(box[2]) + 2), min(DH, int(box[3]) + 2))
         img = self.desktop(page).crop(ib)
         self.draw_overlays(img, scenes, si, p, page, ib, t)
-        img = img.resize((self.out_w, self.out_h), Image.BILINEAR)
+        # one high-quality resample with a sub-pixel box: sharp text and smooth (non-jittery) camera moves
+        img = img.resize((self.out_w, self.out_h), Image.LANCZOS,
+                         box=(box[0] - ib[0], box[1] - ib[1], box[2] - ib[0], box[3] - ib[1]))
+        img = img.filter(ImageFilter.UnsharpMask(radius=1.1, percent=55, threshold=2))
         # pointer travels from the previous click to this one
         start = prev.get("click", [DW * 0.6, DH * 0.5])
         end = click or start
