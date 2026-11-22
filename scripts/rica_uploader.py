@@ -88,11 +88,11 @@ def install():
     dst = os.path.join(os.path.expanduser("~"), "rica_uploader.py")
     if me != dst:
         shutil.copy(me, dst)
-    cmd = f'"{py}" "{dst}" --watch'
-    r = subprocess.run(["schtasks", "/Create", "/F", "/SC", "ONLOGON", "/TN", "RicaClipUploader", "/TR", cmd],
-                       capture_output=True, text=True)
-    if r.returncode != 0:
-        sys.exit("Couldn't add the startup task: " + r.stderr.strip())
+    # Startup-folder launcher: works without admin rights (schtasks ONLOGON needs admin)
+    startup = os.path.join(os.environ.get("APPDATA", ""), "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
+    os.makedirs(startup, exist_ok=True)
+    with open(os.path.join(startup, "RicaClipUploader.cmd"), "w") as f:
+        f.write(f'@start "" "{py}" "{dst}" --watch\r\n')
     subprocess.Popen([py, dst, "--watch"], creationflags=getattr(subprocess, "DETACHED_PROCESS", 0))
     print("Installed. The uploader runs in the background now and every time you log in.")
 
