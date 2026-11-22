@@ -27,6 +27,17 @@ REPO = "mochimosh101/leonida-clips"
 BRANCH = "claude/project-thread-c75y3q"
 DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
 STATE = os.path.join(os.path.expanduser("~"), ".rica_uploader.json")
+LOG = os.path.join(os.path.expanduser("~"), "rica_uploader.log")
+
+
+def log(msg):
+    line = time.strftime("%Y-%m-%d %H:%M:%S ") + msg
+    try:
+        print(line, flush=True)
+    except Exception:                      # pythonw has no console
+        pass
+    with open(LOG, "a", encoding="utf-8") as f:
+        f.write(line + "\n")
 
 
 def token():
@@ -37,7 +48,8 @@ def token():
             return r.stdout.strip()
     try:
         r = subprocess.run(["git", "credential", "fill"], input="protocol=https\nhost=github.com\n\n",
-                           capture_output=True, text=True, timeout=60)
+                           capture_output=True, text=True, timeout=60, env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+                           creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         for line in r.stdout.splitlines():
             if line.startswith("password="):
                 return line.split("=", 1)[1]
@@ -66,17 +78,18 @@ def upload(fn, tok, state):
         body["sha"] = cur.json()["sha"]
     r = requests.put(url, headers=h, json=body, timeout=300)
     if r.status_code not in (200, 201):
-        print(f"{os.path.basename(fn)}: upload failed (HTTP {r.status_code})")
+        log(f"{os.path.basename(fn)}: upload failed (HTTP {r.status_code})")
         return False
     state[fn] = digest
     json.dump(state, open(STATE, "w"))
-    print(f"{os.path.basename(fn)}: uploaded to {path}")
+    log(f"{os.path.basename(fn)}: uploaded to {path}")
     return True
 
 
 def scan(tok):
     state = json.load(open(STATE)) if os.path.exists(STATE) else {}
-    files = [f for ext in ("mp4", "jpg", "png") for f in glob.glob(os.path.join(DOWNLOADS, f"rica-*.{ext}"))]
+    files = [f for ext in ("mp4", "jpg", "png") for f in glob.glob(os.path.join(DOWNLOADS, f"rica-*.{ext}"))
+             if " " not in os.path.basename(f)]      # skip browser duplicates like "rica-pain (1).mp4"
     for f in sorted(files):
         if time.time() - os.path.getmtime(f) > 3:          # skip files still downloading
             upload(f, tok, state)
@@ -107,8 +120,12 @@ def main():
         scan(tok)
         install()
         return 0
+    log("uploader started" + (" (watching)" if a.watch else ""))
     while True:
-        scan(tok)
+        try:
+            scan(tok)
+        except Exception as e:             # never die in the background; try again next round
+            log(f"error: {e!r}")
         if not a.watch:
             return 0
         time.sleep(30)
