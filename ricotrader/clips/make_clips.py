@@ -96,6 +96,9 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args()
+    if os.environ.get("RICA_ALLOW_PAID_API") != "yes":   # Mochi (Nov 22): no API charges; clips come from grok.com
+        print("Paid API is switched off. Make clips on grok.com instead (see README).")
+        return 0
     if not os.environ.get("XAI_API_KEY"):
         print("XAI_API_KEY not set yet, nothing to do.")
         return 0

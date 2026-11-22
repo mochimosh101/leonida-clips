@@ -38,12 +38,6 @@ jobs:
       - name: Install Python deps
         run: pip install "edge-tts>=7" pillow google-api-python-client google-auth requests
 
-      - name: Make Rica's realistic clips (Grok API, only the missing ones)
-        if: github.event_name == 'push'
-        env:
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-        run: python -m ricotrader.clips.make_clips
-
       - name: Preview (push to a claude/ branch)
         if: github.event_name == 'push'
         run: |
@@ -57,7 +51,7 @@ jobs:
           python -m ricotrader.voice_only ricotrader/episodes/sample-rica-stream.json previews/rica-voice.mp3
           git config user.name "autoclip-bot"
           git config user.email "autoclip-bot@users.noreply.github.com"
-          git add previews ricotrader/clips
+          git add previews
           git diff --cached --quiet || git commit -m "Render Rico preview"
           git pull --rebase -X theirs origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
