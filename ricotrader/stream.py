@@ -228,6 +228,20 @@ def screen_chrome(ep, y_screen_end):
     return img
 
 
+def pop(img, v, p, y):
+    """Big number caption (e.g. +$28) that punches in at the start of a scene."""
+    if not v:
+        return
+    d = ImageDraw.Draw(img)
+    k = R.ease(p / 0.12)
+    col = R.COLORS.get(v.get("color", ""), WHITE)
+    size = int(130 * (0.7 + 0.3 * k) + 14 * max(0.0, 1 - abs(p - 0.1) / 0.1))
+    d.text((W // 2, y), v["text"], font=font("black", size), fill=col, anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0))
+    if v.get("sub"):
+        d.text((W // 2, y + 95), v["sub"], font=font("bold", 40), fill=(200, 205, 225), anchor="mm",
+               stroke_width=3, stroke_fill=(0, 0, 0))
+
+
 def tiles(img, ep, t):
     items = ep.get("tiles", [])
     if not items:
@@ -291,10 +305,11 @@ def render_stream(ep, out_path, work=None):
     screen = None
     if ep.get("screen"):
         from ricotrader.desktop import ScreenCam
-        SCR_H = 608                      # 1080x608 ~ 16:9 view of the Windows desktop
+        big = ep["screen"].get("big", False)
+        SCR_H = 1000 if big else 608     # big: the screen fills most of the Short; numbers become pop captions
         screen = ScreenCam(ep, W, SCR_H)
         R.PANEL[:] = [40, CAM_H + SCR_H + 40, W - 40, CAM_H + SCR_H + 490]
-        R.CAPTION_Y[0] = CAM_H + SCR_H + 580
+        R.CAPTION_Y[0] = CAM_H + SCR_H + 290 if big else CAM_H + SCR_H + 580
         chrome = screen_chrome(ep, CAM_H + SCR_H)
     else:
         chrome = app_chrome(ep)
@@ -332,7 +347,10 @@ def render_stream(ep, out_path, work=None):
             trade_log(img, ep, t)
         vis = sc.get("visual", {})
         typ = vis.get("type")
-        if typ == "quote":
+        if screen and ep["screen"].get("big") and typ != "quote":
+            pop(img, sc.get("pop"), p, CAM_H + SCR_H + 100)
+            R.captions(img, words, t)
+        elif typ == "quote":
             R.draw_quote(img, vis, p, mood, words, t, si)
         else:
             {"stat": R.draw_stat, "trade": R.draw_trade, "compare": R.draw_compare, "line": R.draw_line,

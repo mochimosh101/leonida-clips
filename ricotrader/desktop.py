@@ -85,8 +85,11 @@ def make_desktop(page_path, url, title="Desk Trader", blur_boxes=()):
         region = page.crop(tuple(b)).filter(ImageFilter.GaussianBlur(14))
         page.paste(region, tuple(b[:2]))
     cw, ch = CONTENT[2] - CONTENT[0], CONTENT[3] - CONTENT[1]
-    scale = cw / page.width
-    page = page.resize((cw, int(page.height * scale)), Image.LANCZOS).crop((0, 0, cw, ch))
+    scale = _fit_scale(page.width, page.height, page_path)
+    page = page.resize((int(page.width * scale), int(page.height * scale)), Image.LANCZOS).crop((0, 0, cw, ch))
+    if page.width < cw:   # page is taller than the window: extend its right edge (scrollbar track) to fill
+        edge = page.crop((page.width - 2, 0, page.width, page.height)).resize((cw - page.width, page.height))
+        img.paste(edge, (CONTENT[0] + page.width, CONTENT[1]))
     img.paste(page, (CONTENT[0], CONTENT[1]))
     _chrome(d, url, title)
     _taskbar(d)
@@ -94,10 +97,18 @@ def make_desktop(page_path, url, title="Desk Trader", blur_boxes=()):
     return img
 
 
+FIT_HEIGHT = set()   # page paths shown whole (fit to window height) instead of fit to width
+
+
+def _fit_scale(w, h, path=None):
+    cw, ch = CONTENT[2] - CONTENT[0], CONTENT[3] - CONTENT[1]
+    return ch / h if path in FIT_HEIGHT else cw / w
+
+
 def page_scale(page_path):
     """Screenshot px -> desktop px factor, to translate focus boxes given in screenshot pixels."""
-    w = Image.open(page_path).width
-    return (CONTENT[2] - CONTENT[0]) / w
+    w, h = Image.open(page_path).size
+    return _fit_scale(w, h, page_path)
 
 
 def ease(x):
@@ -135,6 +146,25 @@ def draw_pointer(img, x, y, pressed=False, ripple=0.0):
     d.polygon(pts, fill=(255, 255, 255), outline=(0, 0, 0))
 
 
+def _to_desk(page_path, x, y):
+    k = page_scale(page_path)
+    return CONTENT[0] + x * k, CONTENT[1] + y * k
+
+
+def draw_fill(d, x, y, side, label, k, a, up=None, stem=34):
+    """App-style fill marker: arrow + tag. (x, y) already in crop coords; k = page->desktop scale."""
+    col = (38, 214, 120) if side == "buy" else (255, 77, 106) if side == "loss" else (255, 196, 40)
+    r = 9 * k * (0.6 + 0.4 * a)
+    d.ellipse([x - r, y - r, x + r, y + r], fill=col, outline=(255, 255, 255), width=max(2, int(2 * k)))
+    f = font("black", int(17 * k))
+    tw = d.textlength(label, font=f)
+    up = (side == "buy") if up is None else up      # True = tag hangs below the marker
+    ty = y + (stem if up else -stem) * k
+    d.line([x, y + (r if up else -r), x, ty + (-12 if up else 12) * k], fill=col, width=max(2, int(2 * k)))
+    d.rounded_rectangle([x - tw / 2 - 10 * k, ty - 14 * k, x + tw / 2 + 10 * k, ty + 14 * k], radius=int(6 * k), fill=col)
+    d.text((x, ty), label, font=f, fill=(10, 12, 18), anchor="mm")
+
+
 class ScreenCam:
     """Per-frame view of the desktop for a given output box size."""
 
@@ -143,6 +173,8 @@ class ScreenCam:
         self.out_w, self.out_h = out_w, out_h
         self.aspect = out_w / out_h
         self.full = fit_aspect([0, 0, DW, DH * 0.62], self.aspect)
+        for name in self.cfg.get("fit_height", []):
+            FIT_HEIGHT.add(self.cfg["pages"][name])
 
     def desktop(self, page):
         p = self.cfg["pages"][page]
@@ -150,6 +182,48 @@ class ScreenCam:
         title = self.cfg.get("titles", {}).get(page, self.cfg.get("title", "Desk Trader"))
         return make_desktop(p, url, title,
                             self.cfg.get("blur", {}).get(page, []))
+
+    def draw_overlays(self, img, scenes, si, p, page, ib):
+        """Real fills (markers on the chart) and rows in the app's Today's trades list, page-pixel coords."""
+        cfg = self.cfg.get("overlays", {}).get(page)
+        if not cfg:
+            return
+        path = self.cfg["pages"][page]
+        k = page_scale(path)
+        d = ImageDraw.Draw(img)
+        fills, rows = [], []
+        for j in range(si + 1):
+            sc = scenes[j].get("screen", {})
+            for f in sc.get("fills", []):
+                a = 1.0 if j < si else ease((p - f.get("at", 0.25)) / 0.08)
+                if a > 0:
+                    fills.append((f, a))
+            for r in sc.get("rows", []):
+                a = 1.0 if j < si else ease((p - r.get("at", 0.3)) / 0.08)
+                if a > 0:
+                    rows.append((r, a))
+        L = cfg.get("list")
+        if L and rows:
+            x0, y0, x1, y1 = L["box"]
+            dx0, dy0 = _to_desk(path, x0, y0)
+            dx1, dy1 = _to_desk(path, x1, y1)
+            d.rectangle([dx0 - ib[0], dy0 - ib[1], dx1 - ib[0], dy1 - ib[1]], fill=tuple(L.get("bg", (17, 22, 31))))
+            for n, (r, a) in enumerate(reversed(rows)):   # newest on top, like the app
+                ry = dy0 - ib[1] + (8 + n * 46) * k
+                if ry > dy1 - ib[1] - 30 * k:
+                    break
+                rx = dx0 - ib[0] + 10 * k
+                col = (38, 214, 120) if r["pnl"] >= 0 else (255, 77, 106)
+                d.rounded_rectangle([rx, ry, dx1 - ib[0] - 10 * k, ry + 40 * k], radius=int(6 * k), fill=(24, 30, 42))
+                d.rectangle([rx, ry, rx + 4 * k, ry + 40 * k], fill=col)
+                d.text((rx + 14 * k, ry + 13 * k), r["sym"], font=font("black", int(15 * k)), fill=(235, 238, 245), anchor="lm")
+                d.text((rx + 14 * k, ry + 30 * k), r["time"] + " · " + r.get("what", "sold"), font=font("medium", int(12 * k)),
+                       fill=(140, 146, 170), anchor="lm")
+                txt = ("+$" if r["pnl"] >= 0 else "-$") + f"{abs(r['pnl']):.0f}"
+                d.text((dx1 - ib[0] - 22 * k, ry + 20 * k), txt, font=font("black", int(17 * k)), fill=col, anchor="rm")
+        for f, a in fills:
+            x, y = _to_desk(path, f["x"], f["y"])
+            draw_fill(d, x - ib[0], y - ib[1], f.get("side", "buy"), f["label"], k, a, f.get("below"), f.get("stem", 34))
 
     def frame(self, scenes, si, p, t, timeline):
         """Return an RGB image (out_w x out_h) plus the pointer position in output coords."""
@@ -176,7 +250,10 @@ class ScreenCam:
         cx, cy = (box[0] + box[2]) / 2, (box[1] + box[3]) / 2
         bw, bh = (box[2] - box[0]) * push, (box[3] - box[1]) * push
         box = [cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2]
-        img = self.desktop(page).crop(tuple(int(v) for v in box)).resize((self.out_w, self.out_h), Image.BILINEAR)
+        ib = tuple(int(v) for v in box)
+        img = self.desktop(page).crop(ib)
+        self.draw_overlays(img, scenes, si, p, page, ib)
+        img = img.resize((self.out_w, self.out_h), Image.BILINEAR)
         # pointer travels from the previous click to this one
         start = prev.get("click", [DW * 0.6, DH * 0.5])
         end = click or start

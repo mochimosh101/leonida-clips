@@ -1,0 +1,241 @@
+{
+  "layout": "stream",
+  "voice": "en-US-AvaMultilingualNeural",
+  "date": "2026-11-20",
+  "date_label": "FRI NOV 20, 2026",
+  "title": "My bot's put was up $78... then this happened",
+  "description": "Friday on my Desk Trader XPRO screen: every fill is a real trade from my bot.",
+  "tags": [
+    "day trading",
+    "options trading",
+    "trading bot",
+    "QQQ"
+  ],
+  "screen": {
+    "big": true,
+    "tag": "",
+    "title": "Desk Trader XPRO",
+    "pages": {
+      "xpro": "ricotrader/screens/xpro-qqq.png"
+    },
+    "url": "trading.sichi.me/app/xpro",
+    "fit_height": [
+      "xpro"
+    ],
+    "overlays": {
+      "xpro": {
+        "list": {
+          "box": [
+            2,
+            722,
+            458,
+            900
+          ],
+          "bg": [
+            13,
+            17,
+            25
+          ]
+        }
+      }
+    }
+  },
+  "scenes": [
+    {
+      "say": "This is my XPRO screen from Friday. Every marker you're about to see is a real fill.",
+      "mood": "hype",
+      "pop": {
+        "text": "FRIDAY",
+        "sub": "QQQ \u00b7 real money",
+        "color": "cyan"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          479,
+          301,
+          1499,
+          1004
+        ]
+      }
+    },
+    {
+      "say": "Eight fifty-one. My bot buys a QQQ 594 put for a dollar fifty.",
+      "mood": "calm",
+      "pop": {
+        "text": "BUY $1.50",
+        "sub": "QQQ 594 PUT",
+        "color": "yellow"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          874,
+          431,
+          1145,
+          754
+        ],
+        "fills": [
+          {
+            "x": 933.3,
+            "y": 508.2,
+            "side": "buy",
+            "label": "BUY 594P",
+            "at": 0.35
+          }
+        ]
+      }
+    },
+    {
+      "say": "QQQ keeps dropping. My put is up seventy-eight dollars!",
+      "mood": "hype",
+      "pop": {
+        "text": "+$78",
+        "sub": "at the top",
+        "color": "green"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          916,
+          504,
+          1072,
+          712
+        ]
+      }
+    },
+    {
+      "say": "Nine thirty-three, it sells. Plus twenty-eight. It gave back fifty dollars. Ugh.",
+      "mood": "pain",
+      "pop": {
+        "text": "+$28",
+        "sub": "594 PUT \u00b7 SOLD",
+        "color": "green"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          874,
+          431,
+          1145,
+          754
+        ],
+        "fills": [
+          {
+            "x": 971.8,
+            "y": 522.8,
+            "side": "sell",
+            "label": "SOLD +$28",
+            "at": 0.2
+          }
+        ],
+        "rows": [
+          {
+            "time": "9:33 AM",
+            "sym": "QQQ 594P",
+            "pnl": 28,
+            "at": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "say": "Then my call spread. QQQ crosses the strike. Stopped out. Minus thirty.",
+      "mood": "pain",
+      "pop": {
+        "text": "-$30",
+        "sub": "CALL SPREAD \u00b7 STOPPED",
+        "color": "red"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          937,
+          484,
+          1197,
+          775
+        ],
+        "fills": [
+          {
+            "x": 1016.5,
+            "y": 520.4,
+            "side": "loss",
+            "label": "STOP -$30",
+            "at": 0.45,
+            "below": true,
+            "stem": 78
+          }
+        ],
+        "rows": [
+          {
+            "time": "10:21 AM",
+            "sym": "QQQ 622C spread",
+            "pnl": -30,
+            "what": "stopped",
+            "at": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "say": "By the close: twelve options trades, nine winners. Plus thirty-nine dollars on options.",
+      "mood": "calm",
+      "pop": {
+        "text": "+$39",
+        "sub": "12 TRADES \u00b7 9 WINNERS",
+        "color": "green"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          0,
+          723,
+          489,
+          1030
+        ],
+        "rows": [
+          {
+            "time": "11:56 AM",
+            "sym": "QQQ 565P",
+            "pnl": -15,
+            "what": "stopped",
+            "at": 0.3
+          },
+          {
+            "time": "12:24 PM",
+            "sym": "QQQ 570P",
+            "pnl": 5,
+            "at": 0.45
+          }
+        ]
+      }
+    },
+    {
+      "say": "Don't let one great trade make you greedy, or one bad trade make you scared.",
+      "mood": "deep",
+      "visual": {
+        "type": "quote",
+        "text": "Don't let one great trade make you greedy, or one bad trade make you scared.",
+        "by": "Rica"
+      }
+    },
+    {
+      "say": "I trade live again Monday. Follow, and watch it happen. Real trades, not financial advice.",
+      "mood": "hype",
+      "pop": {
+        "text": "FOLLOW",
+        "sub": "live again Monday",
+        "color": "pink"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ]
+      }
+    }
+  ]
+}
