@@ -394,6 +394,114 @@ def pop(img, v, p, y):
                stroke_width=3, stroke_fill=(0, 0, 0))
 
 
+def _pnl_series(v):
+    """Dollar P&L path for a scene's live position card, from the app's real option marks."""
+    mult = v.get("mult", 100) * v.get("qty", 1)
+    sign = -1 if v.get("side") == "credit" else 1
+    marks = v.get("marks") or []
+    a, b = v.get("range", [0, len(marks) - 1])
+    vals = [sign * (m - v["entry"]) * mult for m in marks[a:b + 1]] if marks else list(v.get("path", [0, 0]))
+    if v.get("peak") is not None and vals:              # the app's reported best (mfe) for the peak point
+        i = max(range(len(vals)), key=lambda j: vals[j] * (1 if v["peak"] >= 0 else -1))
+        vals[i] = v["peak"]
+    if v.get("final") is not None:
+        vals[-1] = v["final"]
+    if v.get("start") is not None:
+        vals[0] = v["start"]
+    return vals
+
+
+def pnl_card(img, v, p, y0):
+    """Live position card: the P&L number and its line move with the real price while the trade is open."""
+    if not v:
+        return
+    vals = _pnl_series(v)
+    if len(vals) < 2:
+        return
+    q = max(0.0, min(1.0, (p - v.get("t0", 0.04)) / max(0.05, v.get("t1", 0.9) - v.get("t0", 0.04))))
+    fi = q * (len(vals) - 1)
+    i0 = int(fi)
+    cur = vals[i0] + (vals[min(i0 + 1, len(vals) - 1)] - vals[i0]) * (fi - i0)
+    k = R.ease(p / 0.08)
+    x0, x1, h = 30, 560, 320
+    y = y0 + (1 - k) * 40
+    lay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    col = GREEN if cur >= 0 else RED
+    d.rounded_rectangle([x0, y, x1, y + h], radius=22, fill=(12, 15, 24, int(230 * k)), outline=col + (int(255 * k),), width=4)
+    d.text((x0 + 24, y + 30), v.get("label", "POSITION"), font=font("bold", 24), fill=(200, 205, 225, int(255 * k)), anchor="lm")
+    d.text((x1 - 24, y + 92), v.get("tag", "LIVE P&L"), font=font("bold", 26), fill=col + (int(255 * k),), anchor="rm")
+    d.text((x0 + 24, y + 92), ("+$" if cur >= 0 else "-$") + f"{abs(cur):.0f}", font=font("black", 84),
+           fill=col + (int(255 * k),), anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0, int(255 * k)))
+    # the P&L line so far, with a zero line
+    gx0, gx1, gy0, gy1 = x0 + 24, x1 - 24, y + 150, y + h - 22
+    levels = v.get("levels", [])  # real exit rules: TP / SL in dollars, from the playbook
+    trail = v.get("trail", [])    # [[index, dollars], ...] where the trailing stop sat
+    allv = vals + [lv["val"] for lv in levels] + [t[1] for t in trail]
+    lo, hi = min(min(allv), 0), max(max(allv), 0)
+    span = max(1e-6, hi - lo)
+    Y = lambda val: gy1 - (val - lo) / span * (gy1 - gy0)
+    X = lambda j: gx0 + j / (len(vals) - 1) * (gx1 - gx0)
+    zy = Y(0)
+    xx = gx0
+    while xx < gx1:
+        d.line([xx, zy, min(xx + 8, gx1), zy], fill=(120, 126, 150, int(200 * k)), width=2)
+        xx += 16
+    for lv in levels:
+        lc = {"green": GREEN, "red": RED, "yellow": (255, 210, 60)}.get(lv.get("color"), (200, 205, 225))
+        ly = Y(lv["val"])
+        lf = font("bold", 20)
+        end = gx1 - d.textlength(lv["label"], font=lf) - 12
+        xx = gx0
+        while xx < end:
+            d.line([xx, ly, min(xx + 14, end), ly], fill=lc + (int(230 * k),), width=3)
+            xx += 22
+        d.text((gx1, ly), lv["label"], font=lf, fill=lc + (int(255 * k),), anchor="rm")
+    tpts = [(X(j), Y(val)) for j, val in trail if j <= fi]
+    if tpts:
+        tpts = tpts + [(X(fi), tpts[-1][1])]
+        step = [tpts[0]]
+        for a, b in zip(tpts, tpts[1:]):
+            step += [(b[0], a[1]), b]
+        d.line(step, fill=(255, 210, 60, int(255 * k)), width=3)
+        d.text((step[-1][0] + 6, step[-1][1] + 14), "trail", font=font("bold", 18), fill=(255, 210, 60, int(255 * k)), anchor="lm")
+    pts = [(X(j), Y(vals[j])) for j in range(i0 + 1)] + [(X(fi), Y(cur))]
+    if len(pts) > 1:
+        d.line(pts, fill=col + (int(255 * k),), width=5, joint="curve")
+    cx, cy = pts[-1]
+    d.ellipse([cx - 9, cy - 9, cx + 9, cy + 9], fill=col + (int(255 * k),))
+    if v.get("peak") is not None and max(vals) == v["peak"]:
+        j = vals.index(v["peak"])
+        if j <= fi:
+            px, py = X(j), Y(v["peak"])
+            d.text((px, py - 16), f"peak +${v['peak']:.0f}", font=font("bold", 22), fill=(235, 238, 245, int(255 * k)), anchor="mb")
+    img.alpha_composite(lay)
+
+
+def day_chip(img, ep, scenes, si, p, y):
+    """Running total for the day: ticks up or down the moment each trade closes."""
+    spec = ep.get("day_pnl")
+    if not spec:
+        return
+    total, prev, when = spec.get("start", 0.0), None, None
+    for ev in spec.get("events", []):
+        j, at, val = ev
+        if j < si or (j == si and p >= at):
+            prev, total, when = total, val, (j, at)
+    if si < spec.get("from_scene", 0):
+        return
+    shown = total
+    if when and when[0] == si and prev is not None:
+        a, b = when[1], when[1] + 0.12
+        shown = prev + (total - prev) * R.ease((p - a) / max(0.01, b - a))
+    d = ImageDraw.Draw(img)
+    col = GREEN if shown >= 0 else RED
+    x1 = W - 30
+    d.rounded_rectangle([x1 - 330, y, x1, y + 96], radius=20, fill=(12, 15, 24), outline=col, width=4)
+    d.text((x1 - 306, y + 28), spec.get("label", "TODAY"), font=font("bold", 24), fill=MUTED, anchor="lm")
+    d.text((x1 - 306, y + 66), ("+$" if shown >= 0 else "-$") + f"{abs(shown):.0f}", font=font("black", 50), fill=col, anchor="lm")
+
+
 def tiles(img, ep, t):
     items = ep.get("tiles", [])
     if not items:
@@ -535,6 +643,8 @@ def render_stream(ep, out_path, work=None):
                 if ft <= t < ft + 1.8:
                     filled_toast(img, CAM_H + 26, (t - ft) / 1.8)
             ImageDraw.Draw(img).line([0, CAM_H, W, CAM_H], fill=PINK, width=4)
+            pnl_card(img, sc.get("pnl"), p, CAM_H + SCR_H - 350)
+            day_chip(img, ep, scenes, si, p, CAM_H + 110)
         else:
             tiles(img, ep, t)
             trade_log(img, ep, t)
