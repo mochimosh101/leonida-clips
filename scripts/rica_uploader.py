@@ -8,10 +8,16 @@ re-renders the videos by itself.
   python rica_uploader.py --watch    # keep watching (checks every 30 s)
   python rica_uploader.py --install  # start watching automatically every time you log in to Windows
 
+While watching it also listens on http://127.0.0.1:8765 (this PC only) so grok.com can hand clips over
+directly, with no download or Save prompt, and it updates itself from GitHub when a newer version lands.
+
 Uses your GitHub login from the GitHub CLI (gh) or the one Git already saved. Nothing secret is printed.
 """
 import argparse
 import base64
+import http.server
+import re
+import threading
 import glob
 import hashlib
 import json
@@ -28,6 +34,10 @@ BRANCH = "claude/project-thread-c75y3q"
 DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
 STATE = os.path.join(os.path.expanduser("~"), ".rica_uploader.json")
 LOG = os.path.join(os.path.expanduser("~"), "rica_uploader.log")
+VERSION = 2
+PORT = 8765
+ALLOWED_ORIGINS = ("https://grok.com", "https://www.grok.com")
+NAME_OK = re.compile(r"^[A-Za-z0-9_.-]{1,80}$")
 
 
 def log(msg):
@@ -95,6 +105,87 @@ def scan(tok):
             upload(f, tok, state)
 
 
+class Receiver(http.server.BaseHTTPRequestHandler):
+    """grok.com page -> POST /clip?name=say-x&ext=mp4 (video bytes). Saved to Downloads and uploaded at once."""
+    tok = None
+
+    def _cors(self):
+        origin = self.headers.get("Origin", "")
+        if origin in ALLOWED_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self.send_header("Access-Control-Allow-Private-Network", "true")
+
+    def _reply(self, code, obj):
+        body = json.dumps(obj).encode()
+        self.send_response(code)
+        self._cors()
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._cors()
+        self.end_headers()
+
+    def do_GET(self):
+        self._reply(200, {"ok": True, "version": VERSION})
+
+    def do_POST(self):
+        from urllib.parse import urlparse, parse_qs
+        if self.headers.get("Origin", "") not in ALLOWED_ORIGINS:
+            return self._reply(403, {"ok": False, "error": "origin"})
+        q = parse_qs(urlparse(self.path).query)
+        name, ext = q.get("name", [""])[0], q.get("ext", ["mp4"])[0]
+        if not NAME_OK.match(name) or ext not in ("mp4", "jpg", "png"):
+            return self._reply(400, {"ok": False, "error": "bad name"})
+        n = int(self.headers.get("Content-Length", "0"))
+        if n <= 0 or n > 200_000_000:
+            return self._reply(400, {"ok": False, "error": "size"})
+        data = self.rfile.read(n)
+        fn = os.path.join(DOWNLOADS, f"rica-{name}.{ext}")
+        with open(fn, "wb") as f:
+            f.write(data)
+        state = json.load(open(STATE)) if os.path.exists(STATE) else {}
+        ok = upload(fn, self.tok, state)
+        log(f"received {os.path.basename(fn)} from grok.com ({n} bytes)")
+        self._reply(200, {"ok": True, "uploaded": ok, "path": target(fn), "bytes": n})
+
+    def log_message(self, *a):
+        pass
+
+
+def serve(tok):
+    Receiver.tok = tok
+    try:
+        srv = http.server.ThreadingHTTPServer(("127.0.0.1", PORT), Receiver)
+    except OSError as e:
+        log(f"receiver not started: {e!r}")
+        return
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    log(f"receiver listening on 127.0.0.1:{PORT}")
+
+
+def self_update(tok):
+    """Replace this script with a newer VERSION from the bot's branch, then restart."""
+    h = {"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github.raw+json"}
+    r = requests.get(f"https://api.github.com/repos/{REPO}/contents/scripts/rica_uploader.py",
+                     headers=h, params={"ref": BRANCH}, timeout=60)
+    if r.status_code != 200:
+        return
+    m = re.search(r"^VERSION = (\d+)", r.text, re.M)
+    if not m or int(m.group(1)) <= VERSION:
+        return
+    me = os.path.abspath(__file__)
+    with open(me, "w", encoding="utf-8") as f:
+        f.write(r.text)
+    log(f"updated to version {m.group(1)}, restarting")
+    os.execv(sys.executable, [sys.executable, me] + sys.argv[1:])
+
+
 def install():
     py = sys.executable.replace("python.exe", "pythonw.exe")
     me = os.path.abspath(__file__)
@@ -120,8 +211,17 @@ def main():
         scan(tok)
         install()
         return 0
-    log("uploader started" + (" (watching)" if a.watch else ""))
+    log(f"uploader v{VERSION} started" + (" (watching)" if a.watch else ""))
+    if a.watch:
+        serve(tok)
+    last_update = 0
     while True:
+        if a.watch and time.time() - last_update > 1800:
+            last_update = time.time()
+            try:
+                self_update(tok)
+            except Exception as e:
+                log(f"update check failed: {e!r}")
         try:
             scan(tok)
         except Exception as e:             # never die in the background; try again next round
