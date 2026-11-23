@@ -300,5 +300,23 @@
     "youtube_id": "VueRsiTblK8",
     "dry_run": false,
     "posted_at": "2026-11-22T23:38:31Z"
+  },
+  {
+    "clip_id": "BlatantTenderIcecreamUWot-NDulaXJlbR9f2ztu",
+    "streamer": "rubius",
+    "views": 21115,
+    "title": "Rubius conoce a una vecina en GTA 6",
+    "hook": "Rubius se sienta junto a una lugare\u00f1a. \u00bfQu\u00e9 pod\u00eda salir mal?",
+    "mid": "Ojo, el bot\u00f3n de apaciguar estaba justo ah\u00ed.",
+    "verdict": "Predicci\u00f3n: en GTA 6 los NPC recordar\u00e1n este insulto. Esa se\u00f1ora ya tiene a Rubius en su lista negra.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "1TVcc802wlo",
+    "dry_run": false,
+    "posted_at": "2026-11-23T02:38:20Z"
   }
 ]
