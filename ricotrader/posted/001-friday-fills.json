@@ -1,0 +1,320 @@
+{
+  "layout": "stream",
+  "voice": "en-US-AvaNeural",
+  "date": "2026-11-20",
+  "date_label": "FRI NOV 20, 2026",
+  "title": "My bot's put was up $78... then this happened",
+  "description": "Friday on my Desk Trader screen: every fill is a real trade from my bot.",
+  "tags": [
+    "day trading",
+    "options trading",
+    "trading bot",
+    "QQQ"
+  ],
+  "screen": {
+    "big": true,
+    "tag": "",
+    "title": "Desk Trader XPRO",
+    "pages": {
+      "xpro": "ricotrader/screens/xpro-qqq.png"
+    },
+    "url": "trading.sichi.me/app/xpro",
+    "fit_height": [
+      "xpro"
+    ],
+    "overlays": {
+      "xpro": {
+        "list": {
+          "box": [
+            2,
+            722,
+            458,
+            900
+          ],
+          "bg": [
+            13,
+            17,
+            25
+          ]
+        },
+        "live": {
+          "time": [
+            1,
+            498,
+            55.4
+          ],
+          "price": [
+            647.5,
+            229,
+            595,
+            829
+          ],
+          "plot": [
+            462,
+            232,
+            1381,
+            853
+          ],
+          "axis": [
+            1382,
+            1446
+          ],
+          "step": 2.5
+        }
+      }
+    },
+    "live_start": [
+      6.5,
+      641.0
+    ],
+    "blur": {
+      "xpro": [
+        [
+          12,
+          285,
+          445,
+          352
+        ]
+      ]
+    }
+  },
+  "scenes": [
+    {
+      "say": "Wait. Wait! It's up seventy-eight dollars! Come on, come on!",
+      "mood": "hype",
+      "pop": {
+        "text": "+$78",
+        "sub": "at the top",
+        "color": "green",
+        "count": [
+          40,
+          78
+        ]
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          916,
+          504,
+          1072,
+          712
+        ],
+        "now": [
+          9.2,
+          620.6
+        ],
+        "from_focus": [
+          760,
+          380,
+          1240,
+          820
+        ]
+      },
+      "react": {
+        "face": "wow",
+        "text": "LET'S GOOO",
+        "color": "green",
+        "at": 0.15
+      },
+      "clip": "ricotrader/clips/say-s4-2.mp4"
+    },
+    {
+      "say": "Eight fifty-one. My trend book fires and grabs a triple Q put for a dollar fifty. It only trades when a few things line up. Which things? Not telling.",
+      "mood": "calm",
+      "pop": {
+        "text": "TREND BOOK",
+        "sub": "rewind · 8:51 AM · put for $1.50",
+        "color": "yellow"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          874,
+          431,
+          1145,
+          754
+        ],
+        "fills": [
+          {
+            "x": 933.3,
+            "y": 508.2,
+            "side": "buy",
+            "label": "BUY 594P",
+            "at": 0.47
+          }
+        ],
+        "now": [
+          8.857,
+          623.07
+        ]
+      },
+      "react": {
+        "face": "hype",
+        "text": "WE'RE IN",
+        "color": "yellow"
+      },
+      "clip": "ricotrader/clips/say-s4-1.mp4"
+    },
+    {
+      "say": "Then the safety exit bails. Plus twenty-eight. It gave back fifty! I'll take it, I guess.",
+      "mood": "pain",
+      "pop": {
+        "text": "+$28",
+        "sub": "safety exit · 594 PUT",
+        "color": "green"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          874,
+          431,
+          1145,
+          754
+        ],
+        "fills": [
+          {
+            "x": 971.8,
+            "y": 522.8,
+            "side": "sell",
+            "label": "SOLD +$28",
+            "at": 0.47
+          }
+        ],
+        "rows": [
+          {
+            "time": "9:33 AM",
+            "sym": "QQQ 594P",
+            "pnl": 28,
+            "at": 0.5
+          }
+        ],
+        "now": [
+          9.553,
+          621.79
+        ]
+      },
+      "react": {
+        "face": "ugh",
+        "text": "SO CLOSE",
+        "color": "yellow"
+      },
+      "clip": "ricotrader/clips/say-s4-3b.mp4"
+    },
+    {
+      "say": "Then my morning spread book. It has one rule I can tell you: if price crosses the strike, it's out. No hoping. Triple Q crossed. Minus thirty dollars.",
+      "mood": "pain",
+      "pop": {
+        "text": "-$30",
+        "sub": "SPREAD BOOK · strike rule",
+        "color": "red"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          937,
+          484,
+          1197,
+          775
+        ],
+        "fills": [
+          {
+            "x": 1016.5,
+            "y": 520.4,
+            "side": "loss",
+            "label": "STOP -$30",
+            "at": 0.5,
+            "below": true,
+            "stem": 78
+          }
+        ],
+        "rows": [
+          {
+            "time": "10:21 AM",
+            "sym": "QQQ 622C spread",
+            "pnl": -30,
+            "what": "stopped",
+            "at": 0.53
+          }
+        ],
+        "now": [
+          10.36,
+          622.0
+        ]
+      },
+      "react": {
+        "face": "ugh",
+        "text": "NOOO",
+        "color": "red"
+      },
+      "clip": "ricotrader/clips/say-s4-4.mp4"
+    },
+    {
+      "say": "By the close? Twelve options trades, nine green. Plus thirty-nine on options. Not bad. Not amazing.",
+      "mood": "calm",
+      "pop": {
+        "text": "+$39",
+        "sub": "12 TRADES · 9 WINNERS",
+        "color": "green"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          0,
+          723,
+          489,
+          1030
+        ],
+        "rows": [
+          {
+            "time": "11:56 AM",
+            "sym": "QQQ 565P",
+            "pnl": -15,
+            "what": "stopped",
+            "at": 0.3
+          },
+          {
+            "time": "12:24 PM",
+            "sym": "QQQ 570P",
+            "pnl": 5,
+            "at": 0.45
+          }
+        ],
+        "now": [
+          12.4,
+          613.8
+        ]
+      },
+      "react": {
+        "face": "hype",
+        "text": "GREEN DAY",
+        "color": "green",
+        "at": 0.55
+      },
+      "clip": "ricotrader/clips/say-s4-5b.mp4"
+    },
+    {
+      "say": "Next time, I'll show you which of my books is actually winning. Follow so you don't miss it.",
+      "mood": "hype",
+      "pop": {
+        "text": "FOLLOW",
+        "sub": "which book wins? next video",
+        "color": "pink"
+      },
+      "screen": {
+        "page": "xpro",
+        "focus": [
+          0,
+          88,
+          1920,
+          1032
+        ],
+        "now": [
+          16.9,
+          617.72
+        ]
+      },
+      "clip": "ricotrader/clips/say-s4-7.mp4"
+    }
+  ],
+  "video_id": "aif67hZTo8Q"
+}
