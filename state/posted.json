@@ -466,5 +466,23 @@
     "youtube_id": "qc1Uk0McYuA",
     "dry_run": false,
     "posted_at": "2026-11-23T18:31:37Z"
+  },
+  {
+    "clip_id": "TenuousDependableBananaMingLee-KqfjPnql33RIJzBg",
+    "streamer": "zoreee",
+    "views": 9247,
+    "title": "ZoReee's Getaway Training Goes Great GTA 6",
+    "hook": "ZoReee calls this getaway training. What could possibly go wrong?",
+    "mid": "That's not a shortcut. That's a mural with confidence.",
+    "verdict": "Tip: underpasses have shadows on the road, walls don't. Training arc continues tomorrow, ideally with a minimap.",
+    "hook_style": "H6",
+    "verdict_style": "V3",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "33Fy0FAcOxY",
+    "dry_run": false,
+    "posted_at": "2026-11-23T21:34:16Z"
   }
 ]
