@@ -36,12 +36,14 @@ def ema(vals, n):
     return out
 
 
-def make_page(bars1m, date_label, out_path, start_h=6.5, end_h=13.0, step=2.5):
+def make_page(bars1m, date_label, out_path, start_h=6.5, end_h=13.0, step=2.5, minutes=None):
     """Draw the page; returns the 'live' overlay spec (time->x, price->y) for the episode JSON."""
     im = Image.open(BASE).convert("RGB")
     W, H = im.size
     d = ImageDraw.Draw(im)
-    cs = candles(bars1m)
+    if minutes is None:                      # a day of 5-minute bars has ~78 rows, 1-minute has ~390
+        minutes = 1 if len(bars1m) <= 80 else 5
+    cs = candles(bars1m, minutes) if minutes > 1 else [b for b in bars1m if b]
     hi = max(c[1] for c in cs)
     lo = min(c[2] for c in cs)
     p0 = math.ceil(hi / step) * step + step / 2
@@ -55,7 +57,7 @@ def make_page(bars1m, date_label, out_path, start_h=6.5, end_h=13.0, step=2.5):
     d.rectangle([462, 112, 1432, 905], fill=BG)
     d.rounded_rectangle([468, 118, 1425, 207], radius=8, fill=(19, 33, 41), outline=(40, 120, 140), width=1)
     d.text((482, 140), "Market replay · " + date_label, font=font("black", 15), fill=(235, 238, 245), anchor="lm")
-    d.text((482, 168), "QQQ 5-minute candles from the real 1-minute prices. Every marker is a real fill from my account.",
+    d.text((482, 168), "QQQ 5-minute candles from real market prices. Every marker is a real fill from my account.",
            font=font("medium", 13), fill=MUTED, anchor="lm")
     d.text((1412, 140), "Replay", font=font("medium", 13), fill=MUTED, anchor="rm")
     # grid + price axis labels
@@ -91,7 +93,7 @@ def make_page(bars1m, date_label, out_path, start_h=6.5, end_h=13.0, step=2.5):
     d.text((x1 - 4, 228), "EMA 9", font=font("bold", 12), fill=(255, 160, 40), anchor="rm")
     d.text((x1 - 54, 228), "EMA 21", font=font("bold", 12), fill=(70, 170, 255), anchor="rm")
     d.text((470, 228), "QQQ · 5m · " + date_label, font=font("bold", 12), fill=MUTED, anchor="lm")
-    d.text((1420, 891), "Chart: real 1-minute prices grouped into 5-minute candles", font=font("medium", 12),
+    d.text((1420, 891), "Chart: real QQQ prices, 5-minute candles", font=font("medium", 12),
            fill=MUTED, anchor="rm")
     # left panel: the old day's numbers would be wrong, so replace them with this day's facts
     d.rectangle([0, 110, 458, 674], fill=PANEL)
