@@ -424,6 +424,8 @@ def pnl_card(img, v, p, y0):
     cur = vals[i0] + (vals[min(i0 + 1, len(vals) - 1)] - vals[i0]) * (fi - i0)
     k = R.ease(p / 0.08)
     x0, x1, h = 30, 560, 320
+    if v.get("side") == "right":                  # keep fills on the left of the chart visible
+        x0, x1 = W - 560, W - 30
     y = y0 + (1 - k) * 40
     lay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
