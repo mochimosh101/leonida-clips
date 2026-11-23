@@ -431,5 +431,23 @@
     "youtube_id": "eqs2rW29bb0",
     "dry_run": false,
     "posted_at": "2026-11-23T03:32:46Z"
+  },
+  {
+    "clip_id": "DullPrettyCaterpillarKappaWealth-_PBk2Ut1sJ0GUkqc",
+    "streamer": "xqc",
+    "views": 9168,
+    "title": "xQc's Final Rating Has a Twist | GTA 6",
+    "hook": "xQc beat GTA 6 in 62 hours. What saved his score?",
+    "mid": "Hold on. He just admitted the 9 comes with an asterisk.",
+    "verdict": "Hot take: a game that needs a mod to hit 9 is a 7.8. Wait for PC, then judge.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "IZfFHGC2Xg0",
+    "dry_run": false,
+    "posted_at": "2026-11-23T17:05:06Z"
   }
 ]
