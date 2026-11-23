@@ -336,5 +336,23 @@
     "youtube_id": "hcv6KN0WqFU",
     "dry_run": false,
     "posted_at": "2026-11-23T15:40:25Z"
+  },
+  {
+    "clip_id": "LazyCrepuscularElephantRlyTho-eDm1k29Romx-3A4d",
+    "streamer": "illojuan",
+    "views": 1269,
+    "title": "IlloJuan y la peor confesi\u00f3n en moto GTA 6",
+    "hook": "Jason confiesa lo de Donnie en plena moto. Mala idea, IlloJuan.",
+    "mid": "Ah\u00ed est\u00e1. La verdad duele, el asfalto m\u00e1s.",
+    "verdict": "Consejo de Rico: las confesiones, con casco y estacionado. Nunca a 80 por hora con el carril invadido.",
+    "hook_style": "H6",
+    "verdict_style": "V3",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "GTpZZjhNjCo",
+    "dry_run": false,
+    "posted_at": "2026-11-23T18:38:44Z"
   }
 ]
