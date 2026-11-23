@@ -318,5 +318,23 @@
     "youtube_id": "1TVcc802wlo",
     "dry_run": false,
     "posted_at": "2026-11-23T02:38:20Z"
+  },
+  {
+    "clip_id": "HomelyPlayfulChimpanzeeHassanChop-e2AgFBsrixYbnet5",
+    "streamer": "illojuan",
+    "views": 3819,
+    "title": "IlloJuan encuentra algo raro en GTA 6",
+    "hook": "IlloJuan entra a una oficina cualquiera. \u00bfQu\u00e9 esconde esa computadora?",
+    "mid": "Ojo a la hoja de c\u00e1lculo, ah\u00ed est\u00e1 el chisme.",
+    "verdict": "Predicci\u00f3n: esos cangrejos mutantes no son decoraci\u00f3n. Rockstar ya est\u00e1 cocinando una misi\u00f3n con ellos.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "hcv6KN0WqFU",
+    "dry_run": false,
+    "posted_at": "2026-11-23T15:40:25Z"
   }
 ]
