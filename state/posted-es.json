@@ -354,5 +354,23 @@
     "youtube_id": "GTpZZjhNjCo",
     "dry_run": false,
     "posted_at": "2026-11-23T18:38:44Z"
+  },
+  {
+    "clip_id": "RudeBlatantShingleWTRuck-sTQRh6u-FsKevWA0",
+    "streamer": "auronplay",
+    "views": 1216,
+    "title": "Auronplay y la funda m\u00e1s rara GTA 6",
+    "hook": "Auronplay saca el celular de Jason. \u00bfQu\u00e9 tiene puesto encima?",
+    "mid": "Eso no es una funda, es desayuno incluido.",
+    "verdict": "Puntuaci\u00f3n Neon: 8 de 10. Protege mejor que mi seguro, y encima sirve caf\u00e9.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "MxhVKrLajr0",
+    "dry_run": false,
+    "posted_at": "2026-11-23T23:37:59Z"
   }
 ]
