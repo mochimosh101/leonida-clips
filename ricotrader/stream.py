@@ -476,6 +476,7 @@ def pnl_card(img, v, p, y0):
         j = vals.index(v["peak"])
         if j <= fi:
             px, py = X(j), Y(v["peak"])
+            px = min(max(px, gx0 + 70), gx1 - 70)
             d.text((px, py - 16), f"peak +${v['peak']:.0f}", font=font("bold", 22), fill=(235, 238, 245, int(255 * k)), anchor="mb")
     img.alpha_composite(lay)
 
