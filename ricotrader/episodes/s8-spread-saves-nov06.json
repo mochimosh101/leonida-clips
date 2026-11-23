@@ -1,0 +1,509 @@
+{
+ "layout": "stream",
+ "voice": "en-US-AvaNeural",
+ "date": "2026-11-06",
+ "date_label": "FRI NOV 6, 2026",
+ "title": "My bot made $15 all day\u2026 then one spread paid $62",
+ "description": "My trading bot was up $15 all day, then one afternoon put credit spread paid $62. Every fill and number is a real trade from my Desk Trader account.",
+ "tags": [
+  "day trading",
+  "options trading",
+  "trading bot",
+  "QQQ",
+  "credit spread"
+ ],
+ "day_pnl": {
+  "label": "TODAY \u00b7 OPTIONS",
+  "start": 0,
+  "from_scene": 1,
+  "events": [
+   [
+    1,
+    0.37,
+    15
+   ],
+   [
+    1,
+    0.74,
+    -6
+   ],
+   [
+    2,
+    0.42,
+    7
+   ],
+   [
+    2,
+    0.77,
+    38
+   ],
+   [
+    3,
+    0.57,
+    15
+   ],
+   [
+    4,
+    0.47,
+    77
+   ]
+  ]
+ },
+ "screen": {
+  "big": true,
+  "tag": "",
+  "title": "Desk Trader XPRO",
+  "pages": {
+   "xpro": "ricotrader/screens/xpro-2026-11-06.png"
+  },
+  "url": "trading.sichi.me/app/xpro",
+  "fit_height": [
+   "xpro"
+  ],
+  "overlays": {
+   "xpro": {
+    "list": {
+     "box": [
+      2,
+      722,
+      458,
+      900
+     ],
+     "bg": [
+      13,
+      17,
+      25
+     ]
+    },
+    "live": {
+     "time": [
+      6.5,
+      470,
+      139.23076923076923
+     ],
+     "price": [
+      666.25,
+      240,
+      651.25,
+      845
+     ],
+     "plot": [
+      470,
+      240,
+      1375,
+      845
+     ],
+     "axis": [
+      1382,
+      1446
+     ],
+     "step": 2.5,
+     "grid": [
+      665.0,
+      662.5,
+      660.0,
+      657.5,
+      655.0,
+      652.5
+     ],
+     "bg": [
+      17,
+      22,
+      31
+     ]
+    }
+   }
+  },
+  "live_start": [
+   6.5,
+   658.35
+  ],
+  "blur": {}
+ },
+ "scenes": [
+  {
+   "say": "My bots made fifteen dollars all day. Then one spread paid sixty-two.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$62",
+    "sub": "one put credit spread",
+    "color": "green"
+   },
+   "react": {
+    "face": "wow",
+    "text": "ONE TRADE",
+    "color": "green",
+    "at": 0.5
+   },
+   "clip": "ricotrader/clips/say-s8-0.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     12.916666666666666,
+     656.22
+    ],
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "from_focus": [
+     460,
+     240,
+     1380,
+     850
+    ]
+   }
+  },
+  {
+   "say": "Six fifty-nine. Quick call, plus fifteen. Then a cheap put gets crushed. Minus twenty-one.",
+   "mood": "pain",
+   "pop": {
+    "text": "-$6",
+    "sub": "+$15 call \u00b7 -$21 put",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "UGH",
+    "color": "red",
+    "at": 0.65
+   },
+   "clip": "ricotrader/clips/say-s8-1.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     8.083333333333334,
+     658.38
+    ],
+    "focus": [
+     458,
+     304,
+     758,
+     604
+    ],
+    "fills": [
+     {
+      "x": 543.1,
+      "y": 386.8,
+      "side": "buy",
+      "label": "BUY 679C",
+      "at": 0.15,
+      "below": false
+     },
+     {
+      "x": 550.1,
+      "y": 462.2,
+      "side": "sell",
+      "label": "+$15",
+      "at": 0.35,
+      "below": true
+     },
+     {
+      "x": 666.1,
+      "y": 482.8,
+      "side": "buy",
+      "label": "BUY 618P",
+      "at": 0.55,
+      "below": false
+     },
+     {
+      "x": 684.6,
+      "y": 520.7,
+      "side": "loss",
+      "label": "-$21",
+      "at": 0.72,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "7:02 AM",
+      "sym": "QQQ 679C",
+      "pnl": 15,
+      "what": "trail",
+      "at": 0.37
+     },
+     {
+      "time": "8:02 AM",
+      "sym": "QQQ 618P",
+      "pnl": -21,
+      "what": "knife",
+      "at": 0.74
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     15,
+     -6
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L"
+   }
+  },
+  {
+   "say": "Nine twenty and nine thirty-eight. Two puts. Plus thirteen, plus thirty-one. I'm up thirty-eight.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$38",
+    "sub": "637P +$13 \u00b7 622P +$31",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "NICE",
+    "color": "green",
+    "at": 0.6
+   },
+   "clip": "ricotrader/clips/say-s8-2.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     10.0,
+     655.31
+    ],
+    "focus": [
+     759,
+     425,
+     1059,
+     725
+    ],
+    "fills": [
+     {
+      "x": 870.3,
+      "y": 510.6,
+      "side": "buy",
+      "label": "BUY 637P",
+      "at": 0.2,
+      "below": false
+     },
+     {
+      "x": 874.9,
+      "y": 510.6,
+      "side": "sell",
+      "label": "+$13",
+      "at": 0.4,
+      "below": true
+     },
+     {
+      "x": 912.1,
+      "y": 638.5,
+      "side": "buy",
+      "label": "BUY 622P",
+      "at": 0.55,
+      "below": false
+     },
+     {
+      "x": 958.5,
+      "y": 627.6,
+      "side": "sell",
+      "label": "+$31",
+      "at": 0.75,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "9:22 AM",
+      "sym": "QQQ 637P",
+      "pnl": 13,
+      "what": "trail",
+      "at": 0.42
+     },
+     {
+      "time": "9:58 AM",
+      "sym": "QQQ 622P",
+      "pnl": 31,
+      "what": "trail",
+      "at": 0.77
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     15,
+     -6,
+     7,
+     38
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L",
+    "side": "right"
+   }
+  },
+  {
+   "say": "Ten thirty-one. Another cheap put hits its stop. Minus twenty-three. Back to plus fifteen.",
+   "mood": "pain",
+   "pop": {
+    "text": "+$15",
+    "sub": "618P stopped \u00b7 -$23",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "STOPPED",
+    "color": "red",
+    "at": 0.55
+   },
+   "clip": "ricotrader/clips/say-s8-3.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     11.083333333333334,
+     658.97
+    ],
+    "focus": [
+     916,
+     388,
+     1216,
+     688
+    ],
+    "fills": [
+     {
+      "x": 1035.0,
+      "y": 539.3,
+      "side": "buy",
+      "label": "BUY 618P",
+      "at": 0.2,
+      "below": false
+     },
+     {
+      "x": 1109.3,
+      "y": 536.0,
+      "side": "loss",
+      "label": "-$23",
+      "at": 0.55,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "11:03 AM",
+      "sym": "QQQ 618P",
+      "pnl": -23,
+      "what": "stopped",
+      "at": 0.57
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     15,
+     -6,
+     7,
+     38,
+     15
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L"
+   }
+  },
+  {
+   "say": "Twelve thirty. My afternoon put spread pays off. Plus sixty-two! The day ends plus seventy-seven.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$62",
+    "sub": "656/651 put spread \u00b7 $0.75 \u2192 $0.13",
+    "color": "green"
+   },
+   "react": {
+    "face": "wow",
+    "text": "LET'S GO",
+    "color": "green",
+    "at": 0.5
+   },
+   "clip": "ricotrader/clips/say-s8-4.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     12.583333333333334,
+     658.27
+    ],
+    "focus": [
+     1140,
+     389,
+     1440,
+     689
+    ],
+    "fills": [
+     {
+      "x": 1311.2,
+      "y": 539.3,
+      "side": "sell",
+      "label": "SPREAD +$62",
+      "at": 0.45,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "12:30 PM",
+      "sym": "QQQ 656P spread",
+      "pnl": 62,
+      "what": "closed",
+      "at": 0.47
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     15,
+     -6,
+     7,
+     38,
+     15,
+     77
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L"
+   }
+  },
+  {
+   "say": "Six trades, four green. One spread did most of the work. Follow to see tomorrow.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$77",
+    "sub": "6 TRADES \u00b7 4 WINNERS",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "SPREAD SAVES",
+    "color": "green",
+    "at": 0.4
+   },
+   "clip": "ricotrader/clips/say-s8-5.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     12.916666666666666,
+     656.22
+    ],
+    "focus": [
+     0,
+     88,
+     1440,
+     1032
+    ]
+   }
+  }
+ ]
+}
