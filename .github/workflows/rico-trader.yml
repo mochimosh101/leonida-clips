@@ -38,9 +38,6 @@ jobs:
       - name: Install Python deps
         run: pip install "edge-tts>=7" pillow google-api-python-client google-auth requests faster-whisper
 
-      - name: Fetch Rica's Grok clips by post id (no browser Save needed)
-        run: python -m ricotrader.fetch_clips
-
       - name: Preview (push to a claude/ branch)
         if: github.event_name == 'push'
         run: |
