@@ -36,6 +36,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main   # latest history, so a queued run sees clips the run before it just posted
 
       - uses: actions/setup-python@v6
         with:
@@ -64,6 +66,14 @@ jobs:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_ES }}  # the Spanish channel's sign-in
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: |
+          SLOT="${{ github.event.schedule }}"
+          if [ -n "$SLOT" ]; then
+            # GitHub sometimes starts scheduled runs late. Skip stale ones; the backup starter covers the slot.
+            read -r M HR _ <<< "$SLOT"
+            NOW=$(( 10#$(date -u +%H) * 60 + 10#$(date -u +%M) ))
+            LATE=$(( (NOW - (HR * 60 + M) + 1440) % 1440 ))
+            if [ "$LATE" -gt 15 ]; then echo "Scheduled slot $SLOT started $LATE min late; skipping."; exit 0; fi
+          fi
           if [ -z "$YOUTUBE_REFRESH_TOKEN" ] && [ "${{ inputs.dry_run }}" != "true" ]; then
             echo "Spanish channel not connected yet (secret YOUTUBE_REFRESH_TOKEN_ES is missing). Skipping."
             exit 0
