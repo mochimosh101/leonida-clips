@@ -189,7 +189,10 @@ def _clip_words(path, text, s0, e0):
         from faster_whisper import WhisperModel
         global _WHISPER
         _WHISPER = globals().get("_WHISPER") or WhisperModel("base.en", device="cpu", compute_type="int8")
-        segs, _ = _WHISPER.transcribe(path, word_timestamps=True, initial_prompt=text)
+        import numpy as np                       # decode with ffmpeg ourselves (PyAV versions break faster-whisper's loader)
+        raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"])
+        audio = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
+        segs, _ = _WHISPER.transcribe(audio, word_timestamps=True, initial_prompt=text)
         ws = [{"t": w.start, "d": max(0.1, w.end - w.start), "w": w.word.strip()} for sg in segs for w in sg.words]
         if ws:
             return ws
