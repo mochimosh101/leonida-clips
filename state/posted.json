@@ -519,5 +519,22 @@
     "youtube_id": "V1QYIfJnl70",
     "dry_run": false,
     "posted_at": "2026-11-24T17:06:24Z"
+  },
+  {
+    "clip_id": "series:10waystogetrichfastingta6:4",
+    "format": "series",
+    "series": "10 Ways to Get Rich Fast in GTA 6",
+    "part": 4,
+    "of": 10,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "PhilanthropicToughCakeUWot-N9xNYKnP7VTdWpik",
+    "streamer": "caseoh_",
+    "title": "10 Ways to Get Rich Fast in GTA 6 (Part 4)",
+    "hook": "Sleep to reset the Pay 'n' Spray limit",
+    "source_url": "https://www.forbes.com/sites/paultassi/2026/11/19/the-best-ways-to-earn-money-in-gta-6-early-mid-and-late-game/",
+    "youtube_id": "oywQhN0xgPk",
+    "dry_run": false,
+    "posted_at": "2026-11-24T18:30:42Z"
   }
 ]
