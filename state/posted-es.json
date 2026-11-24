@@ -408,5 +408,23 @@
     "youtube_id": "gGCHJ91n3hM",
     "dry_run": false,
     "posted_at": "2026-11-24T15:38:21Z"
+  },
+  {
+    "clip_id": "BitterOddBaconDoritosChip-3R4Xq2FU7ksHYsHu",
+    "streamer": "illojuan",
+    "views": 1239,
+    "title": "IlloJuan pierde la paciencia con GTA 6",
+    "hook": "IlloJuan tiene GTA 6 instalado. \u00bfCu\u00e1nto le dura la paciencia?",
+    "mid": "Ese 'no pasa nada' suena a que pasa todo.",
+    "verdict": "Contrario: no lo borr\u00f3 por enfado. Lo borr\u00f3 para tener excusa y descargarlo otra vez esta noche.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "yZmjpJp_voc",
+    "dry_run": false,
+    "posted_at": "2026-11-24T18:37:52Z"
   }
 ]
