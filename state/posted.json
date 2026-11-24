@@ -501,5 +501,23 @@
     "youtube_id": "U-GVoheLSDk",
     "dry_run": false,
     "posted_at": "2026-11-24T03:31:24Z"
+  },
+  {
+    "clip_id": "ArtsyGenerousAniseDendiFace-NxwfD1GOBiYOHbfx",
+    "streamer": "cohhcarnage",
+    "views": 18774,
+    "title": "CohhCarnage Gets Rejected by Aliens GTA 6",
+    "hook": "Cohh found the GTA 6 UFO. Why won't it take him?",
+    "mid": "The aliens are being picky. Rude, honestly, but picky.",
+    "verdict": "Prediction: by Friday, half of Leonida is dieting near that field, testing Cohh's theory. Rockstar's tractor beam has standards.",
+    "hook_style": "H3",
+    "verdict_style": "V4",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "V1QYIfJnl70",
+    "dry_run": false,
+    "posted_at": "2026-11-24T17:06:24Z"
   }
 ]
