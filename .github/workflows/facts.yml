@@ -1,0 +1,102 @@
+name: Split-screen facts Shorts
+
+on:
+  schedule:
+    # 4 Shorts a day (same as the other channels). Pacific (PST): 9:22 AM, 12:22 PM, 5:22 PM, 8:22 PM.
+    - cron: "22 17 * * *"
+    - cron: "22 20 * * *"
+    - cron: "22 1 * * *"
+    - cron: "22 4 * * *"
+  push:
+    branches: ["claude/**"]
+    paths: ["splitfacts/**", "config.facts.yaml", ".github/workflows/facts.yml"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Make the Short but don't upload"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: facts-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  facts:
+    # On work branches, only render a preview when the commit message says [preview]
+    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[preview]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'push' && github.ref || 'main' }}
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install ffmpeg and fonts
+        # apt can take 20+ minutes on a slow mirror, so only use it if ffmpeg is missing; the font comes from GitHub.
+        run: |
+          which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          mkdir -p ~/.fonts
+          for f in Black ExtraBold SemiBold; do
+            curl -sfL -o ~/.fonts/Montserrat-$f.ttf "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Montserrat-$f.ttf" || true
+          done
+          fc-cache -f >/dev/null; fc-list | grep -ci montserrat || true
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt numba
+
+      - name: Make (and post) the next fact Short
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_FACTS || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_FACTS || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_FACTS }}  # the facts channel's sign-in
+        run: |
+          SLOT="${{ github.event.schedule }}"
+          if [ -n "$SLOT" ]; then
+            # GitHub sometimes starts scheduled runs hours late; skip stale ones.
+            read -r M HR _ <<< "$SLOT"
+            NOW=$(( 10#$(date -u +%H) * 60 + 10#$(date -u +%M) ))
+            LATE=$(( (NOW - (HR * 60 + M) + 1440) % 1440 ))
+            if [ "$LATE" -gt 40 ]; then echo "Scheduled slot $SLOT started $LATE min late; skipping."; exit 0; fi
+          fi
+          DRY="${{ (github.event_name == 'push' || inputs.dry_run) && '--dry-run' || '' }}"
+          python -m splitfacts.main $DRY
+
+      - name: Keep the rendered Shorts for 7 days
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: facts-${{ github.run_id }}
+          path: out/*.mp4
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Save a preview on the work branch
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p previews && cp out/fact-*.mp4 previews/ 2>/dev/null || exit 0
+          [ -f state/facts.json ] && git add state/facts.json   # keep the researched facts so they aren't paid for twice
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          git add previews && git commit -m "Facts preview" && git push
+
+      - name: Save the facts queue and posted history
+        if: always() && github.event_name != 'push' && !inputs.dry_run
+        run: |
+          git config user.name "autoclip-bot"
+          git config user.email "autoclip-bot@users.noreply.github.com"
+          [ -f state/facts.json ] && git add state/facts.json
+          git diff --cached --quiet || git commit -m "Record posted facts"
+          git pull --rebase origin main
+          git push
