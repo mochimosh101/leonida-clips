@@ -390,5 +390,23 @@
     "youtube_id": "-xuGrgjtXOo",
     "dry_run": false,
     "posted_at": "2026-11-24T02:54:13Z"
+  },
+  {
+    "clip_id": "CrepuscularDirtyShieldKevinTurtle-Jd_JdiTZ4K2dgjGX",
+    "streamer": "rubius",
+    "views": 1678,
+    "title": "Rubius 'comprado por Rockstar' en GTA 6",
+    "hook": "Rubius jura que hacer cardio en GTA 6 cuenta como gym. \u00bfSeguro?",
+    "mid": "Ojo a la barra, no al camino. Error de novato.",
+    "verdict": "Contrario: no est\u00e1 comprado por Rockstar. Est\u00e1 comprado por la barra de stamina, y esa no le avisa de buses.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "gGCHJ91n3hM",
+    "dry_run": false,
+    "posted_at": "2026-11-24T15:38:21Z"
   }
 ]
