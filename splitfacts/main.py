@@ -260,6 +260,9 @@ def main() -> int:
     a = ap.parse_args()
     with open(os.path.join(ROOT, a.config)) as f:
         cfg = yaml.safe_load(f)
+    if not a.dry_run and not os.environ.get("YOUTUBE_REFRESH_TOKEN"):
+        print("facts channel not connected yet (secret YOUTUBE_REFRESH_TOKEN_FACTS is missing); skipping")
+        return 0
     state_path = os.path.join(ROOT, cfg["state_file"])
     data = load_state(state_path)
 
