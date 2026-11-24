@@ -9,7 +9,9 @@ re-renders the videos by itself.
   python rica_uploader.py --install  # start watching automatically every time you log in to Windows
 
 While watching it also listens on http://127.0.0.1:8765 (this PC only) so grok.com can hand clips over
-directly, with no download or Save prompt, and it updates itself from GitHub when a newer version lands.
+directly, with no download or Save prompt. If Brave still shows its "Save" box for one of Rica's clips
+(file name rica-<name>.mp4/.jpg/.png), the uploader presses Save on it by itself; any other Save box is left
+alone. It updates itself from GitHub when a newer version lands.
 
 Uses your GitHub login from the GitHub CLI (gh) or the one Git already saved. Nothing secret is printed.
 """
@@ -34,7 +36,7 @@ BRANCH = "claude/project-thread-c75y3q"
 DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
 STATE = os.path.join(os.path.expanduser("~"), ".rica_uploader.json")
 LOG = os.path.join(os.path.expanduser("~"), "rica_uploader.log")
-VERSION = 2
+VERSION = 3
 PORT = 8765
 ALLOWED_ORIGINS = ("https://grok.com", "https://www.grok.com")
 NAME_OK = re.compile(r"^[A-Za-z0-9_.-]{1,80}$")
@@ -158,6 +160,74 @@ class Receiver(http.server.BaseHTTPRequestHandler):
         pass
 
 
+SAVE_NAME_OK = re.compile(r"^rica-[A-Za-z0-9_-]{1,80}\.(mp4|jpg|png)$")
+
+
+def auto_save_loop():
+    """Windows only: press Save on Brave's save box when the file name is one of Rica's clips."""
+    if os.name != "nt":
+        return
+    import ctypes
+    from ctypes import wintypes
+    u32, k32 = ctypes.windll.user32, ctypes.windll.kernel32
+    ENUM = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+    WM_GETTEXT, WM_GETTEXTLENGTH, BM_CLICK = 0x000D, 0x000E, 0x00F5
+
+    def text(h):
+        n = u32.SendMessageW(h, WM_GETTEXTLENGTH, 0, 0)
+        buf = ctypes.create_unicode_buffer(n + 1)
+        u32.SendMessageW(h, WM_GETTEXT, n + 1, buf)
+        return buf.value
+
+    def cls(h):
+        buf = ctypes.create_unicode_buffer(64)
+        u32.GetClassNameW(h, buf, 64)
+        return buf.value
+
+    def exe(h):
+        pid = wintypes.DWORD()
+        u32.GetWindowThreadProcessId(h, ctypes.byref(pid))
+        hp = k32.OpenProcess(0x1000, False, pid.value)          # PROCESS_QUERY_LIMITED_INFORMATION
+        if not hp:
+            return ""
+        buf, size = ctypes.create_unicode_buffer(520), wintypes.DWORD(520)
+        k32.QueryFullProcessImageNameW(hp, 0, buf, ctypes.byref(size))
+        k32.CloseHandle(hp)
+        return os.path.basename(buf.value).lower()
+
+    def children(h):
+        out = []
+        cb = ENUM(lambda c, _: out.append(c) or True)
+        u32.EnumChildWindows(h, cb, 0)
+        return out
+
+    done = {}
+    log("auto-Save for Rica clips is on")
+    while True:
+        try:
+            tops = []
+            cb = ENUM(lambda h, _: tops.append(h) or True)
+            u32.EnumWindows(cb, 0)
+            for h in tops:
+                if not u32.IsWindowVisible(h) or cls(h) != "#32770":
+                    continue
+                title = text(h)
+                if not (title.endswith("wants to save") or title in ("Save As", "Save as")) or exe(h) != "brave.exe":
+                    continue
+                kids = children(h)
+                names = [text(c) for c in kids if cls(c) == "Edit"]
+                name = next((n for n in names if n), "")
+                save = next((c for c in kids if cls(c) == "Button" and text(c).replace("&", "") == "Save"), None)
+                if not save or not SAVE_NAME_OK.match(name) or time.time() - done.get(h, 0) < 5:
+                    continue
+                done[h] = time.time()
+                u32.SendMessageW(save, BM_CLICK, 0, 0)
+                log(f"pressed Save for {name}")
+        except Exception as e:
+            log(f"auto-Save error: {e!r}")
+        time.sleep(1)
+
+
 def serve(tok):
     Receiver.tok = tok
     try:
@@ -214,6 +284,7 @@ def main():
     log(f"uploader v{VERSION} started" + (" (watching)" if a.watch else ""))
     if a.watch:
         serve(tok)
+        threading.Thread(target=auto_save_loop, daemon=True).start()
     last_update = 0
     while True:
         if a.watch and time.time() - last_update > 1800:
