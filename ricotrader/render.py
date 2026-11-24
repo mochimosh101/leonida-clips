@@ -194,8 +194,13 @@ def _clip_words(path, text, s0, e0):
         audio = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
         segs, _ = _WHISPER.transcribe(audio, word_timestamps=True, initial_prompt=text)
         ws = [{"t": w.start, "d": max(0.1, w.end - w.start), "w": w.word.strip()} for sg in segs for w in sg.words]
-        if ws:
+        import difflib
+        norm = lambda x: re.sub(r"[^a-z0-9 ]", "", x.lower().replace("-", " ")).split()
+        heard, want = norm(" ".join(w["w"] for w in ws)), norm(text)
+        ratio = difflib.SequenceMatcher(None, heard, want).ratio()
+        if ws and ratio >= 0.75 and all(s0 - 0.5 <= w["t"] <= e0 + 0.5 for w in ws):
             return ws
+        print(f"whisper text didn't match the line ({ratio:.2f}) for {path}: spreading the line over the speech")
     except Exception as e:                       # noqa: BLE001  (no whisper locally: fall back)
         print("whisper unavailable:", e)
     toks = text.split()

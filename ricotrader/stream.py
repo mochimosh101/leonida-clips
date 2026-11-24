@@ -419,7 +419,8 @@ def pnl_card(img, v, p, y0):
     if len(vals) < 2:
         return
     q = max(0.0, min(1.0, (p - v.get("t0", 0.04)) / max(0.05, v.get("t1", 0.9) - v.get("t0", 0.04))))
-    fi = q * (len(vals) - 1)
+    f0 = min(max(0, v.get("from_i", 0)), len(vals) - 1)   # day curves: earlier trades already on the line
+    fi = f0 + q * (len(vals) - 1 - f0)
     i0 = int(fi)
     cur = vals[i0] + (vals[min(i0 + 1, len(vals) - 1)] - vals[i0]) * (fi - i0)
     k = R.ease(p / 0.08)
