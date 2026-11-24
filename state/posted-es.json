@@ -426,5 +426,23 @@
     "youtube_id": "yZmjpJp_voc",
     "dry_run": false,
     "posted_at": "2026-11-24T18:37:52Z"
+  },
+  {
+    "clip_id": "EagerGoodBatteryOhMyDog-Wdi6VId7OcFV9HIz",
+    "streamer": "staryuuki",
+    "views": 1100,
+    "title": "Staryuuki intenta la v\u00eda pac\u00edfica en GTA 6",
+    "hook": "Staryuuki choca a un se\u00f1or y elige calmarlo. \u00bfFuncionar\u00e1?",
+    "mid": "El bot\u00f3n de tranquilizar no tiene garant\u00eda, por lo visto.",
+    "verdict": "Comparaci\u00f3n: en GTA 5 solo hab\u00eda pu\u00f1etazos. En GTA 6 existe 'tranquilizar', y aun as\u00ed termin\u00f3 en el piso.",
+    "hook_style": "H1",
+    "verdict_style": "V2",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "Do7Kxr5I6GE",
+    "dry_run": false,
+    "posted_at": "2026-11-24T23:38:16Z"
   }
 ]
