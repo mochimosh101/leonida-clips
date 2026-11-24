@@ -536,5 +536,23 @@
     "youtube_id": "oywQhN0xgPk",
     "dry_run": false,
     "posted_at": "2026-11-24T18:30:42Z"
+  },
+  {
+    "clip_id": "StormyAbstruseTubersFreakinStinkin-WcoQ6j5V34NnsVKX",
+    "streamer": "eviemeowie",
+    "views": 6069,
+    "title": "Evie Found a New Parking Spot GTA 6",
+    "hook": "Eviemeowie is flying a jet through downtown at night. Bold?",
+    "mid": "Altitude says 477 feet. That tower says otherwise.",
+    "verdict": "Neon score: 3 out of 10. Pretty skyline, zero runway. The building had right of way.",
+    "hook_style": "H2",
+    "verdict_style": "V1",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "S6K-ntUx5o4",
+    "dry_run": false,
+    "posted_at": "2026-11-24T21:34:22Z"
   }
 ]
