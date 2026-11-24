@@ -1,0 +1,554 @@
+{
+ "layout": "stream",
+ "voice": "en-US-AvaNeural",
+ "date": "2026-11-10",
+ "date_label": "TUE NOV 10, 2026",
+ "title": "No home run. 8 small wins = +$86 (trading bot)",
+ "description": "No big winner today: my trading bot stacked small wins to +$86. Every fill and number is a real trade from my Desk Trader account.",
+ "tags": [
+  "day trading",
+  "options trading",
+  "trading bot",
+  "QQQ",
+  "small wins"
+ ],
+ "day_pnl": {
+  "label": "TODAY \u00b7 OPTIONS",
+  "start": 0,
+  "from_scene": 1,
+  "events": [
+   [
+    1,
+    0.15,
+    -1
+   ],
+   [
+    1,
+    0.3,
+    -5
+   ],
+   [
+    1,
+    0.52,
+    11
+   ],
+   [
+    1,
+    0.72,
+    25
+   ],
+   [
+    2,
+    0.47,
+    47
+   ],
+   [
+    2,
+    0.72,
+    67
+   ],
+   [
+    3,
+    0.15,
+    68
+   ],
+   [
+    3,
+    0.32,
+    83
+   ],
+   [
+    3,
+    0.62,
+    77
+   ],
+   [
+    4,
+    0.2,
+    83
+   ],
+   [
+    4,
+    0.3,
+    86
+   ]
+  ]
+ },
+ "screen": {
+  "big": true,
+  "tag": "",
+  "title": "Desk Trader XPRO",
+  "pages": {
+   "xpro": "ricotrader/screens/xpro-2026-11-10.png"
+  },
+  "url": "trading.sichi.me/app/xpro",
+  "fit_height": [
+   "xpro"
+  ],
+  "overlays": {
+   "xpro": {
+    "list": {
+     "box": [
+      2,
+      722,
+      458,
+      900
+     ],
+     "bg": [
+      13,
+      17,
+      25
+     ]
+    },
+    "live": {
+     "time": [
+      6.5,
+      470,
+      139.23076923076923
+     ],
+     "price": [
+      683.75,
+      240,
+      663.75,
+      845
+     ],
+     "plot": [
+      470,
+      240,
+      1375,
+      845
+     ],
+     "axis": [
+      1382,
+      1446
+     ],
+     "step": 2.5,
+     "grid": [
+      682.5,
+      680.0,
+      677.5,
+      675.0,
+      672.5,
+      670.0,
+      667.5,
+      665.0
+     ],
+     "bg": [
+      17,
+      22,
+      31
+     ]
+    }
+   }
+  },
+  "live_start": [
+   6.5,
+   671.36
+  ],
+  "blur": {}
+ },
+ "scenes": [
+  {
+   "say": "No big home run today. Just small wins stacking up to plus eighty-six.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$86",
+    "sub": "biggest win only $22",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "STACKING",
+    "color": "green",
+    "at": 0.4
+   },
+   "clip": "ricotrader/clips/say-s7-0.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     12.916666666666666,
+     674.81
+    ],
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "from_focus": [
+     460,
+     240,
+     1380,
+     850
+    ]
+   }
+  },
+  {
+   "say": "Eight thirty-six. Triple Q is sliding, so my bots buy puts. Plus sixteen, then plus fourteen.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$30",
+    "sub": "8:36 AM \u00b7 663P and 655P",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "PUTS",
+    "color": "yellow",
+    "at": 0.2
+   },
+   "clip": "ricotrader/clips/say-s7-1.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     8.75,
+     670.67
+    ],
+    "focus": [
+     623,
+     471,
+     923,
+     771
+    ],
+    "fills": [
+     {
+      "x": 768.2,
+      "y": 605.4,
+      "side": "buy",
+      "label": "BUY 663P",
+      "at": 0.25,
+      "below": false
+     },
+     {
+      "x": 772.8,
+      "y": 605.4,
+      "side": "sell",
+      "label": "+$16",
+      "at": 0.5,
+      "below": true
+     },
+     {
+      "x": 789.1,
+      "y": 635.7,
+      "side": "sell",
+      "label": "+$14",
+      "at": 0.7,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "8:10 AM",
+      "sym": "QQQ 660P/661P",
+      "pnl": -1,
+      "what": "trail",
+      "at": 0.15
+     },
+     {
+      "time": "8:58 AM",
+      "sym": "QQQ 653P",
+      "pnl": -4,
+      "what": "knife",
+      "at": 0.3
+     },
+     {
+      "time": "8:38 AM",
+      "sym": "QQQ 663P",
+      "pnl": 16,
+      "what": "trail",
+      "at": 0.52
+     },
+     {
+      "time": "8:47 AM",
+      "sym": "QQQ 655P",
+      "pnl": 14,
+      "what": "trail",
+      "at": 0.72
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     -1,
+     -1,
+     -5,
+     11,
+     25
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L",
+    "from_i": 0
+   }
+  },
+  {
+   "say": "Nine twenty-three, again. Plus twenty-two. Then plus twenty. I'm up sixty-seven.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$67",
+    "sub": "9:23 AM \u00b7 660P and 653P",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "AGAIN",
+    "color": "green",
+    "at": 0.5
+   },
+   "clip": "ricotrader/clips/say-s7-2.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     10.0,
+     669.26
+    ],
+    "focus": [
+     762,
+     510,
+     1062,
+     810
+    ],
+    "fills": [
+     {
+      "x": 877.2,
+      "y": 667.7,
+      "side": "buy",
+      "label": "BUY 660P",
+      "at": 0.2,
+      "below": false
+     },
+     {
+      "x": 902.8,
+      "y": 652.0,
+      "side": "sell",
+      "label": "+$22",
+      "at": 0.45,
+      "below": true
+     },
+     {
+      "x": 958.5,
+      "y": 656.2,
+      "side": "sell",
+      "label": "+$20",
+      "at": 0.7,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "9:34 AM",
+      "sym": "QQQ 660P",
+      "pnl": 22,
+      "what": "trail",
+      "at": 0.47
+     },
+     {
+      "time": "10:00 AM",
+      "sym": "QQQ 653P",
+      "pnl": 20,
+      "what": "trail",
+      "at": 0.72
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     -1,
+     -1,
+     -5,
+     11,
+     25,
+     47,
+     67
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L",
+    "from_i": 5
+   }
+  },
+  {
+   "say": "Ten twenty, plus fifteen. One put bleeds out, minus six. Still up seventy-seven.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$77",
+    "sub": "10:20 AM +$15 \u00b7 10:30 AM -$6",
+    "color": "green"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "MEH",
+    "color": "yellow",
+    "at": 0.55
+   },
+   "clip": "ricotrader/clips/say-s7-3.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     11.0,
+     671.58
+    ],
+    "focus": [
+     902,
+     500,
+     1202,
+     800
+    ],
+    "fills": [
+     {
+      "x": 1014.2,
+      "y": 691.0,
+      "side": "sell",
+      "label": "+$15",
+      "at": 0.3,
+      "below": true
+     },
+     {
+      "x": 1102.3,
+      "y": 608.1,
+      "side": "loss",
+      "label": "-$6",
+      "at": 0.6,
+      "below": false
+     }
+    ],
+    "rows": [
+     {
+      "time": "10:05 AM",
+      "sym": "QQQ 658P",
+      "pnl": 1,
+      "what": "no progress",
+      "at": 0.15
+     },
+     {
+      "time": "10:23 AM",
+      "sym": "QQQ 659P",
+      "pnl": 15,
+      "what": "trail",
+      "at": 0.32
+     },
+     {
+      "time": "11:04 AM",
+      "sym": "QQQ 651P",
+      "pnl": -6,
+      "what": "knife",
+      "at": 0.62
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     -1,
+     -1,
+     -5,
+     11,
+     25,
+     47,
+     67,
+     68,
+     83,
+     77
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L",
+    "from_i": 7
+   }
+  },
+  {
+   "say": "Twelve trades, eight green, nothing bigger than twenty-two bucks. Boring works. Follow for tomorrow.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$86",
+    "sub": "12 TRADES \u00b7 8 WINNERS",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "BORING WORKS",
+    "color": "green",
+    "at": 0.45
+   },
+   "clip": "ricotrader/clips/say-s7-5.mp4",
+   "screen": {
+    "page": "xpro",
+    "now": [
+     12.916666666666666,
+     674.81
+    ],
+    "focus": [
+     0,
+     88,
+     1440,
+     1032
+    ],
+    "fills": [
+     {
+      "x": 1153.4,
+      "y": 600.6,
+      "side": "sell",
+      "label": "+$6",
+      "at": 0.2,
+      "below": false
+     },
+     {
+      "x": 1241.6,
+      "y": 605.7,
+      "side": "sell",
+      "label": "+$3",
+      "at": 0.3,
+      "below": false
+     }
+    ],
+    "rows": [
+     {
+      "time": "11:24 AM",
+      "sym": "QQQ 679C",
+      "pnl": 6,
+      "what": "trail",
+      "at": 0.2
+     },
+     {
+      "time": "12:02 PM",
+      "sym": "QQQ 679C",
+      "pnl": 3,
+      "what": "trail",
+      "at": 0.3
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     -1,
+     -1,
+     -5,
+     11,
+     25,
+     47,
+     67,
+     68,
+     83,
+     77,
+     83,
+     86
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L",
+    "from_i": 10
+   }
+  }
+ ]
+}
