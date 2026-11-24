@@ -174,12 +174,13 @@ def build_ass(path: str, words, banner: str, dur: float, lead: float) -> str:
         "", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
         f"Dialogue: 0,{_ts(0)},{_ts(min(dur, 3.2))},Banner,,0,0,0,,{{\\fad(0,250)}}{_esc(_ascii(banner))}",
     ]
-    pop = r"{\pos(540,960)\fscx125\fscy125\t(0,90,\fscx100\fscy100)}"
+    pop = r"{\pos(540,500)\fscx125\fscy125\t(0,90,\fscx100\fscy100)}"  # middle of the top half, above streamers' own subtitles
     for i, (s, e, w) in enumerate(words):
         nxt = words[i + 1][0] if i + 1 < len(words) else e + 0.4
         end = max(e, nxt)
         style = "Hot" if (any(ch.isdigit() for ch in w) or w.isupper() and len(w) > 1) else "Word"
-        lines.append(f"Dialogue: 1,{_ts(s + lead)},{_ts(end + lead)},{style},,0,0,0,,{pop}{_esc(w.upper())}")
+        size = "" if len(w) <= 9 else f"\\fs{max(60, int(118 * 9 / len(w)))}"  # long tokens like "3.79 BILLION" shrink to fit
+        lines.append(f"Dialogue: 1,{_ts(s + lead)},{_ts(end + lead)},{style},,0,0,0,,{pop[:-1]}{size}}}{_esc(w.upper())}")
     with open(path, "w") as f:
         f.write("\n".join(lines) + "\n")
     return path
@@ -202,7 +203,7 @@ def render(top_src: str, bottom_src: str, voice_mp3: str, ass_path: str, out: st
          "-stream_loop", "-1", "-ss", f"{top_start:.2f}", "-i", top_src,
          "-i", bottom_src, "-i", voice_mp3,
          "-filter_complex", v + ";" + a, "-map", "[vout]", "-map", "[aout]", "-t", f"{dur:.2f}",
-         "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+         "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-maxrate", "12M", "-bufsize", "24M", "-pix_fmt", "yuv420p",
          "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", out],
         check=True,
     )
@@ -234,11 +235,21 @@ def make(cfg: dict, fact: Fact, top_src: str, work: str, out_path: str, seed: in
 # ---------- one run ----------
 
 def pick_clip(cfg: dict, used: set[str]):
+    """Gameplay clips for the top half. Story cutscenes are left out (spoilers get taken down by Rockstar)."""
     from autoclip import twitch
-    clips = [c for c in twitch.top_clips(cfg) if twitch.eligible(c, cfg, used) and c.duration >= 15]
-    if not clips:
-        clips = [c for c in twitch.top_clips(cfg) if c.duration >= 10]
-    return clips[:12]
+    from autoclip.main import ADULT_WORDS, SPOILER_WORDS
+    allc = [c for c in twitch.top_clips(cfg)
+            if c.duration >= 12 and not SPOILER_WORDS.search(c.title) and not ADULT_WORDS.search(c.title)]
+    clips = [c for c in allc if twitch.eligible(c, cfg, used)] or allc
+    return clips[:15]
+
+
+def choose_clip(cfg: dict, fact: Fact, clips: list):
+    from types import SimpleNamespace
+    from autoclip import listicle
+    import anthropic
+    hint = SimpleNamespace(caption=fact.hook, footage=fact.footage + " (open-world gameplay only, never a story cutscene)")
+    return clips[listicle._pick_footage(anthropic.Anthropic(), cfg["writer_model"], hint, clips)]
 
 
 def main() -> int:
@@ -275,7 +286,7 @@ def main() -> int:
         if not clips:
             print("no GTA 6 Twitch clips for the top half right now; skipping")
             return 0
-        clip = random.choice(clips[:5])
+        clip = choose_clip(cfg, fact, clips)
         top = twitch.download(clip, os.path.join(work, f"{clip.id}.mp4"))
 
     os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
