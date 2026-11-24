@@ -29,21 +29,21 @@
    ],
    [
     2,
-    0.42,
+    0.08,
     7
    ],
    [
     2,
-    0.77,
+    0.16,
     38
    ],
    [
-    3,
-    0.57,
+    2,
+    0.62,
     15
    ],
    [
-    4,
+    3,
     0.47,
     77
    ]
@@ -248,100 +248,6 @@
    }
   },
   {
-   "say": "Nine twenty and nine thirty-eight. Two puts. Plus thirteen, plus thirty-one. I'm up thirty-eight.",
-   "mood": "hype",
-   "pop": {
-    "text": "+$38",
-    "sub": "637P +$13 \u00b7 622P +$31",
-    "color": "green"
-   },
-   "react": {
-    "face": "hype",
-    "text": "NICE",
-    "color": "green",
-    "at": 0.6
-   },
-   "clip": "ricotrader/clips/say-s8-2.mp4",
-   "screen": {
-    "page": "xpro",
-    "now": [
-     10.0,
-     655.31
-    ],
-    "focus": [
-     759,
-     425,
-     1059,
-     725
-    ],
-    "fills": [
-     {
-      "x": 870.3,
-      "y": 510.6,
-      "side": "buy",
-      "label": "BUY 637P",
-      "at": 0.2,
-      "below": false
-     },
-     {
-      "x": 874.9,
-      "y": 510.6,
-      "side": "sell",
-      "label": "+$13",
-      "at": 0.4,
-      "below": true
-     },
-     {
-      "x": 912.1,
-      "y": 638.5,
-      "side": "buy",
-      "label": "BUY 622P",
-      "at": 0.55,
-      "below": false
-     },
-     {
-      "x": 958.5,
-      "y": 627.6,
-      "side": "sell",
-      "label": "+$31",
-      "at": 0.75,
-      "below": true
-     }
-    ],
-    "rows": [
-     {
-      "time": "9:22 AM",
-      "sym": "QQQ 637P",
-      "pnl": 13,
-      "what": "trail",
-      "at": 0.42
-     },
-     {
-      "time": "9:58 AM",
-      "sym": "QQQ 622P",
-      "pnl": 31,
-      "what": "trail",
-      "at": 0.77
-     }
-    ]
-   },
-   "pnl": {
-    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
-    "entry": 0,
-    "path": [
-     0,
-     15,
-     -6,
-     7,
-     38
-    ],
-    "t0": 0.08,
-    "t1": 0.85,
-    "tag": "DAY P&L",
-    "side": "right"
-   }
-  },
-  {
    "say": "Ten thirty-one. Another cheap put hits its stop. Minus twenty-three. Back to plus fifteen.",
    "mood": "pain",
    "pop": {
@@ -363,18 +269,34 @@
      658.97
     ],
     "focus": [
-     916,
-     388,
-     1216,
-     688
+     820,
+     419,
+     1152,
+     719
     ],
     "fills": [
+     {
+      "x": 874.9,
+      "y": 510.6,
+      "side": "sell",
+      "label": "+$13",
+      "at": 0.08,
+      "below": true
+     },
+     {
+      "x": 958.5,
+      "y": 627.6,
+      "side": "sell",
+      "label": "+$31",
+      "at": 0.16,
+      "below": true
+     },
      {
       "x": 1035.0,
       "y": 539.3,
       "side": "buy",
       "label": "BUY 618P",
-      "at": 0.2,
+      "at": 0.3,
       "below": false
      },
      {
@@ -382,17 +304,31 @@
       "y": 536.0,
       "side": "loss",
       "label": "-$23",
-      "at": 0.55,
+      "at": 0.6,
       "below": true
      }
     ],
     "rows": [
      {
+      "time": "9:22 AM",
+      "sym": "QQQ 637P",
+      "pnl": 13,
+      "what": "trail",
+      "at": 0.08
+     },
+     {
+      "time": "9:58 AM",
+      "sym": "QQQ 622P",
+      "pnl": 31,
+      "what": "trail",
+      "at": 0.16
+     },
+     {
       "time": "11:03 AM",
       "sym": "QQQ 618P",
       "pnl": -23,
       "what": "stopped",
-      "at": 0.57
+      "at": 0.62
      }
     ]
    },

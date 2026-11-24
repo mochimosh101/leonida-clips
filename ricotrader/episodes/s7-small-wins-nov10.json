@@ -64,12 +64,12 @@
    ],
    [
     4,
-    0.42,
+    0.2,
     83
    ],
    [
     4,
-    0.62,
+    0.3,
     86
    ]
   ]
@@ -462,91 +462,6 @@
    }
   },
   {
-   "say": "In the afternoon the bots flip to calls. Plus six, plus three. Done at plus eighty-six.",
-   "mood": "calm",
-   "pop": {
-    "text": "+$86",
-    "sub": "11:21 AM and 11:59 AM \u00b7 two calls",
-    "color": "green"
-   },
-   "react": {
-    "face": "hype",
-    "text": "DONE",
-    "color": "green",
-    "at": 0.7
-   },
-   "clip": "ricotrader/clips/say-s7-4.mp4",
-   "screen": {
-    "page": "xpro",
-    "now": [
-     12.083333333333334,
-     672.25
-    ],
-    "focus": [
-     1042,
-     453,
-     1342,
-     753
-    ],
-    "fills": [
-     {
-      "x": 1153.4,
-      "y": 600.6,
-      "side": "sell",
-      "label": "+$6",
-      "at": 0.4,
-      "below": false
-     },
-     {
-      "x": 1241.6,
-      "y": 605.7,
-      "side": "sell",
-      "label": "+$3",
-      "at": 0.6,
-      "below": false
-     }
-    ],
-    "rows": [
-     {
-      "time": "11:24 AM",
-      "sym": "QQQ 679C",
-      "pnl": 6,
-      "what": "trail",
-      "at": 0.42
-     },
-     {
-      "time": "12:02 PM",
-      "sym": "QQQ 679C",
-      "pnl": 3,
-      "what": "trail",
-      "at": 0.62
-     }
-    ]
-   },
-   "pnl": {
-    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
-    "entry": 0,
-    "path": [
-     0,
-     -1,
-     -1,
-     -5,
-     11,
-     25,
-     47,
-     67,
-     68,
-     83,
-     77,
-     83,
-     86
-    ],
-    "t0": 0.08,
-    "t1": 0.85,
-    "tag": "DAY P&L"
-   }
-  },
-  {
    "say": "Twelve trades, eight green, nothing bigger than twenty-two bucks. Boring works. Follow for tomorrow.",
    "mood": "calm",
    "pop": {
@@ -572,7 +487,63 @@
      88,
      1440,
      1032
+    ],
+    "fills": [
+     {
+      "x": 1153.4,
+      "y": 600.6,
+      "side": "sell",
+      "label": "+$6",
+      "at": 0.2,
+      "below": false
+     },
+     {
+      "x": 1241.6,
+      "y": 605.7,
+      "side": "sell",
+      "label": "+$3",
+      "at": 0.3,
+      "below": false
+     }
+    ],
+    "rows": [
+     {
+      "time": "11:24 AM",
+      "sym": "QQQ 679C",
+      "pnl": 6,
+      "what": "trail",
+      "at": 0.2
+     },
+     {
+      "time": "12:02 PM",
+      "sym": "QQQ 679C",
+      "pnl": 3,
+      "what": "trail",
+      "at": 0.3
+     }
     ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     -1,
+     -1,
+     -5,
+     11,
+     25,
+     47,
+     67,
+     68,
+     83,
+     77,
+     83,
+     86
+    ],
+    "t0": 0.08,
+    "t1": 0.85,
+    "tag": "DAY P&L"
    }
   }
  ]
