@@ -1,0 +1,28 @@
+# SPLIT-SCREEN FACTS channel (Mochi 2026-11-24, from a reference TikTok): a "did you know" GTA 6 fact read
+# out loud, GTA 6 gameplay on the top half, our own code-drawn block parkour on the bottom half, and
+# big one-word captions in the middle. Used by .github/workflows/facts.yml (python -m splitfacts.main).
+
+game_name: "Grand Theft Auto VI"   # Twitch category for the top-half gameplay
+lookback_hours: 48
+min_views: 50
+languages: ["en"]
+allow_any_broadcaster: true
+broadcaster_allowlist: []
+broadcaster_blocklist: []
+channel_key: "facts"
+state_file: "state/facts.json"
+writer_model: "claude-opus-5-5"
+facts_per_batch: 10                # researched at once, then posted one per slot
+
+voice:                             # free Microsoft Edge voice, different from Rico so the channels feel distinct
+  edge_voice: "en-US-AndrewMultilingualNeural"
+  edge_rate: "+8%"
+  edge_pitch: "+0Hz"
+
+synthetic_label: false             # no realistic AI visuals (parkour is drawn by code, gameplay is real)
+
+youtube:
+  privacy_status: "public"
+  category_id: "20"                # Gaming
+  made_for_kids: false
+  base_tags: ["gta 6", "gta 6 facts", "did you know gta 6", "gta vi", "gta 6 secrets", "parkour", "shorts"]
