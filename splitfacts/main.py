@@ -105,15 +105,16 @@ def research(cfg: dict, done: list[str]) -> list[Fact]:
 # ---------- voice with word timings ----------
 
 def speak(text: str, out_mp3: str, v: dict) -> list[tuple[float, float, str]]:
-    """Edge voice + the exact time each word is spoken (for the one-word captions)."""
+    """Edge voice + the exact time each word is spoken (for the one-word captions).
+
+    Edge's service sometimes answers with no audio; try again, then fall back to similar voices.
+    If no word timings come back, spread the words evenly over the audio.
+    """
     import edge_tts
 
-    async def run():
-        try:
-            tts = edge_tts.Communicate(text, v["edge_voice"], rate=v["edge_rate"], pitch=v["edge_pitch"],
-                                       boundary="WordBoundary")
-        except TypeError:  # older edge-tts always sends word boundaries
-            tts = edge_tts.Communicate(text, v["edge_voice"], rate=v["edge_rate"], pitch=v["edge_pitch"])
+    async def run(voice, boundary):
+        kw = {"boundary": "WordBoundary"} if boundary else {}
+        tts = edge_tts.Communicate(text, voice, rate=v["edge_rate"], pitch=v["edge_pitch"], **kw)
         words = []
         with open(out_mp3, "wb") as f:
             async for chunk in tts.stream():
@@ -124,7 +125,25 @@ def speak(text: str, out_mp3: str, v: dict) -> list[tuple[float, float, str]]:
                     words.append((s, s + chunk["duration"] / 1e7, chunk["text"]))
         return words
 
-    return asyncio.run(run())
+    last = None
+    for voice in [v["edge_voice"]] + v.get("fallback_voices", ["en-US-AndrewNeural", "en-US-BrianNeural"]):
+        for boundary in (True, True, False):
+            try:
+                words = asyncio.run(run(voice, boundary))
+            except TypeError:       # older edge-tts has no boundary option (it always sends words)
+                continue
+            except Exception as e:  # noqa: BLE001  (NoAudioReceived, network hiccups)
+                last = e
+                print(f"edge voice {voice} failed ({type(e).__name__}); retrying")
+                continue
+            if not words:
+                toks = text.split()
+                d = edit.probe_duration(out_mp3)
+                step = d / max(1, len(toks))
+                words = [(i * step, (i + 1) * step, t.strip(".,!?")) for i, t in enumerate(toks)]
+            print(f"voice: {voice}")
+            return words
+    raise RuntimeError(f"no Edge voice worked: {last}")
 
 
 # ---------- captions ----------
