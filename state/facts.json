@@ -1,14 +1,6 @@
 {
   "queue": [
     {
-      "hook": "Did you know GTA 6 made 3.79 billion dollars in one day?",
-      "narration": "That's a record launch day, from a single game. And it wasn't a surprise either. It had already sold a record 32.5 million copies before it even came out. People were lining up their money years in advance. Most movies dream of making that in their whole run. GTA 6 did it before lunch, basically.",
-      "title": "GTA 6 Made How Much in ONE Day?!",
-      "banner": "$3.79 BILLION IN ONE DAY",
-      "footage": "sweeping skyline shot of Vice City",
-      "source_url": "https://tech.yahoo.com/gaming/breaking-news/live/gta-6-live-updates-record-38-billion-launch-viral-clips-and-the-secrets-players-are-finding-in-leonida-163038757.html"
-    },
-    {
       "hook": "Did you know GTA 6 scored a 99 on Metacritic?",
       "narration": "Ninety nine out of a hundred. And that's not from a handful of critics. It's based on more than 150 reviews. Almost no game in history gets that high. And fans waited thirteen whole years for it after GTA 5. Imagine waiting that long and it actually turns out amazing. Worth it.",
       "title": "GTA 6 Got a Score Almost No Game Ever Gets",
@@ -81,6 +73,21 @@
       "source_url": "https://www.redbull.com/int-en/gta-6-easter-eggs"
     }
   ],
-  "done": [],
-  "posted": []
+  "done": [
+    "GTA 6 Made How Much in ONE Day?!"
+  ],
+  "posted": [
+    {
+      "video_id": "z1wKSondcT4",
+      "title": "GTA 6 Made How Much in ONE Day?!",
+      "hook": "Did you know GTA 6 made 3.79 billion dollars in one day?",
+      "source_url": "https://tech.yahoo.com/gaming/breaking-news/live/gta-6-live-updates-record-38-billion-launch-viral-clips-and-the-secrets-players-are-finding-in-leonida-163038757.html",
+      "footage_clip": "SmoggyCleverMosquitoTBTacoRight-RVBfPSPbe5p5k44q",
+      "streamer": "caseoh_",
+      "ending": "Which one did you already know? Follow for part two.",
+      "duration": 26.0,
+      "format": "facts",
+      "posted_at": "2026-11-24T22:48:38Z"
+    }
+  ]
 }
