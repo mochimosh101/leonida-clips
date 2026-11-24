@@ -484,5 +484,22 @@
     "youtube_id": "33Fy0FAcOxY",
     "dry_run": false,
     "posted_at": "2026-11-23T21:34:16Z"
+  },
+  {
+    "clip_id": "series:10waystogetrichfastingta6:3",
+    "format": "series",
+    "series": "10 Ways to Get Rich Fast in GTA 6",
+    "part": 3,
+    "of": 10,
+    "title_style": "count",
+    "look": "sticker",
+    "footage_clip": "EmpathicLitigiousTurtleShadyLulu-kKjUS1498zVbxMOw",
+    "streamer": "avoidingthepuddle",
+    "title": "10 Ways to Get Rich Fast in GTA 6 (Part 3)",
+    "hook": "Pick jewelry stores with diamond icons",
+    "source_url": "https://www.forbes.com/sites/paultassi/2026/11/19/the-best-ways-to-earn-money-in-gta-6-early-mid-and-late-game/",
+    "youtube_id": "U-GVoheLSDk",
+    "dry_run": false,
+    "posted_at": "2026-11-24T03:31:24Z"
   }
 ]
