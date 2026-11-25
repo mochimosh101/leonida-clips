@@ -46,7 +46,7 @@ jobs:
           mkdir -p previews
           # Only re-render what this push changed (or what has no preview yet), so a run fits the time limit.
           CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" 2>/dev/null || echo ALL)
-          ALL=0; echo "$CHANGED" | grep -qE '^(ALL|ricotrader/[a-z_]+\.py)' && ALL=1
+          ALL=0; echo "$CHANGED" | grep -qx 'ALL' && ALL=1
           for f in ricotrader/episodes/*.json; do
             out="previews/$(basename "$f" .json).mp4"
             if [ "$ALL" = 1 ] || [ ! -f "$out" ] || echo "$CHANGED" | grep -qx "$f"; then

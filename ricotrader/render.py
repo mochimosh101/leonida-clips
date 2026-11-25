@@ -214,6 +214,15 @@ def build_audio_clips(scenes, work):
     parts, timeline, words, t = [], [], [], 0.35
     gaps = {"hype": 0.15, "pain": 0.35, "calm": 0.25, "deep": 0.45}
     for i, sc in enumerate(scenes):
+        if sc.get("quiet"):            # Rica idle on screen (phone, leaning back): no voice, chart plays out
+            dur = min(float(sc.get("dur", 6)), probe_duration(sc["clip"]))
+            wav_i = os.path.join(work, f"c{i}.wav")      # her room sound / soft music from the idle clip, quieter
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{dur:.3f}", "-ac", "1", "-ar", "48000",
+                            "-af", "afade=t=in:d=0.3,afade=t=out:st=%.3f:d=0.4" % max(0, dur - 0.4), wav_i], check=True)
+            parts.append((wav_i, t))
+            timeline.append((t, t + dur))
+            t += dur + sc.get("pause", 0.1)
+            continue
         s0, e0 = _speech_span(sc["clip"])
         end = min(probe_duration(sc["clip"]), e0 + 0.25)
         wav_i = os.path.join(work, f"c{i}.wav")
