@@ -444,5 +444,23 @@
     "youtube_id": "Do7Kxr5I6GE",
     "dry_run": false,
     "posted_at": "2026-11-24T23:38:16Z"
+  },
+  {
+    "clip_id": "UninterestedPerfectWaspDxCat-jbJG-PYz2TXEx9aI",
+    "streamer": "staryuuki",
+    "views": 651,
+    "title": "Staryuuki encuentra un bug rar\u00edsimo en GTA 6",
+    "hook": "Staryuuki contesta la llamada de Brian. Algo se come la carretera.",
+    "mid": "Ojo al carro rojo, ese no llega entero.",
+    "verdict": "Contrario: no es un bug, es el tr\u00e1fico de Leonida. Ah\u00ed hasta los carros tienen hambre.",
+    "hook_style": "H3",
+    "verdict_style": "V6",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "jvZQWPqEVs8",
+    "dry_run": false,
+    "posted_at": "2026-11-25T02:37:53Z"
   }
 ]
