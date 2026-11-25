@@ -480,5 +480,23 @@
     "youtube_id": "wvx8umJ0Yc4",
     "dry_run": false,
     "posted_at": "2026-11-25T15:38:08Z"
+  },
+  {
+    "clip_id": "RelievedFriendlyOtterBloodTrail-FHpFzbyVZMfXcpER",
+    "streamer": "rubius",
+    "views": 869,
+    "title": "Rubius y la b\u00f3veda imposible en GTA 6",
+    "hook": "Rubius tiene que abrir una b\u00f3veda a pura fuerza. \u00bfLo logra?",
+    "mid": "Ese bot\u00f3n se aprieta con fe, no con dedos.",
+    "verdict": "Contrario: la b\u00f3veda no estaba cerrada, solo estaba cansada. Rubius y la puerta empataron por agotamiento.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "0QG7KQitHmg",
+    "dry_run": false,
+    "posted_at": "2026-11-25T18:38:05Z"
   }
 ]
