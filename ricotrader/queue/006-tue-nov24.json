@@ -1,0 +1,674 @@
+{
+ "layout": "stream",
+ "voice": "en-US-AvaNeural",
+ "date": "2026-11-24",
+ "date_label": "TUE NOV 24, 2026",
+ "title": "My bot's put hit +$105\u2026 and sold at +$55",
+ "description": "Tuesday: 4 trades, +$82 on options. One put peaked at +$105 before the exit sold at +$55. Every fill and number is a real trade from my Desk Trader account. AI host presenting my real trades. Not financial advice.",
+ "tags": [
+  "day trading",
+  "options trading",
+  "trading bot",
+  "QQQ",
+  "0dte"
+ ],
+ "day_pnl": {
+  "label": "TODAY \u00b7 OPTIONS",
+  "start": 0,
+  "from_scene": 1,
+  "events": [
+   [
+    1,
+    0.84,
+    29
+   ],
+   [
+    2,
+    0.84,
+    84
+   ],
+   [
+    3,
+    0.84,
+    99
+   ],
+   [
+    4,
+    0.84,
+    82
+   ]
+  ]
+ },
+ "screen": {
+  "big": true,
+  "tag": "",
+  "title": "Desk Trader XPRO",
+  "pages": {
+   "xpro": "ricotrader/screens/xpro-2026-11-24.png"
+  },
+  "url": "trading.sichi.me/app/xpro",
+  "fit_height": [
+   "xpro"
+  ],
+  "overlays": {
+   "xpro": {
+    "list": {
+     "box": [
+      2,
+      722,
+      458,
+      900
+     ],
+     "bg": [
+      13,
+      17,
+      25
+     ]
+    },
+    "live": {
+     "time": [
+      6.5,
+      470,
+      139.23076923076923
+     ],
+     "price": [
+      646.25,
+      240,
+      628.75,
+      845
+     ],
+     "plot": [
+      470,
+      240,
+      1375,
+      845
+     ],
+     "axis": [
+      1382,
+      1446
+     ],
+     "step": 2.5,
+     "grid": [
+      645.0,
+      642.5,
+      640.0,
+      637.5,
+      635.0,
+      632.5,
+      630.0
+     ],
+     "bg": [
+      17,
+      22,
+      31
+     ]
+    }
+   }
+  },
+  "live_start": [
+   6.5,
+   640.02
+  ],
+  "blur": {}
+ },
+ "scenes": [
+  {
+   "say": "Plus eighty-two today. But one put was up a hundred and five, and I only kept fifty-five.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$82",
+    "sub": "one put peaked at +$105, kept +$55",
+    "color": "green"
+   },
+   "react": {
+    "face": "wow",
+    "text": "SO CLOSE",
+    "color": "yellow",
+    "at": 0.45
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     504,
+     446,
+     877,
+     860
+    ],
+    "from_focus": [
+     460,
+     240,
+     1380,
+     850
+    ],
+    "now": [
+     8.6,
+     632.85
+    ]
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-0.mp4"
+  },
+  {
+   "say": "Seven thirty-two, Triple Q drops. My bot buys a put. The trail locks in plus twenty-nine.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$29",
+    "sub": "614 put \u00b7 $1.46 \u2192 $1.75 \u00b7 trail exit",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "LOCKED",
+    "color": "green",
+    "at": 0.8
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     478,
+     463,
+     778,
+     763
+    ],
+    "now": [
+     7.7602777777777785,
+     634.35
+    ],
+    "fills": [
+     {
+      "x": 614.4,
+      "y": 574.0,
+      "side": "buy",
+      "label": "BUY 614P",
+      "at": 0.12,
+      "below": false
+     },
+     {
+      "x": 641.3,
+      "y": 651.4,
+      "side": "sell",
+      "label": "+$29",
+      "at": 0.82,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "7:44 AM",
+      "sym": "QQQ 614P",
+      "pnl": 29,
+      "what": "trail",
+      "at": 0.84
+     }
+    ]
+   },
+   "pnl": {
+    "label": "QQQ 614 PUT \u00b7 1 contract",
+    "entry": 1.46,
+    "qty": 1,
+    "marks": [
+     1.41,
+     1.41,
+     1.31,
+     1.31,
+     1.29,
+     1.31,
+     1.36,
+     1.36,
+     1.4,
+     1.41,
+     1.46,
+     1.46,
+     1.37,
+     1.37,
+     1.42,
+     1.37,
+     1.4,
+     1.43,
+     1.51,
+     1.55,
+     1.53,
+     1.47,
+     1.51,
+     1.53,
+     1.52,
+     1.5,
+     1.42,
+     1.51,
+     1.48,
+     1.62,
+     1.57,
+     1.67,
+     1.73,
+     1.76,
+     1.75
+    ],
+    "start": 0,
+    "peak": 33,
+    "final": 29,
+    "t0": 0.12,
+    "t1": 0.82,
+    "tag": "LIVE P&L",
+    "levels": [
+     {
+      "label": "TARGET +$87.60",
+      "val": 87.6,
+      "color": "green"
+     },
+     {
+      "label": "STOP -$51.10",
+      "val": -51.1,
+      "color": "red"
+     }
+    ],
+    "trail": [
+     [
+      31,
+      14.0
+     ],
+     [
+      31,
+      15.0
+     ],
+     [
+      32,
+      16.0
+     ],
+     [
+      32,
+      21.0
+     ],
+     [
+      32,
+      22.0
+     ],
+     [
+      33,
+      27.0
+     ],
+     [
+      34,
+      27.0
+     ]
+    ],
+    "side": "right"
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-1.mp4"
+  },
+  {
+   "say": "Seven thirty-four, a second put. It runs to plus one oh five. Then the knife exit sells at plus fifty-five.",
+   "mood": "hype",
+   "pop": {
+    "text": "+$55",
+    "sub": "615 put \u00b7 peak +$105 \u00b7 knife exit",
+    "color": "green"
+   },
+   "react": {
+    "face": "wow",
+    "text": "GAVE BACK $50",
+    "color": "yellow",
+    "at": 0.8
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     532,
+     452,
+     848,
+     803
+    ],
+    "now": [
+     8.616111111111111,
+     632.85
+    ],
+    "fills": [
+     {
+      "x": 620.3,
+      "y": 552.0,
+      "side": "buy",
+      "label": "BUY 615P",
+      "at": 0.12,
+      "below": false
+     },
+     {
+      "x": 760.5,
+      "y": 703.3,
+      "side": "sell",
+      "label": "+$55",
+      "at": 0.82,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "8:35 AM",
+      "sym": "QQQ 615P",
+      "pnl": 55,
+      "what": "knife",
+      "at": 0.84
+     }
+    ]
+   },
+   "pnl": {
+    "label": "QQQ 615 PUT \u00b7 1 contract",
+    "entry": 1.47,
+    "qty": 1,
+    "marks": [
+     1.51,
+     1.5,
+     1.71,
+     1.68,
+     1.75,
+     1.82,
+     2.28,
+     2.1,
+     2.25,
+     2.04,
+     1.93,
+     1.8,
+     1.79,
+     1.59,
+     1.95,
+     1.92,
+     2.11,
+     2.08,
+     2.4,
+     2.29,
+     2.16,
+     1.92,
+     2.17,
+     2.5,
+     2.48,
+     2.05,
+     2.35,
+     1.83,
+     1.76,
+     1.92,
+     2.05,
+     1.82,
+     2.02
+    ],
+    "start": 0,
+    "peak": 105,
+    "final": 55,
+    "t0": 0.12,
+    "t1": 0.82,
+    "tag": "LIVE P&L",
+    "levels": [
+     {
+      "label": "TARGET +$88.20",
+      "val": 88.2,
+      "color": "green"
+     },
+     {
+      "label": "STOP -$51.45",
+      "val": -51.45,
+      "color": "red"
+     }
+    ]
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-2.mp4"
+  },
+  {
+   "say": "Eight eleven, one more put. Two minutes later, plus fifteen.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$15",
+    "sub": "610 put \u00b7 2 minutes \u00b7 trail exit",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "QUICK ONE",
+    "color": "green",
+    "at": 0.8
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     557,
+     566,
+     857,
+     866
+    ],
+    "now": [
+     8.251111111111111,
+     632.03
+    ],
+    "fills": [
+     {
+      "x": 704.8,
+      "y": 700.1,
+      "side": "buy",
+      "label": "BUY 610P",
+      "at": 0.12,
+      "below": false
+     },
+     {
+      "x": 709.6,
+      "y": 731.6,
+      "side": "sell",
+      "label": "+$15",
+      "at": 0.82,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "8:13 AM",
+      "sym": "QQQ 610P",
+      "pnl": 15,
+      "what": "trail",
+      "at": 0.84
+     }
+    ]
+   },
+   "pnl": {
+    "label": "QQQ 610 PUT \u00b7 1 contract",
+    "entry": 1.42,
+    "qty": 1,
+    "marks": [
+     1.41,
+     1.43,
+     1.44,
+     1.45,
+     1.43,
+     1.41,
+     1.49,
+     1.52,
+     1.5,
+     1.51,
+     1.56,
+     1.61,
+     1.57
+    ],
+    "start": 0,
+    "peak": 20,
+    "final": 15,
+    "t0": 0.12,
+    "t1": 0.82,
+    "tag": "LIVE P&L",
+    "levels": [
+     {
+      "label": "TARGET +$85.20",
+      "val": 85.2,
+      "color": "green"
+     },
+     {
+      "label": "STOP -$49.70",
+      "val": -49.7,
+      "color": "red"
+     }
+    ],
+    "trail": [
+     [
+      11,
+      13.0
+     ],
+     [
+      11,
+      14.0
+     ],
+     [
+      12,
+      14.0
+     ]
+    ]
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-3.mp4"
+  },
+  {
+   "say": "Nine fifty, it flips to a call. No progress, so it's out at minus seventeen.",
+   "mood": "pain",
+   "pop": {
+    "text": "-$17",
+    "sub": "653 call \u00b7 no progress in 5 min",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "NOPE",
+    "color": "red",
+    "at": 0.8
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     790,
+     341,
+     1090,
+     641
+    ],
+    "now": [
+     9.94861111111111,
+     638.59
+    ],
+    "fills": [
+     {
+      "x": 934.3,
+      "y": 477.5,
+      "side": "buy",
+      "label": "BUY 653C",
+      "at": 0.12,
+      "below": false
+     },
+     {
+      "x": 946.0,
+      "y": 504.8,
+      "side": "loss",
+      "label": "-$17",
+      "at": 0.82,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "9:55 AM",
+      "sym": "QQQ 653C",
+      "pnl": -17,
+      "what": "noprog",
+      "at": 0.84
+     }
+    ]
+   },
+   "pnl": {
+    "label": "QQQ 653 CALL \u00b7 1 contract",
+    "entry": 1.46,
+    "qty": 1,
+    "marks": [
+     1.47,
+     1.43,
+     1.43,
+     1.4,
+     1.41,
+     1.43,
+     1.35,
+     1.4,
+     1.33,
+     1.32,
+     1.31,
+     1.28,
+     1.28,
+     1.24,
+     1.24,
+     1.24,
+     1.28,
+     1.3,
+     1.27,
+     1.3,
+     1.28,
+     1.28,
+     1.26,
+     1.29,
+     1.33,
+     1.28,
+     1.29,
+     1.29,
+     1.3,
+     1.29
+    ],
+    "start": 0,
+    "peak": 1,
+    "final": -17,
+    "t0": 0.12,
+    "t1": 0.82,
+    "tag": "LIVE P&L",
+    "levels": [
+     {
+      "label": "TARGET +$87.60",
+      "val": 87.6,
+      "color": "green"
+     },
+     {
+      "label": "STOP -$51.10",
+      "val": -51.1,
+      "color": "red"
+     }
+    ]
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-4.mp4"
+  },
+  {
+   "say": "Four trades, plus eighty-two. Should my bot have trailed that put? Tell me below.",
+   "mood": "calm",
+   "pop": {
+    "text": "+$82",
+    "sub": "4 TRADES \u00b7 3 WINNERS",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "TELL ME",
+    "color": "yellow",
+    "at": 0.5
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     0,
+     88,
+     1440,
+     1032
+    ],
+    "now": [
+     10.2,
+     638.59
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     29,
+     84,
+     99,
+     82
+    ],
+    "t0": 0.08,
+    "t1": 0.8,
+    "tag": "DAY P&L"
+   },
+   "clip": "ricotrader/clips/say-2026-11-24-5.mp4"
+  }
+ ]
+}

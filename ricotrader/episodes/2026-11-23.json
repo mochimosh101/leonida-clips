@@ -254,8 +254,7 @@
     "t0": 0.15,
     "t1": 0.8,
     "tag": "DAY P&L",
-    "from_i": 0,
-    "side": "right"
+    "from_i": 0
    },
    "say": "Morning was easy. Four calls at seven thirty-five, all green. Up thirty-nine.",
    "clip": "ricotrader/clips/say-2026-11-23-1.mp4"
@@ -488,8 +487,7 @@
     "t0": 0.1,
     "t1": 0.82,
     "tag": "DAY P&L",
-    "from_i": 11,
-    "side": "right"
+    "from_i": 11
    },
    "say": "Ten thirty, same thing again. Four more stops. Then my put spread stops out too. Minus fifty-eight.",
    "clip": "ricotrader/clips/say-2026-11-23-3.mp4"
