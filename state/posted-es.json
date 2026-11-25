@@ -498,5 +498,23 @@
     "youtube_id": "0QG7KQitHmg",
     "dry_run": false,
     "posted_at": "2026-11-25T18:38:05Z"
+  },
+  {
+    "clip_id": "CrackyApatheticMeatloafShadyLulu-JehvNaPWimJCSHE3",
+    "streamer": "illojuan",
+    "views": 627,
+    "title": "Le roban el coche a IlloJuan en GTA 6",
+    "hook": "IlloJuan deja el coche abierto un segundo. Adivina qui\u00e9n se cuela.",
+    "mid": "Error de novato: dejar la puerta abierta en un estacionamiento.",
+    "verdict": "Consejo de Rico: en Leonida, el seguro del coche se pone antes que el cintur\u00f3n. Siempre.",
+    "hook_style": "H3",
+    "verdict_style": "V3",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "k0BZyQBKKHI",
+    "dry_run": false,
+    "posted_at": "2026-11-25T23:38:41Z"
   }
 ]
