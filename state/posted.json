@@ -606,5 +606,23 @@
     "youtube_id": "-Jr6ggmCldQ",
     "dry_run": false,
     "posted_at": "2026-11-25T18:31:35Z"
+  },
+  {
+    "clip_id": "RelievedTolerantMetalPunchTrees-1SrUQSJUwg6PKugm",
+    "streamer": "lilypichu",
+    "views": 20597,
+    "title": "LilyPichu Was Told To Hold Square GTA 6",
+    "hook": "Lily found a beach party in Leonida. Can it stay peaceful?",
+    "mid": "Game says violence counts against you. She heard 'challenge.'",
+    "verdict": "Contrarian take: that warning is a dare. Nobody holding Square in Leonida stays a pacifist for long.",
+    "hook_style": "H1",
+    "verdict_style": "V6",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "NLllLfuXmSM",
+    "dry_run": false,
+    "posted_at": "2026-11-25T21:33:04Z"
   }
 ]
