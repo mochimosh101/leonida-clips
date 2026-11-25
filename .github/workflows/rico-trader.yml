@@ -29,6 +29,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -42,13 +44,20 @@ jobs:
         if: github.event_name == 'push'
         run: |
           mkdir -p previews
+          # Only re-render what this push changed (or what has no preview yet), so a run fits the time limit.
+          CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" 2>/dev/null || echo ALL)
+          ALL=0; echo "$CHANGED" | grep -qE '^(ALL|ricotrader/[a-z_]+\.py)' && ALL=1
           for f in ricotrader/episodes/*.json; do
-            python -m ricotrader.render "$f" "previews/$(basename "$f" .json).mp4"
+            out="previews/$(basename "$f" .json).mp4"
+            if [ "$ALL" = 1 ] || [ ! -f "$out" ] || echo "$CHANGED" | grep -qx "$f"; then
+              python -m ricotrader.render "$f" "$out"
+            fi
           done
-          for f in ricotrader/pov/*.json; do
-            python -m ricotrader.pov "$f" "previews/pov-$(basename "$f" .json).mp4"
-          done
-          python -m ricotrader.voice_only ricotrader/episodes/sample-rica-stream.json previews/rica-voice.mp3
+          if [ "$ALL" = 1 ]; then
+            for f in ricotrader/pov/*.json; do
+              python -m ricotrader.pov "$f" "previews/pov-$(basename "$f" .json).mp4"
+            done
+          fi
           git config user.name "autoclip-bot"
           git config user.email "autoclip-bot@users.noreply.github.com"
           git add previews ricotrader/clips
