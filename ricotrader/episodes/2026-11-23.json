@@ -1,0 +1,687 @@
+{
+ "layout": "stream",
+ "voice": "en-US-AvaNeural",
+ "date": "2026-11-23",
+ "date_label": "MON NOV 23, 2026",
+ "title": "My trading bot lost $276\u2026 same mistake 3 times",
+ "description": "Monday: 27 trades, -$276 on options. My bot bought a stack of calls at once three times and 11 of them hit the -25% stop. Every fill and number is a real trade from my Desk Trader account. AI host presenting my real trades. Not financial advice.",
+ "tags": [
+  "day trading",
+  "options trading",
+  "trading bot",
+  "QQQ",
+  "losing day"
+ ],
+ "day_pnl": {
+  "label": "TODAY \u00b7 OPTIONS",
+  "start": 0,
+  "from_scene": 1,
+  "events": [
+   [
+    1,
+    0.8,
+    39
+   ],
+   [
+    2,
+    0.75,
+    -45
+   ],
+   [
+    3,
+    0.42,
+    -166
+   ],
+   [
+    3,
+    0.8,
+    -224
+   ],
+   [
+    4,
+    0.42,
+    -180
+   ],
+   [
+    4,
+    0.8,
+    -276
+   ]
+  ]
+ },
+ "screen": {
+  "big": true,
+  "tag": "",
+  "title": "Desk Trader XPRO",
+  "pages": {
+   "xpro": "ricotrader/screens/xpro-2026-11-23.png"
+  },
+  "url": "trading.sichi.me/app/xpro",
+  "fit_height": [
+   "xpro"
+  ],
+  "overlays": {
+   "xpro": {
+    "list": {
+     "box": [
+      2,
+      722,
+      458,
+      900
+     ],
+     "bg": [
+      13,
+      17,
+      25
+     ]
+    },
+    "live": {
+     "time": [
+      6.5,
+      470,
+      139.23076923076923
+     ],
+     "price": [
+      658.75,
+      240,
+      638.75,
+      845
+     ],
+     "plot": [
+      470,
+      240,
+      1375,
+      845
+     ],
+     "axis": [
+      1382,
+      1446
+     ],
+     "step": 2.5,
+     "grid": [
+      657.5,
+      655.0,
+      652.5,
+      650.0,
+      647.5,
+      645.0,
+      642.5,
+      640.0
+     ],
+     "bg": [
+      17,
+      22,
+      31
+     ]
+    }
+   }
+  },
+  "live_start": [
+   6.5,
+   655.98
+  ],
+  "blur": {}
+ },
+ "scenes": [
+  {
+   "mood": "pain",
+   "pop": {
+    "text": "-$276",
+    "sub": "27 trades \u00b7 11 stops at -25%",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "OUCH",
+    "color": "red",
+    "at": 0.4
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "from_focus": [
+     460,
+     240,
+     1380,
+     850
+    ],
+    "now": [
+     12.9,
+     651.0
+    ]
+   },
+   "say": "Minus two seventy-six today. My bot made the same mistake three times. Watch.",
+   "clip": "ricotrader/clips/say-2026-11-23-0.mp4"
+  },
+  {
+   "mood": "calm",
+   "pop": {
+    "text": "+$39",
+    "sub": "4 calls + 1 put \u00b7 all green",
+    "color": "green"
+   },
+   "react": {
+    "face": "hype",
+    "text": "EASY",
+    "color": "green",
+    "at": 0.6
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     502,
+     247,
+     802,
+     549
+    ],
+    "now": [
+     8.05,
+     651.85
+    ],
+    "fills": [
+     {
+      "x": 621.8,
+      "y": 346.8,
+      "side": "buy",
+      "label": "BUY 4 CALLS",
+      "at": 0.15,
+      "below": false
+     },
+     {
+      "x": 623.5,
+      "y": 328.0,
+      "side": "sell",
+      "label": "+$36",
+      "at": 0.45,
+      "below": true
+     },
+     {
+      "x": 683.3,
+      "y": 448.7,
+      "side": "sell",
+      "label": "PUT +$3",
+      "at": 0.75,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "7:35 AM",
+      "sym": "QQQ 675C",
+      "pnl": 6,
+      "what": "trail30",
+      "at": 0.4
+     },
+     {
+      "time": "7:36 AM",
+      "sym": "QQQ 674C",
+      "pnl": 5,
+      "what": "trail30",
+      "at": 0.44
+     },
+     {
+      "time": "7:36 AM",
+      "sym": "QQQ 673C x2",
+      "pnl": 22,
+      "what": "trail",
+      "at": 0.48
+     },
+     {
+      "time": "8:01 AM",
+      "sym": "QQQ 624P",
+      "pnl": 3,
+      "what": "trail30",
+      "at": 0.76
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     6,
+     9,
+     14,
+     36,
+     39
+    ],
+    "t0": 0.15,
+    "t1": 0.8,
+    "tag": "DAY P&L",
+    "from_i": 0,
+    "side": "right"
+   },
+   "say": "Morning was easy. Four calls at seven thirty-five, all green. Up thirty-nine.",
+   "clip": "ricotrader/clips/say-2026-11-23-1.mp4"
+  },
+  {
+   "mood": "pain",
+   "pop": {
+    "text": "-$79",
+    "sub": "3 stops \u00b7 9:41 to 9:42 AM",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "STOPPED",
+    "color": "red",
+    "at": 0.7
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     741,
+     331,
+     1041,
+     631
+    ],
+    "now": [
+     9.716666666666667,
+     649.8
+    ],
+    "fills": [
+     {
+      "x": 865.3,
+      "y": 450.2,
+      "side": "buy",
+      "label": "BUY 6 CALLS",
+      "at": 0.15,
+      "below": false
+     },
+     {
+      "x": 916.9,
+      "y": 510.7,
+      "side": "loss",
+      "label": "3 STOPS -$79",
+      "at": 0.72,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "9:25 AM",
+      "sym": "QQQ 666C",
+      "pnl": 3,
+      "what": "trail30",
+      "at": 0.3
+     },
+     {
+      "time": "9:25 AM",
+      "sym": "QQQ 670C x2",
+      "pnl": -6,
+      "what": "noprog",
+      "at": 0.36
+     },
+     {
+      "time": "9:41 AM",
+      "sym": "QQQ 671C",
+      "pnl": -18,
+      "what": "stop",
+      "at": 0.66
+     },
+     {
+      "time": "9:42 AM",
+      "sym": "QQQ 668C",
+      "pnl": -29,
+      "what": "stop",
+      "at": 0.7
+     },
+     {
+      "time": "9:42 AM",
+      "sym": "QQQ 667C",
+      "pnl": -32,
+      "what": "stop",
+      "at": 0.74
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     6,
+     9,
+     14,
+     36,
+     39,
+     42,
+     40,
+     34,
+     16,
+     -13,
+     -45
+    ],
+    "t0": 0.15,
+    "t1": 0.8,
+    "tag": "DAY P&L",
+    "from_i": 5
+   },
+   "say": "Nine twenty. It buys a stack of calls at once. Three hit the stop, minus twenty-five percent each.",
+   "clip": "ricotrader/clips/say-2026-11-23-2.mp4"
+  },
+  {
+   "mood": "pain",
+   "pop": {
+    "text": "-$58",
+    "sub": "650 put spread \u00b7 strike-cross stop",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "AGAIN?!",
+    "color": "red",
+    "at": 0.35
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     909,
+     336,
+     1209,
+     636
+    ],
+    "now": [
+     11.016666666666667,
+     650.0
+    ],
+    "fills": [
+     {
+      "x": 1023.1,
+      "y": 437.2,
+      "side": "buy",
+      "label": "BUY 5 CALLS",
+      "at": 0.1,
+      "below": false
+     },
+     {
+      "x": 1047.5,
+      "y": 497.1,
+      "side": "loss",
+      "label": "4 STOPS -$107",
+      "at": 0.38,
+      "below": true
+     },
+     {
+      "x": 1097.0,
+      "y": 504.7,
+      "side": "loss",
+      "label": "SPREAD -$58",
+      "at": 0.78,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "10:33 AM",
+      "sym": "QQQ 669C x2",
+      "pnl": -14,
+      "what": "noprog",
+      "at": 0.25
+     },
+     {
+      "time": "10:37 AM",
+      "sym": "QQQ 670C",
+      "pnl": -18,
+      "what": "stop",
+      "at": 0.33
+     },
+     {
+      "time": "10:37 AM",
+      "sym": "QQQ 668C",
+      "pnl": -25,
+      "what": "stop",
+      "at": 0.36
+     },
+     {
+      "time": "10:38 AM",
+      "sym": "QQQ 667C",
+      "pnl": -29,
+      "what": "stop",
+      "at": 0.39
+     },
+     {
+      "time": "10:38 AM",
+      "sym": "QQQ 666C",
+      "pnl": -35,
+      "what": "stop",
+      "at": 0.42
+     },
+     {
+      "time": "11:00 AM",
+      "sym": "QQQ 650P spread",
+      "pnl": -58,
+      "what": "strike cross",
+      "at": 0.8
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     6,
+     9,
+     14,
+     36,
+     39,
+     42,
+     40,
+     34,
+     16,
+     -13,
+     -45,
+     -59,
+     -77,
+     -102,
+     -131,
+     -166,
+     -224
+    ],
+    "t0": 0.1,
+    "t1": 0.82,
+    "tag": "DAY P&L",
+    "from_i": 11,
+    "side": "right"
+   },
+   "say": "Ten thirty, same thing again. Four more stops. Then my put spread stops out too. Minus fifty-eight.",
+   "clip": "ricotrader/clips/say-2026-11-23-3.mp4"
+  },
+  {
+   "mood": "pain",
+   "pop": {
+    "text": "-$102",
+    "sub": "12:50 PM \u00b7 4 more stops",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "NOT AGAIN",
+    "color": "red",
+    "at": 0.75
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     1140,
+     299,
+     1440,
+     599
+    ],
+    "now": [
+     12.85,
+     650.8
+    ],
+    "fills": [
+     {
+      "x": 1315.2,
+      "y": 433.9,
+      "side": "buy",
+      "label": "BUY 5 CALLS",
+      "at": 0.1,
+      "below": false
+     },
+     {
+      "x": 1320.0,
+      "y": 419.4,
+      "side": "sell",
+      "label": "+$44",
+      "at": 0.38,
+      "below": true
+     },
+     {
+      "x": 1353.6,
+      "y": 482.9,
+      "side": "loss",
+      "label": "4 STOPS -$102",
+      "at": 0.78,
+      "below": true
+     }
+    ],
+    "rows": [
+     {
+      "time": "12:36 PM",
+      "sym": "QQQ 664C",
+      "pnl": 12,
+      "what": "trail30",
+      "at": 0.38
+     },
+     {
+      "time": "12:36 PM",
+      "sym": "4 more calls",
+      "pnl": 32,
+      "what": "trail30",
+      "at": 0.42
+     },
+     {
+      "time": "12:49 PM",
+      "sym": "QQQ 664C",
+      "pnl": 6,
+      "what": "trail30",
+      "at": 0.55
+     },
+     {
+      "time": "12:50 PM",
+      "sym": "4 calls",
+      "pnl": -102,
+      "what": "stop",
+      "at": 0.8
+     }
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     6,
+     9,
+     14,
+     36,
+     39,
+     42,
+     40,
+     34,
+     16,
+     -13,
+     -45,
+     -59,
+     -77,
+     -102,
+     -131,
+     -166,
+     -224,
+     -215,
+     -207,
+     -199,
+     -192,
+     -180,
+     -174,
+     -193,
+     -217,
+     -243,
+     -276
+    ],
+    "t0": 0.1,
+    "t1": 0.82,
+    "tag": "DAY P&L",
+    "from_i": 17
+   },
+   "say": "Twelve thirty-five, five calls trail out green. Plus forty-four. Then twelve fifty, four more stops.",
+   "clip": "ricotrader/clips/say-2026-11-23-4.mp4"
+  },
+  {
+   "mood": "calm",
+   "pop": {
+    "text": "-$276",
+    "sub": "12 WINNERS \u00b7 15 LOSERS",
+    "color": "red"
+   },
+   "react": {
+    "face": "ugh",
+    "text": "TELL ME",
+    "color": "yellow",
+    "at": 0.5
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     0,
+     88,
+     1440,
+     1032
+    ],
+    "now": [
+     12.9,
+     651.0
+    ]
+   },
+   "pnl": {
+    "label": "TODAY \u00b7 OPTIONS \u00b7 trade by trade",
+    "entry": 0,
+    "path": [
+     0,
+     6,
+     9,
+     14,
+     36,
+     39,
+     42,
+     40,
+     34,
+     16,
+     -13,
+     -45,
+     -59,
+     -77,
+     -102,
+     -131,
+     -166,
+     -224,
+     -215,
+     -207,
+     -199,
+     -192,
+     -180,
+     -174,
+     -193,
+     -217,
+     -243,
+     -276
+    ],
+    "t0": 0.08,
+    "t1": 0.7,
+    "tag": "DAY P&L"
+   },
+   "say": "Twenty-seven trades, eleven stops at minus twenty-five percent. Should my bot stop stacking calls? Tell me below.",
+   "clip": "ricotrader/clips/say-2026-11-23-5.mp4"
+  }
+ ]
+}
