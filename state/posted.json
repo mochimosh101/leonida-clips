@@ -571,5 +571,23 @@
     "youtube_id": "3-AvFBhyAT0",
     "dry_run": false,
     "posted_at": "2026-11-25T03:32:01Z"
+  },
+  {
+    "clip_id": "MistyFastChickpeaBatChest-1l50Cnz_nbghKxmh",
+    "streamer": "kaicenat",
+    "views": 13817,
+    "title": "Kai Cenat's Skyline Getaway Goes Sideways GTA 6",
+    "hook": "Kai brought a Skyline to a cop chase. How long did it last?",
+    "mid": "Door's already hanging off. That's not a good sign.",
+    "verdict": "Neon score: 2 out of 10. Wall had more grip than his tyres. Next time, check the turn-left arrow first.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "L33D1s_u6GM",
+    "dry_run": false,
+    "posted_at": "2026-11-25T17:02:47Z"
   }
 ]
