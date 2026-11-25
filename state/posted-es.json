@@ -462,5 +462,23 @@
     "youtube_id": "jvZQWPqEVs8",
     "dry_run": false,
     "posted_at": "2026-11-25T02:37:53Z"
+  },
+  {
+    "clip_id": "TangibleBlatantCrabSuperVinlin-LvUVIxqU_zb_ZKvq",
+    "streamer": "thegrefg",
+    "views": 1196,
+    "title": "El d\u00eda m\u00e1s tranquilo de TheGrefg en GTA 6",
+    "hook": "TheGrefg maneja tranquilo con Luc\u00eda al tel\u00e9fono. \u00bfCu\u00e1nto dura la paz?",
+    "mid": "Cero choques todav\u00eda. Sospechoso para un streamer en GTA.",
+    "verdict": "Puntuaci\u00f3n Neon: 7 de 10. Respet\u00f3 carriles y camiones; en Leonida eso ya es nivel profesional.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "wvx8umJ0Yc4",
+    "dry_run": false,
+    "posted_at": "2026-11-25T15:38:08Z"
   }
 ]
