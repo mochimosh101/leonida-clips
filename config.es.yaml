@@ -17,6 +17,14 @@ whisper_language: "es"
 allow_any_broadcaster: true
 broadcaster_allowlist: []          # Twitch logins, e.g. ["streamer_one", "streamer_two"]
 broadcaster_blocklist: []          # never clip these
+# Clips from these streamers jump the queue (their Twitch views count this many times more; below 1 = pushed down).
+# Growth review 2026-11-26 (views per Short): staryuuki 13.5, illojuan 7.1, djmariio 4.5, rubius 0.2, auronplay 0.
+boost_streamers:
+  illojuan: 3
+  staryuuki: 3
+  djmariio: 2
+  rubius: 0.3
+  auronplay: 0.3
 
 # Rico Neon, the channel's AI host
 host:
