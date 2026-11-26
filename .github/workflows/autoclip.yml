@@ -4,11 +4,10 @@ on:
   schedule:
     # Slots run at :07/:37 past (GitHub delays top-of-hour runs). 4 Shorts a day (Mochi's "full reset",
     # 2026-11-20): new channels earn reach faster with fewer, more original Shorts. No 18+ slot.
-    # Pacific (PST): 8:37 AM family clip, 10:07 AM tips series, 1:07 PM family clip, 7:07 PM tips series.
-    - cron: "37 16 * * *"
+    # Growth review 2026-11-26 (Mochi chose "shift effort"): 2 a day, effort moves to Rica + Facts.
+    # Pacific (PST): 10:07 AM tips series, 1:07 PM top-streamer clip.
     - cron: "7 18 * * *"   # tips series
     - cron: "7 21 * * *"
-    - cron: "7 3 * * *"    # tips series
   workflow_dispatch:
     inputs:
       dry_run:
