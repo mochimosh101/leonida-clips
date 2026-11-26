@@ -76,7 +76,7 @@ def check(ep, mp4):
             if dv < START_MIN_DIFF:
                 errs.append(f"scene {i} opens on the base photo (same default smile), diff {dv:.0f} < {START_MIN_DIFF}")
             for j, f in starts:
-                if sum(abs(x - y) for x, y in zip(f, fr0)) / len(f) < 6:
+                if sum(abs(x - y) for x, y in zip(f, fr0)) / len(f) < 8:
                     errs.append(f"scenes {j} and {i} open on the same pose")
             starts.append((i, fr0))
         notes.append("cut starts: " + ", ".join(f"{i}@{sc.get('clip_from')}" for i, sc in enumerate(ep["scenes"]) if sc.get("clip")))

@@ -156,7 +156,7 @@
     ]
    },
    "say": "Minus two seventy-six today. My bot made the same mistake three times. Watch.",
-   "clip": "ricotrader/clips/say-2026-11-23-0.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-0b.mp4"
   },
   {
    "mood": "calm",
@@ -257,7 +257,7 @@
     "from_i": 0
    },
    "say": "Morning was easy. Four calls at seven thirty-five, all green. Up thirty-nine.",
-   "clip": "ricotrader/clips/say-2026-11-23-1.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-1b.mp4"
   },
   {
    "mood": "pain",
@@ -363,7 +363,7 @@
     "from_i": 5
    },
    "say": "Nine twenty. It buys a stack of calls at once. Three hit the stop, minus twenty-five percent each.",
-   "clip": "ricotrader/clips/say-2026-11-23-2.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-2b.mp4"
   },
   {
    "mood": "pain",
@@ -490,7 +490,7 @@
     "from_i": 11
    },
    "say": "Ten thirty, same thing again. Four more stops. Then my put spread stops out too. Minus fifty-eight.",
-   "clip": "ricotrader/clips/say-2026-11-23-3.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-3b.mp4"
   },
   {
    "mood": "pain",
@@ -613,7 +613,7 @@
     "from_i": 17
    },
    "say": "Twelve thirty-five, five calls trail out green. Plus forty-four. Then twelve fifty, four more stops.",
-   "clip": "ricotrader/clips/say-2026-11-23-4.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-4b.mp4"
   },
   {
    "mood": "calm",
@@ -680,7 +680,9 @@
     "from_i": 27
    },
    "say": "Twenty-seven trades, eleven stops at minus twenty-five percent. Should my bot stop stacking calls? Tell me below.",
-   "clip": "ricotrader/clips/say-2026-11-23-5.mp4"
+   "clip": "ricotrader/clips/say-2026-11-23-5b.mp4"
   }
- ]
+ ],
+ "style": "talk",
+ "opening": "mid-reaction"
 }

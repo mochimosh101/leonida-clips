@@ -233,12 +233,20 @@ def _best_cut(path, lo, hi, cf=0.0):
         return hi
 
 
+def _face_frames(path, fps=10):
+    """Grey frames of just her head/face area (centre of the webcam), so expression and hand changes count."""
+    raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", path, "-vf",
+                                   f"fps={fps},crop=iw*0.4:ih*0.75:iw*0.3:0,scale=64:80,format=gray", "-f", "rawvideo", "-"])
+    n = 64 * 80
+    return [raw[i:i + n] for i in range(0, len(raw) - n + 1, n)], fps
+
+
 def auto_start(path, s0=None, dur=None):
     """Where a clip should start so the cut never opens on the shared base photo (Rica's default smile).
     Every Grok clip begins from the same still, so frame 0 always looks the same: start once she is already moving
     (pose clearly away from frame 0), but before her first word for speaking clips."""
     try:
-        fr, fps = _tiny_frames(path)
+        fr, fps = _face_frames(path)
     except Exception as e:
         print("auto_start failed:", e); return 0.0
     ref = fr[0]
@@ -248,15 +256,15 @@ def auto_start(path, s0=None, dur=None):
     if not ks:
         return max(0.0, hi)
     top = max(d[k] for k in ks)          # the pose furthest from the base photo, earliest one if several are close
-    return next(k for k in ks if d[k] >= top - 1.5) / fps
+    return next(k for k in ks if d[k] >= top - 2.5) / fps
 
 
-START_MIN_DIFF = 10      # tiny-frame grey difference from the base photo that reads as "a different pose"
+START_MIN_DIFF = 12      # face-area grey difference from the base photo that reads as "a different pose"
 
 
 def start_diff(path, cf):
     """How far the frame at clip_from is from the base photo (frame 0). Used by QA."""
-    fr, fps = _tiny_frames(path)
+    fr, fps = _face_frames(path)
     k = min(len(fr) - 1, int(round(cf * fps)))
     return sum(abs(x - y) for x, y in zip(fr[k], fr[0])) / len(fr[0]), fr[k]
 
