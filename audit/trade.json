@@ -2,13 +2,23 @@
  "channel": "Rica Neon Trades",
  "id": "UCMH097LZ-bZkAwJXtUnPgvQ",
  "stats": {
-  "viewCount": "320",
+  "viewCount": "413",
   "subscriberCount": "1",
   "hiddenSubscriberCount": false,
-  "videoCount": "7"
+  "videoCount": "8"
  },
- "pulled": "2026-11-26T18:04:13.138418Z",
+ "pulled": "2026-11-26T19:19:15.417406Z",
  "videos": [
+  {
+   "id": "DWOWkJAys7k",
+   "title": "My trading bot lost $276\u2026 same mistake 3 times",
+   "published": "2026-11-26T19:08:04Z",
+   "duration": "PT44S",
+   "privacy": "public",
+   "views": 1,
+   "likes": 0,
+   "comments": 0
+  },
   {
    "id": "Cy_MxkDPZ4o",
    "title": "My small stops cost $96. One stubborn hold cost $360.",
@@ -35,7 +45,7 @@
    "published": "2026-11-26T01:00:41Z",
    "duration": "PT48S",
    "privacy": "public",
-   "views": 84,
+   "views": 87,
    "likes": 0,
    "comments": 0
   },
@@ -45,7 +55,7 @@
    "published": "2026-11-26T00:41:37Z",
    "duration": "PT40S",
    "privacy": "public",
-   "views": 138,
+   "views": 142,
    "likes": 0,
    "comments": 0
   },

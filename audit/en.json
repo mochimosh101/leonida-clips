@@ -5,17 +5,27 @@
   "viewCount": "80",
   "subscriberCount": "0",
   "hiddenSubscriberCount": false,
-  "videoCount": "41"
+  "videoCount": "42"
  },
- "pulled": "2026-11-26T18:04:11.055769Z",
+ "pulled": "2026-11-26T19:19:13.311391Z",
  "videos": [
+  {
+   "id": "-cNXNSqphyc",
+   "title": "10 Ways to Get Rich Fast in GTA 6 (Part 8)",
+   "published": "2026-11-26T18:32:14Z",
+   "duration": "PT12S",
+   "privacy": "public",
+   "views": 0,
+   "likes": 0,
+   "comments": 0
+  },
   {
    "id": "bDFJtwkNbTU",
    "title": "Shroud's Mystery Cargo Ship Heist GTA 6",
    "published": "2026-11-26T17:04:33Z",
    "duration": "PT30S",
    "privacy": "public",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comments": 0
   },
