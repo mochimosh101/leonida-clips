@@ -641,5 +641,23 @@
     "youtube_id": "QnrzX9t_nwM",
     "dry_run": false,
     "posted_at": "2026-11-26T03:37:10Z"
+  },
+  {
+    "clip_id": "ZealousAgreeablePoultryHeyGuys-IOxAVg64-JTLdcyR",
+    "streamer": "shroud",
+    "views": 3861,
+    "title": "Shroud's Mystery Cargo Ship Heist GTA 6",
+    "hook": "Shroud stole something off a cargo ship. Does he know why?",
+    "mid": "Bold plan. Step one: steal. Step two: figure it out.",
+    "verdict": "Contrarian take: no purpose is the purpose. In Leonida, you steal first and Google the side hustle later.",
+    "hook_style": "H4",
+    "verdict_style": "V6",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "bDFJtwkNbTU",
+    "dry_run": false,
+    "posted_at": "2026-11-26T17:04:16Z"
   }
 ]
