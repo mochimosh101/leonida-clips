@@ -44,6 +44,12 @@ def main():
     mp4 = os.path.join("out", "rico-" + os.path.basename(path).replace(".json", ".mp4"))
     (render_stream if ep.get("layout") == "stream" else render)(ep, mp4)
     print("rendered", mp4)
+    if ep.get("layout") == "stream":
+        from ricotrader.qa import check
+        errs, notes = check(ep, mp4)
+        print("\n".join(notes))
+        if errs:                                  # never post a video that could look glitched or wrong
+            raise SystemExit("QA FAILED, not uploading:\n- " + "\n- ".join(errs))
     if a.dry_run:
         return
     from autoclip.youtube import upload

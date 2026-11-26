@@ -28,3 +28,10 @@ Never reuse the exact Grok prompt wording from the last Short: vary posture, exp
 ## Log
 style-log.json: list of {"date", "file", "style", "opening", "video_id"} appended when a Short is queued
 (video_id filled after posting). After Dec 2 compare views per style (YouTube stats) and keep the winner.
+
+## Never look glitched or fake (Mochi, Nov 25)
+- No reaction punch-ins (tinted zoom + word): they made her look like a different woman. Off unless "reactions": true (don't).
+- Big result number only appears when that trade's exit fills; it must equal the trade's real P&L; the ending number must equal the day's last total.
+- One "Order filled" alert at a time; P&L cards appear without cross-fades; outro stays on the chart (focus [440,230,1440,880]), never the full page.
+- Cuts land where her pose matches the shared start pose (render picks the cut), no dissolves.
+- ricotrader/qa.py runs before every upload (main.py) and blocks it on: non say-/idle- clips, look drift, webcam jumps, number mismatches. Run it on every preview too and look at <video>.qa.png.

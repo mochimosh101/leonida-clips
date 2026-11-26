@@ -423,7 +423,7 @@ def pnl_card(img, v, p, y0):
     fi = f0 + q * (len(vals) - 1 - f0)
     i0 = int(fi)
     cur = vals[i0] + (vals[min(i0 + 1, len(vals) - 1)] - vals[i0]) * (fi - i0)
-    k = R.ease(p / 0.08)
+    k = 1.0
     x0, x1, h = 30, 560, 320
     if v.get("side") == "right":                  # keep fills on the left of the chart visible
         x0, x1 = W - 560, W - 30
@@ -629,10 +629,10 @@ def render_stream(ep, out_path, work=None):
                 ft = a + f_.get("at", 0.25) * (b - a)
                 if t >= ft:
                     since = t - ft
-            rq, rv = reaction_at(sc, t, a, b, fill_times_by_scene.get(si, []))
+            rq, rv = (reaction_at(sc, t, a, b, fill_times_by_scene.get(si, [])) if ep.get("reactions") else (0, None))
             face = rv.get("face", mood) if rv else mood
             if say_clips and mcam:
-                cam = mcam.say_frame(si, sc["clip"], t - a)   # her lips match the line
+                cam = mcam.say_frame(si, sc["clip"], t - a + sc.get("clip_from", 0))   # her lips match the line
             elif mcam:
                 cam = mcam.frame(face, t - rv["_t"], once=True) if rv else mcam.frame(mood, t - a)
             else:
@@ -643,9 +643,9 @@ def render_stream(ep, out_path, work=None):
         cam_overlay(img, real=bool(mcam))
         if screen:
             img.alpha_composite(screen.frame(scenes, si, p, t, timeline), (0, CAM_H))
-            for ft in fill_times:
-                if ft <= t < ft + 1.8:
-                    filled_toast(img, CAM_H + 26, (t - ft) / 1.8)
+            live = [ft for ft in fill_times if ft <= t < ft + 1.8]
+            if live:                                   # only the newest alert, never two stacked
+                filled_toast(img, CAM_H + 26, (t - max(live)) / 1.8)
             ImageDraw.Draw(img).line([0, CAM_H, W, CAM_H], fill=PINK, width=4)
             pnl_card(img, sc.get("pnl"), p, CAM_H + SCR_H - 350)
             day_chip(img, ep, scenes, si, p, CAM_H + 110)
@@ -655,7 +655,10 @@ def render_stream(ep, out_path, work=None):
         vis = sc.get("visual", {})
         typ = vis.get("type")
         if screen and ep["screen"].get("big") and typ != "quote":
-            pop(img, sc.get("pop"), p, CAM_H + SCR_H + 100)
+            ex = [f_.get("at", 0) for f_ in sc.get("screen", {}).get("fills", []) if f_.get("side") in ("sell", "loss")]
+            pa = max(ex) if ex else 0.0                # the result shows when the trade closes, not before
+            if p >= pa:
+                pop(img, sc.get("pop"), (p - pa) / max(0.05, 1 - pa) if pa else p, CAM_H + SCR_H + 100)
             R.captions(img, words, t)
         elif typ == "quote":
             R.draw_quote(img, vis, p, mood, words, t, si)

@@ -208,6 +208,31 @@ def _clip_words(path, text, s0, e0):
     return [{"t": s0 + i * step, "d": step * 0.9, "w": w} for i, w in enumerate(toks)]
 
 
+def _tiny_frames(path, fps=10):
+    """Small grey frames of a clip, to find the moment her pose is closest to the shared start pose."""
+    raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", path, "-vf", f"fps={fps},scale=48:27,format=gray",
+                                   "-f", "rawvideo", "-"])
+    n = 48 * 27
+    return [raw[i:i + n] for i in range(0, len(raw) - n + 1, n)], fps
+
+
+def _best_cut(path, lo, hi, cf=0.0):
+    """Time in [lo, hi] (seconds from clip_from) whose frame is closest to the clip's first frame.
+    Every Grok clip starts from the same base photo, so cutting there makes the next clip's start match: no pose jump."""
+    try:
+        fr, fps = _tiny_frames(path)
+        ref = fr[0]
+        best, bt = None, hi
+        for k in range(int((cf + lo) * fps), min(len(fr), int((cf + hi) * fps) + 1)):
+            d = sum(abs(x - y) for x, y in zip(fr[k], ref))
+            if best is None or d < best:
+                best, bt = d, k / fps - cf
+        return max(lo, min(hi, bt))
+    except Exception as e:
+        print("best_cut failed:", e)
+        return hi
+
+
 def build_audio_clips(scenes, work):
     """Voice from each scene's own lip-synced video clip (Rica actually saying the line).
     Each clip plays from its start; the scene ends shortly after her speech ends."""
@@ -215,16 +240,21 @@ def build_audio_clips(scenes, work):
     gaps = {"hype": 0.15, "pain": 0.35, "calm": 0.25, "deep": 0.45}
     for i, sc in enumerate(scenes):
         if sc.get("quiet"):            # Rica idle on screen (phone, leaning back): no voice, chart plays out
-            dur = min(float(sc.get("dur", 6)), probe_duration(sc["clip"]))
+            cf = float(sc.get("clip_from", 0))
+            full = probe_duration(sc["clip"]) - cf
+            want = min(float(sc.get("dur", 6)), full)
+            dur = _best_cut(sc["clip"], max(2.5, want - 1.2), min(full - 0.1, want + 1.2), cf)
             wav_i = os.path.join(work, f"c{i}.wav")      # her room sound / soft music from the idle clip, quieter
-            subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{dur:.3f}", "-ac", "1", "-ar", "48000",
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cf:.3f}", "-i", sc["clip"], "-vn", "-t", f"{dur:.3f}", "-ac", "1", "-ar", "48000",
                             "-af", "afade=t=in:d=0.3,afade=t=out:st=%.3f:d=0.4" % max(0, dur - 0.4), wav_i], check=True)
             parts.append((wav_i, t))
             timeline.append((t, t + dur))
             t += dur + sc.get("pause", 0.1)
             continue
         s0, e0 = _speech_span(sc["clip"])
-        end = min(probe_duration(sc["clip"]), e0 + 0.25)
+        cdur = probe_duration(sc["clip"])
+        end = min(cdur, e0 + 0.25)
+        end = _best_cut(sc["clip"], end, min(cdur - 0.05, end + 0.9))   # hold her a beat until the pose matches the next start
         wav_i = os.path.join(work, f"c{i}.wav")
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{end:.3f}", "-ac", "1",
                         "-ar", "48000", "-af", "loudnorm=I=-15:TP=-1.5:LRA=11,afade=t=out:st=%.3f:d=0.12" % max(0, end - 0.12), wav_i], check=True)
