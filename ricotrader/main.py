@@ -57,6 +57,14 @@ def main():
     vid = upload(mp4, ep["title"], describe(ep), tags, YT, synthetic_label=False)
     print(f"uploaded https://youtube.com/shorts/{vid}")
     ep["video_id"] = vid
+    for old in ep.get("replaces", []):             # a fixed re-make: hide the old glitchy upload only now that the new one is up
+        try:
+            from autoclip.youtube import _client
+            _client().videos().update(part="status", body={"id": old, "status": {
+                "privacyStatus": "private", "selfDeclaredMadeForKids": False}}).execute()
+            print("set private:", old)
+        except Exception as e:
+            print("could not set private", old, e)
     dest = os.path.join("ricotrader/posted", os.path.basename(path))
     json.dump(ep, open(dest, "w"), indent=2)
     if path.startswith("ricotrader/queue/"):

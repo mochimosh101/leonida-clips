@@ -302,6 +302,11 @@ class ScreenCam:
         pad = lambda b: [b[0] - 50, b[1] - 30, b[2] + 50, b[3] + 30]   # breathing room around the focus
         box_prev = fit_aspect(pad(prev.get("focus", self.full)), self.aspect)
         box_cur = fit_aspect(pad(cur["focus"]), self.aspect) if cur.get("focus") else box_prev
+        def keep_in(b, xr=1440):                      # never show the blurred strip right of the app
+            if b[2] - b[0] <= xr and b[2] > xr:
+                b = [b[0] - (b[2] - xr), b[1], xr, b[3]]
+            return b
+        box_prev, box_cur = keep_in(box_prev), keep_in(box_cur)
         # camera: hold wide on the click, then move to the new focus
         k = ease((p - click_at) / 0.18) if click else ease(p / 0.15)
         box = lerp_box(box_prev, box_cur, k)

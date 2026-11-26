@@ -405,7 +405,7 @@
       "side": "loss",
       "label": "4 STOPS -$107",
       "at": 0.38,
-      "below": true
+      "below": false
      },
      {
       "x": 1097.0,
@@ -676,7 +676,8 @@
     ],
     "t0": 0.08,
     "t1": 0.7,
-    "tag": "DAY P&L"
+    "tag": "DAY P&L",
+    "from_i": 27
    },
    "say": "Twenty-seven trades, eleven stops at minus twenty-five percent. Should my bot stop stacking calls? Tell me below.",
    "clip": "ricotrader/clips/say-2026-11-23-5.mp4"

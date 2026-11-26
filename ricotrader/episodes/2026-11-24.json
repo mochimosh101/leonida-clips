@@ -666,7 +666,8 @@
     ],
     "t0": 0.08,
     "t1": 0.8,
-    "tag": "DAY P&L"
+    "tag": "DAY P&L",
+    "from_i": 4
    },
    "clip": "ricotrader/clips/say-2026-11-24-5.mp4"
   }
