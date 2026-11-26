@@ -4,9 +4,8 @@ on:
   schedule:
     # 4 family-friendly Spanish Shorts a day (Mochi's "full reset", 2026-11-20), timed for Mexico/Latin America and Spain.
     # Times in UTC (Pacific = UTC-8). Minutes are :15 so they never start with the English channel's runs.
-    - cron: "15 15 * * *"   # Spain 4 PM, Mexico 9 AM
+    # Growth review 2026-11-26 (Mochi chose "shift effort"): 2 a day, best two slots.
     - cron: "15 18 * * *"   # Spain 7 PM, Mexico noon (CDMX)
-    - cron: "15 23 * * *"   # Mexico 5 PM
     - cron: "15 2 * * *"    # Mexico 8 PM
   workflow_dispatch:
     inputs:
