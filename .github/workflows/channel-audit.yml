@@ -1,0 +1,51 @@
+name: Channel audit (one-off)
+on:
+  push:
+    branches: ["claude/project-thread-fqozz1"]
+    paths: [".github/workflows/channel-audit.yml", "scripts/channel_audit.py"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: "3.12"}
+      - run: pip install "google-api-python-client>=2.100" "google-auth>=2.23"
+      - name: en
+        if: always()
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+        run: python scripts/channel_audit.py en
+      - name: es
+        if: always()
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_ES || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_ES || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_ES }}
+        run: python scripts/channel_audit.py es
+      - name: trade
+        if: always()
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_TRADE || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_TRADE || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_TRADE }}
+        run: python scripts/channel_audit.py trade
+      - name: facts
+        if: always()
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID_FACTS || secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_FACTS || secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_FACTS }}
+        run: python scripts/channel_audit.py facts
+      - name: Save
+        if: always()
+        run: |
+          git config user.name "autoclip-bot"; git config user.email "autoclip-bot@users.noreply.github.com"
+          git add audit; git commit -m "Channel audit data" || exit 0
+          git push origin HEAD:${GITHUB_REF_NAME}

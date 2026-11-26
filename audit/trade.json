@@ -1,0 +1,114 @@
+{
+ "channel": "Rica Neon Trades",
+ "id": "UCMH097LZ-bZkAwJXtUnPgvQ",
+ "stats": {
+  "viewCount": "320",
+  "subscriberCount": "1",
+  "hiddenSubscriberCount": false,
+  "videoCount": "7"
+ },
+ "pulled": "2026-11-26T18:04:13.138418Z",
+ "videos": [
+  {
+   "id": "Cy_MxkDPZ4o",
+   "title": "My small stops cost $96. One stubborn hold cost $360.",
+   "published": "2026-11-26T14:12:20Z",
+   "duration": "PT36S",
+   "privacy": "public",
+   "views": 88,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "V1Wr5hjcFVM",
+   "title": "My small stops cost $96. One stubborn hold cost $360.",
+   "published": "2026-11-26T08:56:01Z",
+   "duration": "PT35S",
+   "privacy": "private",
+   "views": 79,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "gHMliUyVIws",
+   "title": "My bot's put hit +$105\u2026 and sold at +$55",
+   "published": "2026-11-26T01:00:41Z",
+   "duration": "PT48S",
+   "privacy": "public",
+   "views": 84,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "-qqmRHhCL74",
+   "title": "My bot made $15 all day\u2026 then one spread paid $62",
+   "published": "2026-11-26T00:41:37Z",
+   "duration": "PT40S",
+   "privacy": "public",
+   "views": 138,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "pqwRbWR4DlI",
+   "title": "My bot made $15 all day\u2026 then one spread paid $62",
+   "published": "2026-11-25T18:53:12Z",
+   "duration": "PT37S",
+   "privacy": "private",
+   "views": 90,
+   "likes": 2,
+   "comments": 0
+  },
+  {
+   "id": "Ofiq1TQ8ytQ",
+   "title": "My bot's put hit +$105\u2026 and sold at +$55",
+   "published": "2026-11-25T09:58:41Z",
+   "duration": "PT44S",
+   "privacy": "private",
+   "views": 63,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "OeeGVFywoAM",
+   "title": "No home run. 8 small wins = +$86 (trading bot)",
+   "published": "2026-11-24T18:53:45Z",
+   "duration": "PT38S",
+   "privacy": "public",
+   "views": 27,
+   "likes": 0,
+   "comments": 0
+  },
+  {
+   "id": "_GwGKfcaJe0",
+   "title": "Up $9 at 11 AM\u2026 closed +$123 (my bot's comeback)",
+   "published": "2026-11-24T06:06:11Z",
+   "duration": "PT41S",
+   "privacy": "public",
+   "views": 86,
+   "likes": 1,
+   "comments": 0
+  },
+  {
+   "id": "ehNFfzg1k4Q",
+   "title": "My bot made $244 on ONE put (best day so far)",
+   "published": "2026-11-23T20:29:32Z",
+   "duration": "PT55S",
+   "privacy": "public",
+   "views": 63,
+   "likes": 2,
+   "comments": 0
+  },
+  {
+   "id": "aif67hZTo8Q",
+   "title": "My bot's put was up $78... then this happened",
+   "published": "2026-11-23T01:53:21Z",
+   "duration": "PT52S",
+   "privacy": "public",
+   "views": 29,
+   "likes": 1,
+   "comments": 0
+  }
+ ],
+ "analytics_error": "<HttpError 403 when requesting https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=2026-11-01&endDate=2026-11-26&metrics=views%2CaverageViewDuration%2CaverageViewPercentage%2CsubscribersGained&dimensions=video&sort=-views&maxResults=200&alt=json returned \"YouTube Analy"
+}

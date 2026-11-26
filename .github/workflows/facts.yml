@@ -2,11 +2,9 @@ name: Split-screen facts Shorts
 
 on:
   schedule:
-    # 4 Shorts a day (same as the other channels). Pacific (PST): 9:22 AM, 12:22 PM, 5:22 PM, 8:22 PM.
-    - cron: "22 17 * * *"
-    - cron: "22 20 * * *"
-    - cron: "22 1 * * *"
-    - cron: "22 4 * * *"
+    # 4 Shorts a day. GitHub often starts scheduled runs hours late, so it wakes up every 2 hours
+    # and posts only when the last facts Short is 4+ hours old and fewer than 4 went up in 24 hours.
+    - cron: "22 */2 * * *"
   push:
     branches: ["claude/**"]
     paths: ["splitfacts/**", "config.facts.yaml", ".github/workflows/facts.yml"]
@@ -62,13 +60,21 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET_FACTS || secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN_FACTS }}  # the facts channel's sign-in
         run: |
-          SLOT="${{ github.event.schedule }}"
-          if [ -n "$SLOT" ]; then
-            # GitHub sometimes starts scheduled runs hours late; skip stale ones.
-            read -r M HR _ <<< "$SLOT"
-            NOW=$(( 10#$(date -u +%H) * 60 + 10#$(date -u +%M) ))
-            LATE=$(( (NOW - (HR * 60 + M) + 1440) % 1440 ))
-            if [ "$LATE" -gt 40 ]; then echo "Scheduled slot $SLOT started $LATE min late; skipping."; exit 0; fi
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Post only if the last facts Short is 4+ hours old and fewer than 4 went up in the last 24 hours.
+            python - <<'PY' || { echo "Not time for a new facts Short yet; skipping."; exit 0; }
+          import json, datetime as dt, sys
+          try:
+              posted = json.load(open("state/facts.json")).get("posted", [])
+          except FileNotFoundError:
+              posted = []
+          now = dt.datetime.now(dt.timezone.utc)
+          ages = [(now - dt.datetime.strptime(p["posted_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)).total_seconds() / 3600
+                  for p in posted if p.get("posted_at")]
+          recent = [a for a in ages if a < 24]
+          print(f"last facts Short {min(ages):.1f} h ago, {len(recent)} in 24 h" if ages else "no facts Shorts yet")
+          sys.exit(0 if (not ages or min(ages) >= 4) and len(recent) < 4 else 1)
+          PY
           fi
           DRY="${{ (github.event_name == 'push' || inputs.dry_run) && '--dry-run' || '' }}"
           python -m splitfacts.main $DRY

@@ -15,9 +15,15 @@ broadcaster_allowlist: []          # Twitch logins, e.g. ["streamer_one", "strea
 broadcaster_blocklist: []          # never clip these
 # Clips from these streamers jump the queue (their Twitch views count this many times more).
 # Mochi 2026-11-22: ohnePixel and xQc Shorts get 2-3x the views of the rest.
+# Growth review 2026-11-26 (views per Short): ohnepixel 5.6, lilypichu 2.0, xqc 1.2,
+# ludwig / caseoh_ / avoidingthepuddle ~0.5. Numbers below 1 push a streamer down the queue (still allowed).
 boost_streamers:
-  ohnepixel: 3
-  xqc: 3
+  ohnepixel: 4
+  xqc: 2
+  lilypichu: 2
+  ludwig: 0.4
+  caseoh_: 0.4
+  avoidingthepuddle: 0.4
 
 # Rico Neon, the channel's AI host
 host:
