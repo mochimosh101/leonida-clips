@@ -534,5 +534,23 @@
     "youtube_id": "XlxDP-LZgoI",
     "dry_run": false,
     "posted_at": "2026-11-26T02:37:21Z"
+  },
+  {
+    "clip_id": "CrispyBreakableMangetoutOneHand-sN4HAYB4z83itaT0",
+    "streamer": "rubius",
+    "views": 1167,
+    "title": "Rubius y la casa de la se\u00f1ora GTA 6",
+    "hook": "Rubius entra a la casa de una se\u00f1ora. Ella pidi\u00f3 una cosa.",
+    "mid": "Le dijo que no rompiera nada. Mal p\u00fablico para eso.",
+    "verdict": "Predicci\u00f3n: esa se\u00f1ora ya est\u00e1 llamando a su seguro. Y Rubius va a reiniciar el checkpoint tres veces m\u00e1s.",
+    "hook_style": "H3",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "-8od2XK2-RE",
+    "dry_run": false,
+    "posted_at": "2026-11-26T15:37:52Z"
   }
 ]
