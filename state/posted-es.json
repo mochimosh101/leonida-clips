@@ -516,5 +516,23 @@
     "youtube_id": "k0BZyQBKKHI",
     "dry_run": false,
     "posted_at": "2026-11-25T23:38:41Z"
+  },
+  {
+    "clip_id": "KnottyClumsyPepperPogChamp-yMfYotTaJGHSMpt5",
+    "streamer": "rubius",
+    "views": 1556,
+    "title": "Rubius y sus 10 mil pavos en GTA 6",
+    "hook": "Rubius cruza la calle con 10 mil pavos. \u00bfQu\u00e9 podr\u00eda salir mal?",
+    "mid": "Ese cami\u00f3n al fondo no viene a saludar.",
+    "verdict": "Consejo de Rico: en Leonida mira a los dos lados. Los tr\u00e1ileres no frenan por nadie, ni por diez mil pavos.",
+    "hook_style": "H6",
+    "verdict_style": "V3",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "XlxDP-LZgoI",
+    "dry_run": false,
+    "posted_at": "2026-11-26T02:37:21Z"
   }
 ]
