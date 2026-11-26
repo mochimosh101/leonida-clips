@@ -1,4 +1,23 @@
 [
- {"date": "2026-11-23", "file": "007-mon-nov23.json", "style": "talk", "opening": "classic-zoom", "video_id": null},
- {"date": "2026-11-24", "file": "006-tue-nov24.json", "style": "talk", "opening": "classic-zoom", "video_id": "Ofiq1TQ8ytQ"}
+ {
+  "date": "2026-11-23",
+  "file": "007-mon-nov23.json",
+  "style": "talk",
+  "opening": "classic-zoom",
+  "video_id": null
+ },
+ {
+  "date": "2026-11-24",
+  "file": "008-tue-nov24-fixed.json",
+  "style": "talk",
+  "opening": "classic-zoom",
+  "video_id": "gHMliUyVIws"
+ },
+ {
+  "date": "2026-11-25",
+  "file": "010-wed-nov25.json",
+  "style": "quiet",
+  "opening": "lean-in",
+  "video_id": null
+ }
 ]

@@ -156,7 +156,7 @@ def _to_desk(page_path, x, y):
     return CONTENT[0] + x * k, CONTENT[1] + y * k
 
 
-def draw_fill(d, x, y, side, label, k, a, up=None, stem=34):
+def draw_fill(d, x, y, side, label, k, a, up=None, stem=34, left=False):
     """App-style fill marker: arrow + tag. (x, y) already in crop coords; k = page->desktop scale."""
     col = (38, 214, 120) if side == "buy" else (255, 77, 106) if side == "loss" else (255, 196, 40)
     r = 9 * k * (0.6 + 0.4 * a)
@@ -166,8 +166,9 @@ def draw_fill(d, x, y, side, label, k, a, up=None, stem=34):
     up = (side == "buy") if up is None else up      # True = tag hangs below the marker
     ty = y + (stem if up else -stem) * k
     d.line([x, y + (r if up else -r), x, ty + (-12 if up else 12) * k], fill=col, width=max(2, int(2 * k)))
-    d.rounded_rectangle([x - tw / 2 - 10 * k, ty - 14 * k, x + tw / 2 + 10 * k, ty + 14 * k], radius=int(6 * k), fill=col)
-    d.text((x, ty), label, font=f, fill=(10, 12, 18), anchor="mm")
+    tx = x - tw / 2 - 8 * k if left else x          # "left": tag sits left of the marker (fills near the right edge)
+    d.rounded_rectangle([tx - tw / 2 - 10 * k, ty - 14 * k, tx + tw / 2 + 10 * k, ty + 14 * k], radius=int(6 * k), fill=col)
+    d.text((tx, ty), label, font=f, fill=(10, 12, 18), anchor="mm")
 
 
 class ScreenCam:
@@ -281,7 +282,7 @@ class ScreenCam:
                 d.text((dx1 - ib[0] - 22 * k, ry + 20 * k), txt, font=font("black", int(17 * k)), fill=col, anchor="rm")
         for f, a in fills:
             x, y = _to_desk(path, f["x"], f["y"])
-            draw_fill(d, x - ib[0], y - ib[1], f.get("side", "buy"), f["label"], k, a, f.get("below"), f.get("stem", 34))
+            draw_fill(d, x - ib[0], y - ib[1], f.get("side", "buy"), f["label"], k, a, f.get("below"), f.get("stem", 34), f.get("left", False))
 
     def frame(self, scenes, si, p, t, timeline):
         """Return an RGB image (out_w x out_h) plus the pointer position in output coords."""
