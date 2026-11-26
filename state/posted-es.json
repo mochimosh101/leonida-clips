@@ -552,5 +552,23 @@
     "youtube_id": "-8od2XK2-RE",
     "dry_run": false,
     "posted_at": "2026-11-26T15:37:52Z"
+  },
+  {
+    "clip_id": "CleverFairCroquetteFrankerZ-UQrk056P6sHmUWK3",
+    "streamer": "illojuan",
+    "views": 1050,
+    "title": "IlloJuan y el abrazo m\u00e1s sospechoso GTA 6",
+    "hook": "IlloJuan llega a la casa de empe\u00f1os con Luc\u00eda. \u00bfRomance o negocio?",
+    "mid": "Ojo, ning\u00fan abrazo frente a una casa de empe\u00f1os es gratis.",
+    "verdict": "Predicci\u00f3n: ese abrazo acaba en tasaci\u00f3n. Luc\u00eda ya est\u00e1 calculando cu\u00e1nto le dan por el reloj de Jason.",
+    "hook_style": "H2",
+    "verdict_style": "V4",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "5K8MY7u_q9A",
+    "dry_run": false,
+    "posted_at": "2026-11-26T18:37:39Z"
   }
 ]
