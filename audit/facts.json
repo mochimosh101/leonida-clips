@@ -1,0 +1,24 @@
+{
+ "channel": "Leonida Facts",
+ "id": "UCgHlnsrUcR0JoDoqGe-H2uQ",
+ "stats": {
+  "viewCount": "19",
+  "subscriberCount": "0",
+  "hiddenSubscriberCount": false,
+  "videoCount": "1"
+ },
+ "pulled": "2026-11-26T18:04:14.135756Z",
+ "videos": [
+  {
+   "id": "z1wKSondcT4",
+   "title": "GTA 6 Made How Much in ONE Day?!",
+   "published": "2026-11-24T22:49:06Z",
+   "duration": "PT27S",
+   "privacy": "public",
+   "views": 19,
+   "likes": 1,
+   "comments": 0
+  }
+ ],
+ "analytics_error": "<HttpError 403 when requesting https://youtubeanalytics.googleapis.com/v2/reports?ids=channel%3D%3DMINE&startDate=2026-11-01&endDate=2026-11-26&metrics=views%2CaverageViewDuration%2CaverageViewPercentage%2CsubscribersGained&dimensions=video&sort=-views&maxResults=200&alt=json returned \"YouTube Analy"
+}
