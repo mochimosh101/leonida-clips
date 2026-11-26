@@ -28,6 +28,18 @@ def _num(text):
     return (1 if m.group(1) == "+" else -1) * int(m.group(2).replace(",", "")) if m else None
 
 
+def _cut_times(ep, mp4):
+    """Scene start times in the video (where a webcam cut is an edit, not a glitch)."""
+    try:
+        from ricotrader.render import build_audio_clips
+        import tempfile
+        _, timeline, _, _ = build_audio_clips(ep["scenes"], tempfile.mkdtemp())
+        return [a - 0.35 for a, b in timeline]   # the picture switches 0.35 s before each clip's audio
+    except Exception as e:
+        print("cut times unavailable:", e)
+        return []
+
+
 def check(ep, mp4):
     errs, notes = [], []
     # 1) only locked-look clips
@@ -52,6 +64,24 @@ def check(ep, mp4):
         card = sc.get("pnl") or {}
         if card.get("path") and last is not None and i == len(ep["scenes"]) - 1 and round(card["path"][-1]) != round(last):
             errs.append(f"ending day card ends at {card['path'][-1]} but the day total is {last}")
+    # 2b) every cut must open on a different pose, never the shared base photo (Mochi, Nov 26: "same smile every cut")
+    try:
+        from ricotrader.render import resolve_starts, start_diff, START_MIN_DIFF
+        resolve_starts(ep["scenes"])
+        starts = []
+        for i, sc in enumerate(ep["scenes"]):
+            if not sc.get("clip"):
+                continue
+            dv, fr0 = start_diff(sc["clip"], float(sc.get("clip_from", 0)))
+            if dv < START_MIN_DIFF:
+                errs.append(f"scene {i} opens on the base photo (same default smile), diff {dv:.0f} < {START_MIN_DIFF}")
+            for j, f in starts:
+                if sum(abs(x - y) for x, y in zip(f, fr0)) / len(f) < 6:
+                    errs.append(f"scenes {j} and {i} open on the same pose")
+            starts.append((i, fr0))
+        notes.append("cut starts: " + ", ".join(f"{i}@{sc.get('clip_from')}" for i, sc in enumerate(ep["scenes"]) if sc.get("clip")))
+    except Exception as e:
+        errs.append(f"could not check cut starts: {e}")
     # 3) look drift + pose jumps in the webcam strip
     fps, w, h = 10, 96, 43
     fr = _frames(mp4, CAM, w, h, fps)
@@ -66,7 +96,10 @@ def check(ep, mp4):
     if len(drift) >= 3:
         errs.append(f"her look drifts (hair much lighter than usual) at {drift[0]:.1f}s ({len(drift)} frames)")
     jumps = []
+    cut_t = _cut_times(ep, mp4)
     for i in range(1, len(fr)):
+        if any(abs(i / fps - c) < 0.25 for c in cut_t):
+            continue
         d = sum(abs(a - b) for a, b in zip(fr[i], fr[i - 1])) / len(fr[i])
         if d > 28:
             jumps.append((round(i / fps, 1), round(d)))

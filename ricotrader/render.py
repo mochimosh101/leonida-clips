@@ -233,6 +233,43 @@ def _best_cut(path, lo, hi, cf=0.0):
         return hi
 
 
+def auto_start(path, s0=None, dur=None):
+    """Where a clip should start so the cut never opens on the shared base photo (Rica's default smile).
+    Every Grok clip begins from the same still, so frame 0 always looks the same: start once she is already moving
+    (pose clearly away from frame 0), but before her first word for speaking clips."""
+    try:
+        fr, fps = _tiny_frames(path)
+    except Exception as e:
+        print("auto_start failed:", e); return 0.0
+    ref = fr[0]
+    d = [sum(abs(x - y) for x, y in zip(f, ref)) / len(f) for f in fr]
+    hi = (s0 - 0.12) if s0 is not None else len(fr) / fps - (dur or 6) - 0.2
+    ks = [k for k in range(int(1.0 * fps), int(hi * fps) + 1) if k < len(d)]
+    if not ks:
+        return max(0.0, hi)
+    top = max(d[k] for k in ks)          # the pose furthest from the base photo, earliest one if several are close
+    return next(k for k in ks if d[k] >= top - 1.5) / fps
+
+
+START_MIN_DIFF = 10      # tiny-frame grey difference from the base photo that reads as "a different pose"
+
+
+def start_diff(path, cf):
+    """How far the frame at clip_from is from the base photo (frame 0). Used by QA."""
+    fr, fps = _tiny_frames(path)
+    k = min(len(fr) - 1, int(round(cf * fps)))
+    return sum(abs(x - y) for x, y in zip(fr[k], fr[0])) / len(fr[0]), fr[k]
+
+
+def resolve_starts(scenes):
+    """Fill in clip_from for every scene clip (auto unless a number is given)."""
+    for sc in scenes:
+        if not sc.get("clip") or isinstance(sc.get("clip_from"), (int, float)):
+            continue
+        s0 = None if sc.get("quiet") else _speech_span(sc["clip"])[0]
+        sc["clip_from"] = round(auto_start(sc["clip"], s0, float(sc.get("dur", 6))), 2)
+
+
 def build_audio_clips(scenes, work):
     """Voice from each scene's own lip-synced video clip (Rica actually saying the line).
     Each clip plays from its start; the scene ends shortly after her speech ends."""
@@ -243,7 +280,7 @@ def build_audio_clips(scenes, work):
             cf = float(sc.get("clip_from", 0))
             full = probe_duration(sc["clip"]) - cf
             want = min(float(sc.get("dur", 6)), full)
-            dur = _best_cut(sc["clip"], max(2.5, want - 1.2), min(full - 0.1, want + 1.2), cf)
+            dur = want
             wav_i = os.path.join(work, f"c{i}.wav")      # her room sound / soft music from the idle clip, quieter
             subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cf:.3f}", "-i", sc["clip"], "-vn", "-t", f"{dur:.3f}", "-ac", "1", "-ar", "48000",
                             "-af", "afade=t=in:d=0.3,afade=t=out:st=%.3f:d=0.4" % max(0, dur - 0.4), wav_i], check=True)
@@ -252,14 +289,14 @@ def build_audio_clips(scenes, work):
             t += dur + sc.get("pause", 0.1)
             continue
         s0, e0 = _speech_span(sc["clip"])
+        cf = float(sc.get("clip_from", 0))
         cdur = probe_duration(sc["clip"])
-        end = min(cdur, e0 + 0.25)
-        end = _best_cut(sc["clip"], end, min(cdur - 0.05, end + 0.9))   # hold her a beat until the pose matches the next start
+        end = min(cdur, e0 + 0.35) - cf          # scene length, counted from clip_from
         wav_i = os.path.join(work, f"c{i}.wav")
-        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", sc["clip"], "-vn", "-t", f"{end:.3f}", "-ac", "1",
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cf:.3f}", "-i", sc["clip"], "-vn", "-t", f"{end:.3f}", "-ac", "1",
                         "-ar", "48000", "-af", "loudnorm=I=-15:TP=-1.5:LRA=11,afade=t=out:st=%.3f:d=0.12" % max(0, end - 0.12), wav_i], check=True)
         timeline.append((t, t + end))
-        words += [{**w, "t": w["t"] + t, "scene": i} for w in _clip_words(sc["clip"], sc["say"], s0, e0)]
+        words += [{**w, "t": w["t"] - cf + t, "scene": i} for w in _clip_words(sc["clip"], sc["say"], s0, e0)]
         parts.append((wav_i, t))
         t += end + sc.get("pause", gaps.get(sc.get("mood", "calm"), 0.25))
     total = t + 0.6

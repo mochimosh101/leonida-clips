@@ -127,7 +127,7 @@
  "scenes": [
   {
    "say": "Don't tell anyone. I lost four ninety-five on options.",
-   "clip": "ricotrader/clips/say-2026-11-25-0.mp4",
+   "clip": "ricotrader/clips/say-2026-11-25-0b.mp4",
    "mood": "pain",
    "screen": {
     "page": "xpro",
@@ -498,7 +498,7 @@
   },
   {
    "say": "Small stops cost ninety-six. One stubborn hold cost three sixty.",
-   "clip": "ricotrader/clips/say-2026-11-25-2.mp4",
+   "clip": "ricotrader/clips/say-2026-11-25-2b.mp4",
    "mood": "calm",
    "pop": {
     "text": "-$495",

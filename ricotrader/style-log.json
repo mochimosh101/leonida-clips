@@ -15,9 +15,10 @@
  },
  {
   "date": "2026-11-25",
-  "file": "010-wed-nov25.json",
+  "file": "011-wed-nov25-v2.json",
   "style": "quiet",
   "opening": "lean-in",
-  "video_id": "V1Wr5hjcFVM"
+  "video_id": null,
+  "replaced": "V1Wr5hjcFVM"
  }
 ]

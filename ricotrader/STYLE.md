@@ -35,3 +35,14 @@ style-log.json: list of {"date", "file", "style", "opening", "video_id"} appende
 - One "Order filled" alert at a time; P&L cards appear without cross-fades; outro stays on the chart (focus [440,230,1440,880]), never the full page.
 - Cuts land where her pose matches the shared start pose (render picks the cut), no dissolves.
 - ricotrader/qa.py runs before every upload (main.py) and blocks it on: non say-/idle- clips, look drift, webcam jumps, number mismatches. Run it on every preview too and look at <video>.qa.png.
+
+## Never open a cut on the same smile (Mochi, Nov 26)
+Every Grok clip starts from the same base photo (Rica smiling), so frame 0 of every clip looks identical.
+- The renderer now starts each clip mid-motion (render.auto_start: the pose furthest from the base photo, before her first word).
+  Leave "clip_from" out of the episode so it is picked automatically.
+- Speaking clips need room for that: every say prompt starts with ~2 s of a distinct action and a NON-smiling expression
+  ("Right away she drops the smile and <action> ... after about two seconds she says exactly: ...").
+  Vary the action each scene (leaning in worried, slumped with arms crossed, rubbing her forehead, eyes on the phone, sipping coffee...).
+- qa.py blocks the upload if any cut opens on the base photo or two cuts open on the same pose. Still look at the
+  first webcam frame of every scene before posting.
+- grok.com (small Brave window): there is no "Add Prompt" menu; type the prompt in "Ask Grok anything" and click the button with aria-label "Make video".

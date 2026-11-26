@@ -565,6 +565,7 @@ def render_stream(ep, out_path, work=None):
     voice = ep.get("voice", "en-US-AvaMultilingualNeural")
     say_clips = all(os.path.exists(sc.get("clip", "")) for sc in scenes)   # Rica really says each line
     if say_clips:
+        R.resolve_starts(scenes)           # never open a cut on the shared base photo (same smile every time)
         wav, timeline, words, total = R.build_audio_clips(scenes, work)
     else:
         wav, timeline, words, total = R.build_audio(scenes, voice, work)
