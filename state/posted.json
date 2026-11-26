@@ -676,5 +676,23 @@
     "youtube_id": "-cNXNSqphyc",
     "dry_run": false,
     "posted_at": "2026-11-26T18:31:53Z"
+  },
+  {
+    "clip_id": "MoralFastPenguinUWot-LG0z7lwE4TPs24CW",
+    "streamer": "vinesauce",
+    "views": 725,
+    "title": "Vinesauce's Getaway Plan Needs Water GTA 6",
+    "hook": "Vinesauce picked a kayak as his getaway vehicle. On land?",
+    "mid": "Sand is not a river, Vinny. Physics disagrees with you.",
+    "verdict": "Neon score: 4 out of 10. Bold vehicle choice, wrong terrain. Paddle toward water first, then flee.",
+    "hook_style": "H3",
+    "verdict_style": "V1",
+    "caption_style": "B",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "P5D-4G9DrKo",
+    "dry_run": false,
+    "posted_at": "2026-11-26T21:33:14Z"
   }
 ]
