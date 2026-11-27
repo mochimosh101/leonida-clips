@@ -588,5 +588,23 @@
     "youtube_id": "OZWmuNkiV_8",
     "dry_run": false,
     "posted_at": "2026-11-27T02:37:15Z"
+  },
+  {
+    "clip_id": "ConcernedFuriousOkapiRedCoat-RqZyCRo--PIgibPp",
+    "streamer": "illojuan",
+    "views": 3427,
+    "title": "IlloJuan y el disparo que nadie esperaba GTA 6",
+    "hook": "IlloJuan entra sigiloso al robo. \u00bfQu\u00e9 tan buena es su punter\u00eda?",
+    "mid": "Ese tipo no estaba en el plan. Mira la reacci\u00f3n.",
+    "verdict": "Puntuaci\u00f3n Neon: 8 de 10. Reflejos de \u00e9lite, pero dos puntos menos por gritar m\u00e1s fuerte que el disparo.",
+    "hook_style": "H1",
+    "verdict_style": "V1",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "sdDS5yosU1I",
+    "dry_run": false,
+    "posted_at": "2026-11-27T18:38:08Z"
   }
 ]
