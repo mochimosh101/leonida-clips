@@ -711,5 +711,23 @@
     "youtube_id": "HHXN1UMmWTs",
     "dry_run": false,
     "posted_at": "2026-11-27T18:31:49Z"
+  },
+  {
+    "clip_id": "PleasantDirtyWallabyDancingBanana-0knKCXLfB4Uw-FS0",
+    "streamer": "nickeh30",
+    "views": 1818,
+    "title": "NickEh30 Takes a Tank Sightseeing in GTA 6",
+    "hook": "NickEh30 promised no explosions in a tank. How long did that last?",
+    "mid": "A peaceful tank is just a war waiting for traffic.",
+    "verdict": "Prediction: the beach doesn't survive his arrival. Nobody drives a tank to Vice City for sunscreen.",
+    "hook_style": "H1",
+    "verdict_style": "V4",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "xoTHICnG4eA",
+    "dry_run": false,
+    "posted_at": "2026-11-27T21:33:47Z"
   }
 ]
