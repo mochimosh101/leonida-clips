@@ -1,14 +1,6 @@
 {
   "queue": [
     {
-      "hook": "GTA 6 has more animal species than some zoos.",
-      "narration": "According to Game Informer's cover story, there are over 170 species. More than 60 kinds of birds, over 30 land mammals, plus manatees, flamingos, pelicans and alligators. But here's the wild part. Even Florida's invasive species made it in. Green iguanas, cane toads, feral cats and rhesus monkeys. Rockstar really said, the whole ecosystem, please.",
-      "title": "GTA 6 Has Over 170 Animal Species?!",
-      "banner": "170+ ANIMAL SPECIES",
-      "footage": "flamingos, an iguana and monkeys in the wild",
-      "source_url": "https://gtaintel.com/news/gta-6-wildlife-and-animals-what-we-know"
-    },
-    {
       "hook": "In GTA 6, alligators don't care whose side you're on.",
       "narration": "They attack enemies and the player alike. So if you're in a shootout near the swamp, the gator might be your best friend or your worst nightmare. On the softer side, you can catch 35 species of fish, and pet friendly cats and dogs for a Focus boost. Pet the dog. Avoid the gator. Simple.",
       "title": "GTA 6 Alligators Will Attack ANYONE",
@@ -67,7 +59,8 @@
   ],
   "done": [
     "GTA 6 Made How Much in ONE Day?!",
-    "GTA 6 Got a Score Almost No Game Ever Gets"
+    "GTA 6 Got a Score Almost No Game Ever Gets",
+    "GTA 6 Has Over 170 Animal Species?!"
   ],
   "posted": [
     {
@@ -93,6 +86,18 @@
       "duration": 23.3,
       "format": "facts",
       "posted_at": "2026-11-27T01:50:31Z"
+    },
+    {
+      "video_id": "Et4Al0QRvAk",
+      "title": "GTA 6 Has Over 170 Animal Species?!",
+      "hook": "GTA 6 has more animal species than some zoos.",
+      "source_url": "https://gtaintel.com/news/gta-6-wildlife-and-animals-what-we-know",
+      "footage_clip": "BreakableWimpyStarlingFutureMan-8I8IqOwAd2RtZEY2",
+      "streamer": "ohnepixel",
+      "ending": "Which one did you already know? Follow for part two.",
+      "duration": 31.4,
+      "format": "facts",
+      "posted_at": "2026-11-27T11:02:50Z"
     }
   ]
 }
