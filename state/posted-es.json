@@ -570,5 +570,23 @@
     "youtube_id": "5K8MY7u_q9A",
     "dry_run": false,
     "posted_at": "2026-11-26T18:37:39Z"
+  },
+  {
+    "clip_id": "DepressedBlatantWeaselSoonerLater-MrZ3Eb-yMsPB7vYW",
+    "streamer": "staryuuki",
+    "views": 1077,
+    "title": "Staryuuki y la camioneta del jefe GTA 6",
+    "hook": "Staryuuki estaciona sin romper nada. Ni su auto ni el del jefe.",
+    "mid": "Ese palmar no estaba en el plan. Ojo con la defensa.",
+    "verdict": "Puntuaci\u00f3n Neon: 6 de 10. La camioneta del jefe sobrevivi\u00f3, pero ese besito al rojo sale de su sueldo.",
+    "hook_style": "H3",
+    "verdict_style": "V1",
+    "caption_style": "A",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "OZWmuNkiV_8",
+    "dry_run": false,
+    "posted_at": "2026-11-27T02:37:15Z"
   }
 ]
