@@ -1,14 +1,6 @@
 {
   "queue": [
     {
-      "hook": "In GTA 6, alligators don't care whose side you're on.",
-      "narration": "They attack enemies and the player alike. So if you're in a shootout near the swamp, the gator might be your best friend or your worst nightmare. On the softer side, you can catch 35 species of fish, and pet friendly cats and dogs for a Focus boost. Pet the dog. Avoid the gator. Simple.",
-      "title": "GTA 6 Alligators Will Attack ANYONE",
-      "banner": "GATORS ATTACK EVERYONE",
-      "footage": "alligator lunging in the Grassrivers swamp, then petting a dog",
-      "source_url": "https://thegameswiki.com/gta6/wiki/wildlife"
-    },
-    {
       "hook": "Bigfoot is hiding in GTA 6, and he's terrifying.",
       "narration": "It's the Skunk Ape, straight from Florida folklore. Head to Cottonmouth Lake, south of Hamlet in Grassrivers. You might catch it eating a deer on a dirt road. Follow it into the woods and you'll find an effigy tied to a tree. Examine it, and your character passes out as the creature walks up. Sleep tight.",
       "title": "GTA 6 Hides a Creepy Bigfoot Encounter",
@@ -60,7 +52,8 @@
   "done": [
     "GTA 6 Made How Much in ONE Day?!",
     "GTA 6 Got a Score Almost No Game Ever Gets",
-    "GTA 6 Has Over 170 Animal Species?!"
+    "GTA 6 Has Over 170 Animal Species?!",
+    "GTA 6 Alligators Will Attack ANYONE"
   ],
   "posted": [
     {
@@ -98,6 +91,18 @@
       "duration": 31.4,
       "format": "facts",
       "posted_at": "2026-11-27T11:02:50Z"
+    },
+    {
+      "video_id": "07FXaIZew5g",
+      "title": "GTA 6 Alligators Will Attack ANYONE",
+      "hook": "In GTA 6, alligators don't care whose side you're on.",
+      "source_url": "https://thegameswiki.com/gta6/wiki/wildlife",
+      "footage_clip": "PleasantDirtyWallabyDancingBanana-0knKCXLfB4Uw-FS0",
+      "streamer": "nickeh30",
+      "ending": "Follow for more GTA 6 facts.",
+      "duration": 22.6,
+      "format": "facts",
+      "posted_at": "2026-11-27T21:29:12Z"
     }
   ]
 }
