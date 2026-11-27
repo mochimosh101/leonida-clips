@@ -1,8 +1,8 @@
 {
   "channels": {
     "en": {
-      "updated": "2026-11-26T20:33:32Z",
-      "videos_scored": 40,
+      "updated": "2026-11-27T20:19:35Z",
+      "videos_scored": 44,
       "weights": {
         "caption_style": {
           "A": 0.333,
@@ -38,62 +38,62 @@
       "tested": {
         "caption_style": {
           "A": 6,
-          "B": 8,
-          "C": 5
+          "B": 9,
+          "C": 6
         },
         "hook_style": {
           "H1": 10,
           "H2": 2,
-          "H3": 5,
-          "H4": 1,
+          "H3": 6,
+          "H4": 2,
           "H5": 0,
           "H6": 1,
           "H7": 0
         },
         "verdict_style": {
-          "V1": 6,
+          "V1": 7,
           "V2": 1,
           "V3": 2,
           "V4": 5,
           "V5": 0,
-          "V6": 5
+          "V6": 6
         },
         "title_style": {
-          "count": 11,
+          "count": 13,
           "utility": 0
         },
         "look": {
-          "clean": 3,
-          "sticker": 8
+          "clean": 4,
+          "sticker": 9
         }
       },
       "lessons": []
     },
     "es": {
-      "updated": "2026-11-26T20:33:33Z",
-      "videos_scored": 29,
+      "updated": "2026-11-27T20:19:36Z",
+      "videos_scored": 32,
       "weights": {
         "caption_style": {
-          "A": 0.333,
-          "B": 0.333,
-          "C": 0.333
+          "A": 0.569,
+          "B": 0.09,
+          "C": 0.342
         },
         "hook_style": {
-          "H1": 0.143,
-          "H2": 0.143,
-          "H3": 0.143,
-          "H4": 0.143,
-          "H5": 0.143,
-          "H6": 0.143,
-          "H7": 0.143
+          "H1": 0.113,
+          "H2": 0.195,
+          "H3": 0.32,
+          "H4": 0.039,
+          "H5": 0.039,
+          "H6": 0.255,
+          "H7": 0.039
         },
         "verdict_style": {
-          "V1": 0.167,
-          "V2": 0.167,
-          "V3": 0.167,
-          "V4": 0.167,
-          "V5": 0.167,
-          "V6": 0.167
+          "V1": 0.038,
+          "V2": 0.076,
+          "V3": 0.176,
+          "V4": 0.299,
+          "V5": 0.257,
+          "V6": 0.154
         },
         "title_style": {
           "count": 0.5,
@@ -106,24 +106,24 @@
       },
       "tested": {
         "caption_style": {
-          "A": 12,
+          "A": 14,
           "B": 8,
-          "C": 9
+          "C": 10
         },
         "hook_style": {
           "H1": 15,
-          "H2": 3,
-          "H3": 5,
+          "H2": 4,
+          "H3": 6,
           "H4": 1,
           "H5": 1,
-          "H6": 3,
+          "H6": 4,
           "H7": 1
         },
         "verdict_style": {
           "V1": 6,
           "V2": 3,
-          "V3": 8,
-          "V4": 5,
+          "V3": 9,
+          "V4": 7,
           "V5": 1,
           "V6": 6
         },
@@ -136,7 +136,13 @@
           "sticker": 0
         }
       },
-      "lessons": []
+      "lessons": [
+        "Open with a concrete physical action and stake in present tense (enters, leaves car open, crosses with 10 mil pavos); avoid vague 'qué podía hacer él' setups.",
+        "Prefer H3 hooks: two short sentences, setup then twist tease ('Ella pidió una cosa.' / 'Adivina quién se cuela.').",
+        "Use V4 predictions or V3 Rico tips with a specific Leonida joke; drop V1 numeric scores, they consistently flop.",
+        "Prioritize IlloJuan and Rubius clips; avoid Auronplay until a new angle is tested.",
+        "Use caption style A and post at 10 AM, 7 AM or 6 PM PT; avoid B captions and 12 PM or 3 PM slots."
+      ]
     }
   }
 }
