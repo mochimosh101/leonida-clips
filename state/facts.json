@@ -1,14 +1,6 @@
 {
   "queue": [
     {
-      "hook": "Did you know GTA 6 scored a 99 on Metacritic?",
-      "narration": "Ninety nine out of a hundred. And that's not from a handful of critics. It's based on more than 150 reviews. Almost no game in history gets that high. And fans waited thirteen whole years for it after GTA 5. Imagine waiting that long and it actually turns out amazing. Worth it.",
-      "title": "GTA 6 Got a Score Almost No Game Ever Gets",
-      "banner": "99 ON METACRITIC",
-      "footage": "montage of beautiful Leonida scenery",
-      "source_url": "https://www.aljazeera.com/news/2026/11/19/grand-theft-auto-vi-launches-to-rave-reviews-after-13-year-wait"
-    },
-    {
       "hook": "GTA 6 has more animal species than some zoos.",
       "narration": "According to Game Informer's cover story, there are over 170 species. More than 60 kinds of birds, over 30 land mammals, plus manatees, flamingos, pelicans and alligators. But here's the wild part. Even Florida's invasive species made it in. Green iguanas, cane toads, feral cats and rhesus monkeys. Rockstar really said, the whole ecosystem, please.",
       "title": "GTA 6 Has Over 170 Animal Species?!",
@@ -74,7 +66,8 @@
     }
   ],
   "done": [
-    "GTA 6 Made How Much in ONE Day?!"
+    "GTA 6 Made How Much in ONE Day?!",
+    "GTA 6 Got a Score Almost No Game Ever Gets"
   ],
   "posted": [
     {
@@ -88,6 +81,18 @@
       "duration": 26.0,
       "format": "facts",
       "posted_at": "2026-11-24T22:48:38Z"
+    },
+    {
+      "video_id": "rnYYgqJCCvY",
+      "title": "GTA 6 Got a Score Almost No Game Ever Gets",
+      "hook": "Did you know GTA 6 scored a 99 on Metacritic?",
+      "source_url": "https://www.aljazeera.com/news/2026/11/19/grand-theft-auto-vi-launches-to-rave-reviews-after-13-year-wait",
+      "footage_clip": "RenownedUninterestedOrcaAMPEnergy-fyL5CkAsqUYjbW5-",
+      "streamer": "cohhcarnage",
+      "ending": "Follow for more GTA 6 facts.",
+      "duration": 23.3,
+      "format": "facts",
+      "posted_at": "2026-11-27T01:50:31Z"
     }
   ]
 }
