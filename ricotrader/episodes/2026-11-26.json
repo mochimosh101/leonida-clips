@@ -1,0 +1,188 @@
+{
+ "layout": "stream",
+ "voice": "en-US-AvaNeural",
+ "screen": {
+  "big": true,
+  "tag": "",
+  "title": "Desk Trader XPRO",
+  "pages": {
+   "xpro": "ricotrader/screens/xpro-2026-11-25.png"
+  },
+  "url": "trading.sichi.me/app/xpro",
+  "fit_height": [
+   "xpro"
+  ],
+  "overlays": {
+   "xpro": {
+    "list": {
+     "box": [
+      2,
+      722,
+      458,
+      900
+     ],
+     "bg": [
+      13,
+      17,
+      25
+     ]
+    },
+    "live": {
+     "time": [
+      6.5,
+      470,
+      139.23076923076923
+     ],
+     "price": [
+      636.25,
+      240,
+      606.25,
+      845
+     ],
+     "plot": [
+      470,
+      240,
+      1375,
+      845
+     ],
+     "axis": [
+      1382,
+      1446
+     ],
+     "step": 2.5,
+     "grid": [
+      635.0,
+      632.5,
+      630.0,
+      627.5,
+      625.0,
+      622.5,
+      620.0,
+      617.5,
+      615.0,
+      612.5,
+      610.0,
+      607.5
+     ],
+     "bg": [
+      17,
+      22,
+      31
+     ]
+    }
+   }
+  },
+  "live_start": [
+   6.5,
+   617.1
+  ],
+  "blur": {}
+ },
+ "date": "2026-11-26",
+ "date_label": "THU NOV 26, 2026",
+ "style": "talk",
+ "opening": "side-glance",
+ "title": "Market's closed for Thanksgiving. My bot's week: -$689",
+ "description": "Thanksgiving, market closed, so no trades today. My options results this week: Monday -$276, Tuesday +$82, Wednesday -$495, -$689 over 38 trades. Chart shows Wednesday's real QQQ candles. Every number is from my Desk Trader account. AI host presenting my real trades. Not financial advice.",
+ "tags": [
+  "day trading",
+  "options trading",
+  "trading bot",
+  "QQQ",
+  "weekly recap"
+ ],
+ "scenes": [
+  {
+   "say": "Market's closed for Thanksgiving. So let's be honest about this week.",
+   "clip": "ricotrader/clips/say-2026-11-26-0.mp4",
+   "mood": "calm",
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "from_focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "now": [
+     12.97,
+     633.81
+    ]
+   }
+  },
+  {
+   "say": "Monday, minus two seventy-six. Tuesday, plus eighty-two. Wednesday, minus four ninety-five.",
+   "clip": "ricotrader/clips/say-2026-11-26-1.mp4",
+   "mood": "pain",
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "now": [
+     12.97,
+     633.81
+    ]
+   },
+   "pnl": {
+    "label": "THIS WEEK \u00b7 OPTIONS \u00b7 day by day",
+    "entry": 0,
+    "path": [
+     0,
+     -276,
+     -194,
+     -689
+    ],
+    "t0": 0.1,
+    "t1": 0.85,
+    "tag": "WEEK P&L"
+   }
+  },
+  {
+   "say": "Down six eighty-nine on options this week. Friday's a half day. What would you change?",
+   "clip": "ricotrader/clips/say-2026-11-26-2.mp4",
+   "mood": "calm",
+   "pop": {
+    "text": "-$689",
+    "sub": "38 OPTION TRADES \u00b7 MON\u2013WED",
+    "color": "red"
+   },
+   "screen": {
+    "page": "xpro",
+    "focus": [
+     440,
+     230,
+     1440,
+     880
+    ],
+    "now": [
+     12.97,
+     633.81
+    ]
+   },
+   "pnl": {
+    "label": "THIS WEEK \u00b7 OPTIONS \u00b7 day by day",
+    "entry": 0,
+    "path": [
+     0,
+     -276,
+     -194,
+     -689
+    ],
+    "from_i": 3,
+    "t0": 0.05,
+    "t1": 0.8,
+    "tag": "WEEK P&L"
+   }
+  }
+ ]
+}
