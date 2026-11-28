@@ -606,5 +606,23 @@
     "youtube_id": "sdDS5yosU1I",
     "dry_run": false,
     "posted_at": "2026-11-27T18:38:08Z"
+  },
+  {
+    "clip_id": "AdventurousUnusualScorpionWutFace-Z2oG65MqqT0D4G96",
+    "streamer": "djmariio",
+    "views": 220,
+    "title": "DjMaRiiO no aprende la lecci\u00f3n en GTA 6",
+    "hook": "DjMaRiiO roba una camioneta a golpes. Luego entra a la gasolinera.",
+    "mid": "Dej\u00f3 al due\u00f1o en el piso y ni mir\u00f3 atr\u00e1s.",
+    "verdict": "Predicci\u00f3n: ese cajero ya tiene el bot\u00f3n de p\u00e1nico presionado. Y DjMaRiiO no sabe d\u00f3nde dej\u00f3 la camioneta.",
+    "hook_style": "H3",
+    "verdict_style": "V4",
+    "caption_style": "C",
+    "synthetic_label": false,
+    "adult": false,
+    "variant": "normal",
+    "youtube_id": "NyEYWI2u91o",
+    "dry_run": false,
+    "posted_at": "2026-11-28T02:37:45Z"
   }
 ]
