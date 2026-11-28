@@ -256,7 +256,7 @@ def auto_start(path, s0=None, dur=None):
     if not ks:
         return max(0.0, hi)
     top = max(d[k] for k in ks)          # the pose furthest from the base photo, earliest one if several are close
-    return next(k for k in ks if d[k] >= top - 2.5) / fps
+    return max(ks, key=lambda k: (d[k], -k)) / fps
 
 
 START_MIN_DIFF = 12      # face-area grey difference from the base photo that reads as "a different pose"

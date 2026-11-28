@@ -79,11 +79,11 @@
   "blur": {}
  },
  "date": "2026-11-26",
- "date_label": "THU NOV 26, 2026",
+ "date_label": "THANKSGIVING WEEK",
  "style": "talk",
  "opening": "side-glance",
- "title": "Market's closed for Thanksgiving. My bot's week: -$689",
- "description": "Thanksgiving, market closed, so no trades today. My options results this week: Monday -$276, Tuesday +$82, Wednesday -$495, -$689 over 38 trades. Chart shows Wednesday's real QQQ candles. Every number is from my Desk Trader account. AI host presenting my real trades. Not financial advice.",
+ "title": "Thanksgiving week: my trading bot is down $689",
+ "description": "Thanksgiving week recap. My options results: Monday -$276, Tuesday +$82, Wednesday -$495, -$689 over 38 trades. Chart shows Wednesday's real QQQ candles. Every number is from my Desk Trader account. AI host presenting my real trades. Not financial advice.",
  "tags": [
   "day trading",
   "options trading",
@@ -93,8 +93,8 @@
  ],
  "scenes": [
   {
-   "say": "Market's closed for Thanksgiving. So let's be honest about this week.",
-   "clip": "ricotrader/clips/say-2026-11-26-0.mp4",
+   "say": "Thanksgiving week. Short week, rough numbers. Let's be honest.",
+   "clip": "ricotrader/clips/say-2026-11-26-0b.mp4",
    "mood": "calm",
    "screen": {
     "page": "xpro",
@@ -132,23 +132,10 @@
      12.97,
      633.81
     ]
-   },
-   "pnl": {
-    "label": "THIS WEEK \u00b7 OPTIONS \u00b7 day by day",
-    "entry": 0,
-    "path": [
-     0,
-     -276,
-     -194,
-     -689
-    ],
-    "t0": 0.1,
-    "t1": 0.85,
-    "tag": "WEEK P&L"
    }
   },
   {
-   "say": "Down six eighty-nine on options this week. Friday's a half day. What would you change?",
+   "say": "That's down six eighty-nine on options, Monday to Wednesday. What would you change?",
    "clip": "ricotrader/clips/say-2026-11-26-2.mp4",
    "mood": "calm",
    "pop": {
@@ -184,5 +171,27 @@
     "tag": "WEEK P&L"
    }
   }
- ]
+ ],
+ "day_pnl": {
+  "label": "THIS WEEK \u00b7 OPTIONS",
+  "start": 0,
+  "from_scene": 1,
+  "events": [
+   [
+    1,
+    0.3,
+    -276
+   ],
+   [
+    1,
+    0.6,
+    -194
+   ],
+   [
+    1,
+    0.9,
+    -689
+   ]
+  ]
+ }
 }
