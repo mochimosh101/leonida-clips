@@ -1,14 +1,6 @@
 {
   "queue": [
     {
-      "hook": "Bigfoot is hiding in GTA 6, and he's terrifying.",
-      "narration": "It's the Skunk Ape, straight from Florida folklore. Head to Cottonmouth Lake, south of Hamlet in Grassrivers. You might catch it eating a deer on a dirt road. Follow it into the woods and you'll find an effigy tied to a tree. Examine it, and your character passes out as the creature walks up. Sleep tight.",
-      "title": "GTA 6 Hides a Creepy Bigfoot Encounter",
-      "banner": "THE SKUNK APE IS REAL",
-      "footage": "dirt road in the swamp at dusk",
-      "source_url": "https://leonidaverse.com/en/codex/gta-6-easter-eggs"
-    },
-    {
       "hook": "GTA 6 hides a literal Easter egg at the top of a tower.",
       "narration": "One player spent about seven minutes climbing a communications tower. That's way longer than the famous ladder in Metal Gear Solid 3, which takes nearly two. At the top, there's a nest of colorful eggs. Grab one, throw it off the tower, and it triggers a secret cutscene. An actual egg. As an easter egg. Rockstar, please.",
       "title": "GTA 6's Seven Minute Climb Hides a Secret",
@@ -53,7 +45,8 @@
     "GTA 6 Made How Much in ONE Day?!",
     "GTA 6 Got a Score Almost No Game Ever Gets",
     "GTA 6 Has Over 170 Animal Species?!",
-    "GTA 6 Alligators Will Attack ANYONE"
+    "GTA 6 Alligators Will Attack ANYONE",
+    "GTA 6 Hides a Creepy Bigfoot Encounter"
   ],
   "posted": [
     {
@@ -103,6 +96,18 @@
       "duration": 22.6,
       "format": "facts",
       "posted_at": "2026-11-27T21:29:12Z"
+    },
+    {
+      "video_id": "e-rdMi3kHmI",
+      "title": "GTA 6 Hides a Creepy Bigfoot Encounter",
+      "hook": "Bigfoot is hiding in GTA 6, and he's terrifying.",
+      "source_url": "https://leonidaverse.com/en/codex/gta-6-easter-eggs",
+      "footage_clip": "ElatedZealousTapirItsBoshyTime-YCvWkB6_AjSAv02M",
+      "streamer": "ohnepixel",
+      "ending": "Follow, there's way more where that came from.",
+      "duration": 25.7,
+      "format": "facts",
+      "posted_at": "2026-11-28T04:00:57Z"
     }
   ]
 }
